@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "nbgv": {
+      "version": "3.6.133",
+      "commands": [
+        "nbgv"
+      ],
+      "rollForward": false
+    },
+    "azuresigntool": {
+      "version": "4.0.1",
+      "commands": [
+        "azuresigntool"
+      ],
+      "rollForward": false
+    }
+  }
+}

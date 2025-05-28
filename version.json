@@ -1,0 +1,19 @@
+{
+    "$schema": "https://raw.githubusercontent.com/dotnet/Nerdbank.GitVersioning/main/src/NerdBank.GitVersioning/version.schema.json",
+    "version": "25.1",
+    "pathFilters": [
+        "MilestonePSTools",
+        "src",
+        "docs"
+    ],
+    "publicReleaseRefSpec": [
+        "^refs/heads/main$",
+        "^refs/tags/v\\d+\\.\\d+"
+    ],
+    "release": {
+        "tagName": "v{version}",
+        "branchName": "v{version}",
+        "versionIncrement": "minor",
+        "firstUnstableTag": "alpha"
+    }
+}

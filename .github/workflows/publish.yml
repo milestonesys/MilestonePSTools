@@ -1,0 +1,66 @@
+name: Publish Module
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+  
+jobs:
+  BuildModule:
+    name: Build module
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build and Test
+        id: runtests
+        env:
+          VAULT_PASSWORD_DEFAULT: ${{ secrets.SecretStorePassword }}
+        shell: powershell
+        run: |
+          .\build.ps1 -Task RunTests -Bootstrap -SkipIsolation -ErrorAction Stop
+          "BHBuildOutput=$($env:BHBuildOutput)" | Add-Content "$($env:GITHUB_OUTPUT)"
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/windows@v2
+        if: always()
+        continue-on-error: true
+        with:
+          nunit_files: "tests/out/*.xml"
+      
+      - name: Azure login
+        if: github.ref == 'refs/heads/main'
+        uses: Azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+
+      - name: Sign module
+        if: github.ref == 'refs/heads/main'
+        shell: powershell
+        env:
+          AZUREKEYVAULT_URI: ${{ secrets.AZUREKEYVAULT_URI }}
+          AZUREKEYVAULT_CERTNAME: ${{ secrets.AZUREKEYVAULT_CERTNAME }}
+        run: |
+            .\build.ps1 -Task SignWithAzureSignTool -SkipIsolation
+
+      - name: Publish to PSGallery
+        if: github.ref == 'refs/heads/main'
+        env:
+          NUGETAPIKEY: ${{ secrets.PSGALLERY_TOKEN }}
+        shell: powershell
+        run: .\build.ps1 -Task PublishModule -SkipIsolation
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MilestonePSTools
+          path: ${{ steps.runtests.outputs.BHBuildOutput }}

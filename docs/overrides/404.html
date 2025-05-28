@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+
+<!-- Content -->
+{% block content %}
+<script>
+  window.onload = () => {
+    currentURL = window.location.href;
+    var regex = new RegExp("/functions/")
+    if (regex.test(currentURL)) {
+      newUrl = currentURL.replace(/^((http|https):\/\/.+\/)functions\/.*$/, "$1" + "commands/en-US/")
+      location.replace(newUrl);
+    }
+  };
+</script>
+
+<h1>404 - Not found</h1>
+{% endblock %}

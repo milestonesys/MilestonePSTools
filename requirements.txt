@@ -1,0 +1,28 @@
+# Python packages to be installed with pip install -r requirements.txt
+
+# LGLP3+ - https://github.com/Kozea/CairoSVG/
+cairosvg~=2.7
+
+# MIT - https://github.com/timvink/mkdocs-git-revision-date-localized-plugin
+mkdocs-git-revision-date-localized-plugin~=1.2
+
+# MIT - https://github.com/BigBuildBench/lukasgeiter_mkdocs-awesome-pages-plugin
+mkdocs-awesome-pages-plugin==2.9.2
+
+# MIT - https://github.com/blueswen/mkdocs-glightbox
+mkdocs-glightbox~=0.4
+
+# MIT - https://github.com/Guts/mkdocs-rss-plugin
+mkdocs-rss-plugin~=1.15
+
+# MIT - https://github.com/timvink/mkdocs-table-reader-plugin
+mkdocs-table-reader-plugin~=3.0
+
+# MIT - https://github.com/soulless-viewer/mkdocs-video
+mkdocs-video~=1.5
+
+# MIT-CMU - https://github.com/python-pillow/Pillow
+pillow~=10.4
+
+# BSD - https://github.com/alanhamlett/readtime
+readtime~=3.0

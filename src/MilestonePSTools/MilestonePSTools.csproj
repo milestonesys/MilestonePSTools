@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProjectGuid>{C2EAEBC8-66B2-4D1F-B6E4-83F305114655}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MilestonePSTools</RootNamespace>
+    <AssemblyName>MilestonePSTools</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <OutputPath>..\..\Output\lib\$(AssemblyName)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <DocumentationFile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <DocumentationFile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Device" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlarmCommands\GetAlarmClient.cs" />
+    <Compile Include="AlarmCommands\GetEventLine.cs" />
+    <Compile Include="AlarmCommands\GetAlarmStatistics.cs" />
+    <Compile Include="AlarmCommands\GetAlarmLine.cs" />
+    <Compile Include="AlarmCommands\NewAlarm.cs" />
+    <Compile Include="AlarmCommands\NewAlarmCondition.cs" />
+    <Compile Include="AlarmCommands\NewAlarmOrder.cs" />
+    <Compile Include="AlarmCommands\SendAlarm.cs" />
+    <Compile Include="AlarmCommands\UpdateAlarmLine.cs" />
+    <Compile Include="Attributes.cs" />
+    <Compile Include="BookmarkCommands\UpdateBookmark.cs" />
+    <Compile Include="Connection\AddTokenBehavior.cs" />
+    <Compile Include="Connection\ChannelBuilder.cs" />
+    <Compile Include="Connection\ChannelSettings.cs" />
+    <Compile Include="Connection\CreateChannelResult.cs" />
+    <Compile Include="Connection\LoginType.cs" />
+    <Compile Include="Connection\MilestoneConnection.cs" />
+    <Compile Include="DeviceCommands\GetDeviceStreamSettingCommand.cs" />
+    <Compile Include="DeviceCommands\SetDeviceStreamSettingCommand.cs" />
+    <Compile Include="DeviceCommands\SetDeviceGeneralSettingCommand.cs" />
+    <Compile Include="DeviceCommands\GetMetadataRecordCommand.cs" />
+    <Compile Include="DeviceCommands\SetDeviceCommandBase.cs" />
+    <Compile Include="EventCommands\MessageQueueMessage.cs" />
+    <Compile Include="Commands\GetMipSdkEula.cs" />
+    <Compile Include="Commands\InvokeMipSdkEula.cs" />
+    <Compile Include="Commands\ClearVmsCache.cs" />
+    <Compile Include="ConfigApiCommands\GetConfigurationService.cs" />
+    <Compile Include="ConfigApiCommands\GetVmsIServiceRegistrationServiceCommand.cs" />
+    <Compile Include="ConfigApiCommands\GetMethodInfo.cs" />
+    <Compile Include="ConfigApiCommands\GetServerCommandService.cs" />
+    <Compile Include="ConfigApiCommands\GetTranslations.cs" />
+    <Compile Include="ConfigApiCommands\InvokeMethod.cs" />
+    <Compile Include="ConfigApiCommands\SetConfigurationItem.cs" />
+    <Compile Include="ConnectionCommands\GetLoginSettings.cs" />
+    <Compile Include="ConnectionCommands\GetSite.cs" />
+    <Compile Include="ConnectionCommands\SelectSite.cs" />
+    <Compile Include="ConfigApiCommands\GetConfigurationItem.cs" />
+    <Compile Include="DeviceCommands\GetKind.cs" />
+    <Compile Include="DeviceCommands\GetPlatformItem.cs" />
+    <Compile Include="DeviceCommands\GetItemState.cs" />
+    <Compile Include="DeviceCommands\GetSequenceData.cs" />
+    <Compile Include="EventCommands\AddGenericEvent.cs" />
+    <Compile Include="EventCommands\AddUserDefinedEvent.cs" />
+    <Compile Include="AlarmCommands\GetAlarmDefinition.cs" />
+    <Compile Include="DeviceCommands\GetOutputSetting.cs" />
+    <Compile Include="DeviceCommands\GetInputSetting.cs" />
+    <Compile Include="DeviceCommands\GetMetadataSetting.cs" />
+    <Compile Include="DeviceCommands\GetSpeakerSetting.cs" />
+    <Compile Include="DeviceCommands\GetMicrophoneSetting.cs" />
+    <Compile Include="EventCommands\GetGenericEvent.cs" />
+    <Compile Include="EventCommands\GetGenericEventDataSource.cs" />
+    <Compile Include="EventCommands\RemoveGenericEvent.cs" />
+    <Compile Include="EventCommands\SendGenericEvent.cs" />
+    <Compile Include="EventCommands\TraceEvents.cs" />
+    <Compile Include="EventCommands\GetUserDefinedEvent.cs" />
+    <Compile Include="BookmarkCommands\AddBookmark.cs" />
+    <Compile Include="BookmarkCommands\GetBookmark.cs" />
+    <Compile Include="BookmarkCommands\RemoveBookmark.cs" />
+    <Compile Include="EventCommands\TraceEventsMessage.cs" />
+    <Compile Include="EvidenceLockCommands\CopyEvidenceLock.cs" />
+    <Compile Include="EvidenceLockCommands\UpdateEvidenceLock.cs" />
+    <Compile Include="ExportCommands\StartExport.cs" />
+    <Compile Include="Commands\GetWhoIsOnline.cs" />
+    <Compile Include="Commands\GetVmsLog.cs" />
+    <Compile Include="EventCommands\RemoveUserDefinedEvent.cs" />
+    <Compile Include="EventCommands\SendUserDefinedEvent.cs" />
+    <Compile Include="DeviceCommands\SetOutputSetting.cs" />
+    <Compile Include="DeviceCommands\SetInputSetting.cs" />
+    <Compile Include="DeviceCommands\SetMetadataSetting.cs" />
+    <Compile Include="DeviceCommands\SetSpeakerSetting.cs" />
+    <Compile Include="DeviceCommands\SetMicrophoneSetting.cs" />
+    <Compile Include="Extensions\ExtensionMethods.cs" />
+    <Compile Include="Helpers\AclHelpers.cs" />
+    <Compile Include="Helpers\DeviceAcl.cs" />
+    <Compile Include="Helpers\DeviceGroups.cs" />
+    <Compile Include="Helpers\DialogHelpers.cs" />
+    <Compile Include="Helpers\ServerTasks.cs" />
+    <Compile Include="Helpers\StringParsingUtils.cs" />
+    <Compile Include="Helpers\UserSession.cs" />
+    <Compile Include="Events\EventLineReader.cs" />
+    <Compile Include="Lpr\AddLprMatchListEntryCommand.cs" />
+    <Compile Include="Lpr\ClearLprMatchListCommand.cs" />
+    <Compile Include="Lpr\ImportLprMatchListCommand.cs" />
+    <Compile Include="Lpr\RemoveLprMatchListEntryCommand.cs" />
+    <Compile Include="Utility\MipItemNameArgumentCompleter.cs" />
+    <Compile Include="Utility\AviCodecArgumentCompleter.cs" />
+    <Compile Include="Lpr\NewLprMatchListCommand.cs" />
+    <Compile Include="Lpr\GetLprEventCommand.cs" />
+    <Compile Include="Lpr\GetLprMatchListCommand.cs" />
+    <Compile Include="Lpr\GetLprMatchListEntryCommand.cs" />
+    <Compile Include="Lpr\RemoveLprMatchListCommand.cs" />
+    <Compile Include="Lpr\SetLprMatchListCommand.cs" />
+    <Compile Include="Messaging\GetMipMessageIdList.cs" />
+    <Compile Include="Messaging\SendMipMessage.cs" />
+    <Compile Include="Models\ModuleSettings.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="PermissionCommands\GetOverallSecurity.cs" />
+    <Compile Include="PermissionCommands\SetDeviceAcl.cs" />
+    <Compile Include="PermissionCommands\GetDeviceAcl.cs" />
+    <Compile Include="DeviceCommands\SetCameraSetting.cs" />
+    <Compile Include="DeviceCommands\GetCameraSetting.cs" />
+    <Compile Include="DeviceCommands\GetDeviceCommand.cs" />
+    <Compile Include="DeviceCommands\GetDeviceGeneralSettingCommand.cs" />
+    <Compile Include="HardwareCommands\GetHardwareSetting.cs" />
+    <Compile Include="HardwareCommands\SetHardwareSetting.cs" />
+    <Compile Include="HardwareCommands\GetVmsHardware.cs" />
+    <Compile Include="DeviceCommands\AddStream.cs" />
+    <Compile Include="DeviceCommands\RemoveStream.cs" />
+    <Compile Include="DeviceCommands\SetStream.cs" />
+    <Compile Include="DeviceCommands\GetStream.cs" />
+    <Compile Include="Helpers\ServerTaskProgressWriter.cs" />
+    <Compile Include="Commands\GetVmsManagementServer.cs" />
+    <Compile Include="RecordingServerCommands\GetRecorderStatusService.cs" />
+    <Compile Include="ConfigApiCmdlet.cs" />
+    <Compile Include="ConnectionCommands\DisconnectManagementServer.cs" />
+    <Compile Include="ConnectionCommands\ConnectManagementServer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EvidenceLockCommands\AddEvidenceLock.cs" />
+    <Compile Include="EvidenceLockCommands\GetEvidenceLock.cs" />
+    <Compile Include="EvidenceLockCommands\RemoveEvidenceLock.cs" />
+    <Compile Include="RegisteredServiceCommands\UpdateRegisteredService.cs" />
+    <Compile Include="RegisteredServiceCommands\AddRegisteredService.cs" />
+    <Compile Include="RegisteredServiceCommands\GetRegisteredService.cs" />
+    <Compile Include="RegisteredServiceCommands\RemoveRegisteredService.cs" />
+    <Compile Include="MipSdkAssemblies.cs" />
+    <Compile Include="ModuleInitializer.cs" />
+    <Compile Include="Telemetry\Telemetry.cs" />
+    <Compile Include="Webhook.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SnapshotCommands\GetVideoSource.cs" />
+    <Compile Include="SnapshotCommands\GetSnapshot.cs" />
+    <Compile Include="SnapshotCommands\TestPlayback.cs" />
+    <Compile Include="UI\CustomItemPickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CustomItemPickerForm.Designer.cs">
+      <DependentUpon>CustomItemPickerForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomItemPickerForm.resx">
+      <DependentUpon>CustomItemPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\LoginDialogHeaderMilestonePSTools2.png" />
+    <None Include="Resources\LoginDialogHeaderMilestonePSTools.png" />
+    <None Include="Resources\MilestoneLogoPSTools-469x62.png" />
+    <None Include="Resources\MilestoneLogo-469x62-Left.png" />
+    <None Include="Resources\LoginDialogHeader.bmp" />
+    <None Include="Resources\MilestoneIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>8.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="Azure.Identity">
+      <Version>1.14.0</Version>
+    </PackageReference>
+    <PackageReference Include="CsvHelper">
+      <Version>33.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.ApplicationInsights">
+      <Version>2.23.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration">
+      <Version>9.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder">
+      <Version>9.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables">
+      <Version>9.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json">
+      <Version>9.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Identity.Client">
+      <Version>4.72.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens">
+      <Version>8.10.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies">
+      <Version>1.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="MilestoneSystems.VideoOS.ConfigurationAPI">
+      <Version>25.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="MilestoneSystems.VideoOS.Platform">
+      <Version>25.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="MilestoneSystems.VideoOS.Platform.SDK">
+      <Version>25.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="MilestoneSystems.VideoOS.Platform.Transact">
+      <Version>25.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="Nerdbank.GitVersioning">
+      <Version>3.7.115</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt">
+      <Version>8.10.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>9.0.5</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

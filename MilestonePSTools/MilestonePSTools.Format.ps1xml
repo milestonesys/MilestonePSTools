@@ -1,0 +1,1827 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>Role</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.Role</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>RoleType</Label>
+            <Width>14</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>SmartClient</Label>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>WebClient</Label>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>MobileClient</Label>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>RoleType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.AllowSmartClientLogOn</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.AllowWebClientLogOn</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.AllowMobileClientLogOn</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Item State</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.Messaging.ItemState</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>25</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ItemType</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>18</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <ScriptBlock>
+                    ($_ | Get-PlatformItem).Name
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                    [VideoOS.Platform.Kind]::DefaultTypeToNameTable[$_.FQID.Kind]
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>State</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.FQID.ObjectId</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Hardware Driver</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.HardwareDriver</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <PropertyName>DriverType</PropertyName>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>6</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>8</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>10</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Number</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>UseCount</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DriverRevision</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Evidence Lock</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Common.Proxy.Server.WCF.MarkedData</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Created</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>StartTime</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>EndTime</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Expires</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Retention</Label>
+            <Width>15</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Header</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>User</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                    $_.Created
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                    $_.StartTime
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                    $_.EndTime
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                    $_.RetentionExpire
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                    $unit = if ($_.RetentionOption.RetentionUnits -ge 0) { "$($_.RetentionOption.RetentionUnits) " }
+                    "$unit$($_.RetentionOption.RetentionOptionType)"
+                </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Bookmark</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Common.Proxy.Server.WCF.Bookmark</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>Timestamp</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Header</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Description</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Reference</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                    $_.TimeTrigged
+                </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>User-defined Event</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.UserDefinedEvent</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Subtype</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Generic Event</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.GenericEvent</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>7</Width>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>ExpressionType</Label>
+            <Width>18</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>8</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Enabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Expression</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                    $g = $_
+                    $expressionTypes = @{}
+                    $g.ExpressionTypeValues.Keys | Foreach-Object {
+                    $expressionTypes.$($g.ExpressionTypeValues.$_) = $_
+                    }
+                    $expressionTypes.$($g.ExpressionType)
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Priority</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Configuration Item Property</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.ConfigurationApi.ClientService.Property</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Key</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Value</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ValueType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IsSettable</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>LicenseInformation</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.LicenseInformation</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Slc</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Sku</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CareLevel</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CareId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ActivationAutomatic</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>LicenseInstalledProductChildItem</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.LicenseInstalledProductChildItem</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Slc</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ExpirationDate</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CarePlus</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CarePremium</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>LicenseOverviewAllChildItem</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.LicenseOverviewAllChildItem</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Width>30</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>20</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>LicenseType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Activated</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>LicenseDetailChildItem</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.LicenseDetailChildItem</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Width>30</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>24</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>LicenseType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Activated</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>InGrace</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>GraceExpired</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>NotLicensed</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ChangesWithoutActivation</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>VideoOS.Platform.ConfigurationItems.ManagementServer</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.ManagementServer</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>8</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>8</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Version</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ComputerName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>TimeZone</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>VideoOS.Platform.ConfigurationItems.RecordingServer</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.RecordingServer</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>8</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>HostName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>WebServerUri</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>TimeZoneName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>VideoOS.Platform.ConfigurationItems.Hardware</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.Hardware</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>5</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Address</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Model</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Enabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Device</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.Camera</TypeName>
+        <TypeName>VideoOS.Platform.ConfigurationItems.InputEvent</TypeName>
+        <TypeName>VideoOS.Platform.ConfigurationItems.Metadata</TypeName>
+        <TypeName>VideoOS.Platform.ConfigurationItems.Microphone</TypeName>
+        <TypeName>VideoOS.Platform.ConfigurationItems.Output</TypeName>
+        <TypeName>VideoOS.Platform.ConfigurationItems.Speaker</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>3</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>5</Width>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Channel</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Enabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Configuration Item</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.ConfigurationApi.ClientService.ConfigurationItem</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>Enabled</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>25</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>5</Width>
+          </TableColumnHeader>
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.EnableProperty.Enabled</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ItemType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ItemCategory</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Path</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>VideoOS.Platform.ConfigurationItems.Storage</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.Storage</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <Label>Recording Server</Label>
+        <ScriptBlock>[VideoOS.Platform.ConfigurationItems.RecordingServer]::new((Get-VmsManagementServer).ServerId, $_.ParentItemPath).Name</ScriptBlock>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>LiveRetention</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>LiveSize(GB)</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>5</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>5</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Encryption</Label>
+            <Width>6</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Archives</Label>
+            <Width>3</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>TotalRetention</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>TotalSize(GB)</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DiskPath</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>New-Timespan -Minutes $_.RetainMinutes</ScriptBlock>
+                <FormatString>g</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.MaxSize / 1KB</ScriptBlock>
+                <FormatString>{0:.##}</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IsDefault</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Signing</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>EncryptionMethod</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.ArchiveStorageFolder.ArchiveStorages.Count</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                                    if ($_.ArchiveStorageFolder.ArchiveStorages.Count -eq 0) {
+                                        New-TimeSpan -Minutes $_.RetainMinutes
+                                    }
+                                    else {
+                                        New-TimeSpan -Minutes ($_.ArchiveStorageFolder.ArchiveStorages | Sort-Object RetainMinutes -Descending | Select-Object -First 1 -ExpandProperty RetainMinutes)
+                                    }
+                </ScriptBlock>
+                <FormatString>g</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>($_.MaxSize + ($_.ArchiveStorageFolder.ArchiveStorages.MaxSize | Measure-Object -Sum).Sum) / 1KB</ScriptBlock>
+                <FormatString>{0:.##}</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>VideoOS.Platform.ConfigurationItems.ArchiveStorage</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.ArchiveStorage</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <Label>Storage</Label>
+        <ScriptBlock>
+                    $storage = [VideoOS.Platform.ConfigurationItems.Storage]::new((Get-VmsManagementServer).ServerId, $_.ParentItemPath)
+                    $storageName = $storage.Name
+                    $recorderName = [VideoOS.Platform.ConfigurationItems.RecordingServer]::new((Get-VmsManagementServer).ServerId, $storage.ParentItemPath).Name
+                    "$storageName on $recorderName"</ScriptBlock>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>Retention</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>MaxSize(GB)</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ReducesFramerate</Label>
+            <Width>5</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>TargetFramerate</Label>
+            <Width>3</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>36</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DiskPath</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>New-Timespan -Minutes $_.RetainMinutes</ScriptBlock>
+                <FormatString>g</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.MaxSize / 1KB</ScriptBlock>
+                <FormatString>{0:.##}</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.FramerateReductionEnabled</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.FramerateReductionEnabled) { $_.TargetFramerate } else { '' }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>HardwareScan</Name>
+      <ViewSelectedBy>
+        <TypeName>VmsHardwareScanResult</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>HardwareAddress</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>UserName</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>MacAddress</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Validated</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ExistsLocally</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ExistsGlobally</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>RecordingServer</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>HardwareAddress</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>UserName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>MacAddress</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.HardwareScanValidated</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.MacAddressExistsLocal</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.MacAddressExistsGlobal</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.RecordingServer.Name</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>FailoverGroup</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.FailoverGroup</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader/>
+          <TableColumnHeader/>
+          <TableColumnHeader/>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Video Stream Configuration</Name>
+      <ViewSelectedBy>
+        <TypeName>VmsCameraStreamConfig</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <PropertyName>DriverType</PropertyName>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Camera</Label>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Width>7</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>11</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>8</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>RecordingTrack</Label>
+            <Width>14</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>7</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <ScriptBlock>$_.Camera.Name</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Enabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LiveMode</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LiveDefault</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Recorded</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  $_.GetRecordingTrackName()
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>PlaybackDefault</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>UseEdge</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>VMS View Group</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.ViewGroup</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>VMS View</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.View</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>ViewSize</Label>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.ViewItemChildItems.Count</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Shortcut</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>Configuration Item</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.IConfigurationItem</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ItemCategory</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Path</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ParentPath</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>VMS User</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.User</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Domain</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>AccountName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IdentityType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Sid</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>VMS Basic User</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.BasicUser</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Status</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IsExternal</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CreatedDate</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Sid</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>ClientProfile</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.ClientProfile</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IsDefaultProfile</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Description</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>LoginProvider</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.LoginProvider</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Enabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ClientId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Authority</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>UserNameClaimType</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>RegisteredClaim</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.RegisteredClaim</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CaseSensitive</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>ClaimChildItem</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.ClaimChildItem</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>LoginProvider</Label>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <ScriptBlock>(Get-VmsLoginProvider | Where-Object Id -eq $_.ClaimProvider)</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ClaimName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ClaimValue</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>FailoverGroup</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.FailoverGroup</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>FailoverRecorders</Label>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.FailoverRecorderFolder.FailoverRecorders.Count</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>FailoverRecorder</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.FailoverRecorder</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <Label>FailoverGroup</Label>
+        <ScriptBlock>
+          if ($_.ParentItemPath -eq '/') {
+            'None'
+          } else {
+            (Get-ConfigurationItem -Path $_.ParentItemPath -ErrorAction SilentlyContinue).DisplayName
+          }
+        </ScriptBlock>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>HostName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>WebServerUri</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Position</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>Webhook</Name>
+      <ViewSelectedBy>
+        <TypeName>MilestonePSTools.Webhook</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Address</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Token</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ApiVersion</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>HardwareEvent</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.HardwareDeviceEventChildItem</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Device</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>EventUsed</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Enabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>EventIndex</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>ValidateResult</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.ConfigurationApi.ClientService.ValidateResult</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>ResultItem</Label>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <ScriptBlock>$_.ResultItem.DisplayName</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ValidatedOk</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ErrorResults</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>MotionDetection</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.MotionDetection</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Camera</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Enabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>HardwareAccelerationMode</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ManualSensitivityEnabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DetectionMethod</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>KeyframesOnly</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>GenerateMotionMetadata</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ManualSensitivity</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Threshold</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>RestrictedMediaLive</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Common.Proxy.Server.WCF.RestrictedMediaLive</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>UserName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>StartTime</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DeviceId</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>RestrictedMedia</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Common.Proxy.Server.WCF.RestrictedMedia</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Header</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>UserName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>StartTime</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>EndTime</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DeviceIds</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>GenericEventDataSource</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.Platform.ConfigurationItems.GenericEventDataSource</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>DataSourceAddressFamily</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Enabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DataSourcePort</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DataSourceProtocol</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$s = $_; ($s.DataSourceAddressFamilyValues.GetEnumerator() | ? { $_.Value -eq $s.DataSourceAddressFamily }).Key</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>VmsStreamSettings</Name>
+      <ViewSelectedBy>
+        <TypeName>MilestonePSTools.DeviceCommands.VmsStreamSettings</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>Settings</Label>
+            <Width>50</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Device</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>StreamName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>($_.Settings.GetEnumerator() | % { '{0}={1}' -f $_.Key, $_.Value }) -join ', '</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>ValueTypeInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>VideoOS.ConfigurationApi.ClientService.ValueTypeInfo</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader />
+          <TableColumnHeader />
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Value</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+  </ViewDefinitions>
+</Configuration>

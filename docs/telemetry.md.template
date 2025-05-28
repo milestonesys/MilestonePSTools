@@ -1,0 +1,41 @@
+____________
+
+## In the last 30 days[^1]
+
+[^1]: Module usage is based on [optional telemetry](commands/en-US/about_Telemetry.md).
+
+<div class="grid cards" markdown>
+
+-   :octicons-device-camera-video-24:{ .lg .middle } __462,049 cameras__
+
+    ---
+
+    More than 462k cameras have been managed by MilestonePSTools globally.
+
+-   :octicons-globe-24:{ .lg .middle } __52 countries__
+
+    ---
+
+    MilestonePSTools was used in at least 52 countries across the globe.
+
+-   :fontawesome-solid-user-group:{ .lg .middle } __890 active users__
+
+    ---
+
+    In the last 30 days, at least 890 unique customers have used MilestonePSTools.
+
+-   :material-login:{ .lg .middle } __1,776,432 sessions__
+
+    ---
+
+    There have been more than 1.7M PowerShell sessions using MilestonePSTools in the last 30 days.
+
+-   :material-download:{ .lg .middle } __453,700 downloads__
+
+    ---
+
+    MilestonePSTools has been downloaded more than 453k times since the initial release in 2019.
+
+    [:octicons-arrow-right-24: PowerShell Gallery](https://www.powershellgallery.com/packages/MilestonePSTools)
+
+</div>

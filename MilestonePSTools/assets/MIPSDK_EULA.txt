@@ -1,0 +1,60 @@
+User License Agreement for MilestoneSystems.VideoOS. MIP SDK, MilestoneSystems.VideoOS. VpsCommon and MilestoneSystems.VideoOS. Mobile SDK Packages
+  
+This User License Agreement ("License Agreement") is a legally binding agreement between you (either an individual or a single legal entity) and Milestone Systems A/S ("Milestone") for the MilestoneSystems.VideoOS. MIP SDK, MilestoneSystems.VideoOS. VpsCommon and MilestoneSystems.VideoOS. Mobile SDK packages which may include associated software, media, online or electronic documentation and any updates or corrections ("Product"). This License Agreement shall be accepted by you and applies specifically if you download the Product from NuGet.org.
+
+By installing, deploying, copying, or otherwise using the Product, you agree to be bound by the terms of this License Agreement. If you do not agree to the terms of this License Agreement, do not install or use the Product. The Product is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. Note that all software parts of Product are licensed to you, not sold.
+
+Intellectual Property Rights 
+All title and rights, including but not limited to copyrights, in and to the Product and any copies thereof are owned by Milestone, or in the case of third party contributions to such Product, the title and rights to such contributions only are owned by our licensors. All rights not expressly granted are reserved by Milestone.
+
+No Warranties 
+Milestone expressly disclaims any warranty and liability for the Product. The Product and any related documentation is provided "as is" without warranty of any kind, either expressed or implied, including, without limitation, the implied warranties of merchantability or fitness for a particular purpose, or infringement of third party's rights. The entire risk arising out of use or performance of the Product remains with you as the user. You are notified that the Product, when used with certain equipment or other software, may enable you to perform surveillance actions and data processing which are likely to be restricted by or contrary to applicable law, including without limitation data privacy and criminal law. The sole responsibility for verification of your use against compliance with applicable law lies with you as the user.
+
+Prohibited Use 
+The Product may only be applied and used in accordance with the applicable law(s) of the jurisdiction, country or region it is used in. This includes, but is not limited to, possible legal restrictions to what you surveil and record with the Product, the policy for storing recorded and other data in the Product, and how such recorded data is to be handled as it is exported from the Product. It is the sole responsibility of you the user to be acquainted with, and to adhere to, such laws and restrictions. Milestone does not accept any liability whatsoever, for any direct, indirect, or consequential losses or damages for the violation of such laws and/or restrictions.
+
+This license does not cover use of the Product for the purpose of, or in connection with, a violation of the human rights of any person as set out in the United Nations Universal Declaration of Human Rights. Any such use is prohibited and is a material breach of this License Agreement causing the whole license for the Product to lapse immediately without notice rendering any further use of the Product unlawful.
+
+Copenhagen Clause 
+Milestone is a signatory to the Copenhagen Letter, a technology declaration to aspire to open and honest public conversation about the power of technology and how technology should enhance the quality of life. We who shape technology must reflect on how technology affects human needs and behaviors, and how we further the responsible use of technology. Milestone encourages our partners not only to involve themselves in this important discussion on responsible use of technology, but to also sign the Copenhagen Letter at www.copenhagenletter.org and adopt a corresponding Copenhagen Clause into their own agreements.
+
+Exclusion of Liability 
+The provisions of this paragraph are in effect to the maximum extent permitted by applicable law. In no event shall Milestone or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or any other pecuniary loss) nor for any product liability (except for bodily injury) arising out of the use of or inability to use the Product or the provision of or failure to provide proper support, even if Milestone has been advised of the possibility of such damages. If for any reason Milestone should be deemed liable under applicable law, Milestone's entire liability shall be limited to and not exceed the amount equivalent to 100 EUR (one hundred Euro).  
+
+Third Party Licenses 
+The Products include certain third party software as set out in the documentation for the specific Product. You may use and integrate the Products with other third party software and it is your responsibility when installing to investigate and obtain usage rights to any such third party software for your purpose. 
+
+Miscellaneous 
+(a) You may make as many copies of the Product as may be necessary for backup and archival purposes. (b) You may not distribute copies of the Product to third parties, except as specified in section "Download, Installation and Use" below. (c) You may not reverse engineer, decompile, or disassemble any of the Product's components except and only to the extent permitted by applicable law which cannot be contractually waived. (d) This License Agreement is non-transferable save that if there is any ownership interest transferred which includes the Milestone Product, you may permanently assign all of your rights for this Product to the Transferee, provided the Transferee agrees to the terms of this License Agreement.
+
+Collection of plug-in data. If you use the Product to develop plug-ins or other integrated applications to be applied with Milestone XProtect VMS products, basic data about such applications will be collected and sent to Milestone when the end-user activates the licenses for the Milestone XProtect VMS products. The data about integrated applications include information, such as: the manufacturer's name, the name and version of the integration. Milestone will use collected data for statistical and analytical purposes. If the collected data includes personal data, Milestone will be a controller of such personal data and will treat it in accordance with our Privacy Policy, cf. https://www.milestonesys.com/privacy-policy/.
+
+Termination
+Without prejudice to any other rights, Milestone may terminate this License Agreement if you fail to comply with its terms and conditions. In such event you must immediately cease using the Product and destroy all copies of it.
+
+Severability
+If a court or government body of competent jurisdiction determines that any provision of this License Agreement is invalid, not enforceable or enforceable only if limited in scope, this present License Agreement shall continue in full force and effect with such provisions stricken or so limited. 
+
+Entire Agreement 
+This License Agreement constitute the parties' entire and complete agreement relating to the subject matter hereof, and all implied warranties, rules of common law or ordinary rules of law not restated as applicable herein, are hereby excluded from effect between the parties.
+
+Governing Law 
+This License Agreement is governed by Danish law and the sole and proper forum for the settlement of disputes hereunder shall be the City Court of Copenhagen.
+
+Download, Installation and Use - for the MilestoneSystems.VideoOS. MIP SDK, MilestoneSystems.VideoOS. VpsCommon and MilestoneSystems.VideoOS. Mobile SDK packages (including, but not limited to, MilestoneSystems.VideoOS.Platform, MilestoneSystems.VideoOS.Platform.SDK, MilestoneSystems.VideoOS.Platform.SDK.Debug, MilestoneSystems.VideoOS.Platform.AccessControl, MilestoneSystems.VideoOS.Platform.Transact, MilestoneSystems.VideoOS.Platform.DriverFramework, MilestoneSystems.VideoOS.ConfigurationAPI, MilestoneSystems.VideoOS.VpsCommon and MilestoneSystems.VideoOS.Mobile.SDK packages) published and provided by Milestone on NuGet.org the following applies: 
+Milestone hereby grants you the right to download, install and use each of the Products with the following restrictions:
+1. The Product may be installed on an unlimited number of computers and used for evaluation or development purposes. The Product must only be used with compatible development tools like Microsoft Visual Studio or corresponding tools. 
+2. The Product is not for your distribution, except as allowed in paragraph 4 of this section, and may only be operated, regardless of whether this is directly or in some indirect form, by you, your employees or other people working for you.
+3. The Product may only be used in connection with Milestone XProtect products, Milestone Husky NVR products supporting the Milestone Integration Platform Software Development Kit, and approved OEM versions of Milestone XProtect products; the Product may not be used separately, in connection with non-Milestone products. 
+4. You may redistribute to 3rd parties only the parts of the Product that are utilized by your application, provided that all relevant third parties' licensing agreements are included in such redistribution. For MilestoneSystems.VideoOS.Platform.SDK, MilestoneSystems.VideoOS.Platform.SDK.Debug and MilestoneSystems.VideoOS.Mobile.SDK packages, the licensing agreements are to include, but not limited to, those licenses listed in the "3rd party software terms and conditions.txt" file included in these packages. The "3rd party software terms and conditions.txt" file is added to the design project in which the package is used with, and copied to the output folder of the specific design project.
+5. The use of the Product is further restricted by the terms set out in the Milestone End-user License Agreement for the Milestone product, cf. https://www.milestonesys.com/support/resources/download-software/, or the OEM version of the Milestone product it is used together with.
+6. You agree and warrant not to use the Product, or other technical tools, in ways that will enable an end-user to use a Milestone product, or an OEM version of a Milestone product in a way that may infringe the Milestone End-user License Agreement covering the specific product, or break or circumvent the licensing system for the Milestone product or the OEM version of a Milestone product.
+7. The Product includes software components that enable you to connect or integrate with third party software. The Product does not include licenses for such third party software, which you must obtain yourself for your purpose.
+8. The MilestoneSystems.VideoOS. MIP SDK packages are part of the MIP SDK (Milestone Integration Platform Software Development Kit), and the MilestoneSystems.VideoOS. Mobile SDK packages are part of the MIP SDK Mobile. You can download the MIP SDK and MIP SDK Mobile at https://www.milestonesys.com/. 
+9. The list of MilestoneSystems.VideoOS. MIP SDK and MilestoneSystems.VideoOS. Mobile SDK packages specified in the beginning of this section is not exhaustive and other packages can also be published and provided by Milestone on NuGet.org. Regardless of whether a particular MilestoneSystems.VideoOS. MIP SDK and/or MilestoneSystems.VideoOS. Mobile SDK package is specified in this section, this License Agreement will govern and apply to the use of such package if it has been downloaded from NuGet.org.  
+
+
+
+License Agreement 02.09.2021
+
+

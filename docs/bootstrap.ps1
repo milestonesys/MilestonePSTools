@@ -1,0 +1,1 @@
+Set-ExecutionPolicy RemoteSigned -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression (Invoke-RestMethod 'https://www.milestonepstools.com/install.ps1')

@@ -1,0 +1,196 @@
+/* MILESTONE BRAND COLORS - HEX VALUES
+  --milestone-primary-typeface:       "Bricolage Grotesque";
+  --milestone-secondary-typeface:     "Aptos";
+  --milestone-primary-midnight-blue:  #081927;
+  --milestone-primary-misty-gray:     #eceef0;
+  --milestone-primary-milestone-blue: #0099da;
+  --milestone-secondary-dark-blue:    #023852;
+  --milestone-secondary-cobalt-blue:  #0c62ad;
+  --milestone-secondary-sky-blue:     #d4edfc;
+  --milestone-secondary-stone-gray:   #9dadb0;
+  --milestone-secondary-forest-green: #2caa57;
+  --milestone-secondary-sunny-yellow: #ffe700;
+*/
+
+@font-face {
+  font-family: "Aptos";
+  src: url('/assets/fonts/Aptos.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: "Cascadia Code";
+  src: url(/assets/fonts/CascadiaCodeNF.ttf) format("truetype");
+}
+
+:root {
+  /* Milestone Branding Variables
+     Note: Colors are converted from hex to hsla for
+           ease of generating different shades.
+   */
+  --milestone-primary-midnight-blue: hsla(207, 66%, 9%, 1);
+  --milestone-primary-midnight-blue--light: hsla(207, 66%, 9%, 0.68);
+  --milestone-primary-midnight-blue--lighter: hsla(207, 66%, 9%, 0.39);
+  --milestone-primary-midnight-blue--lightest: hsla(207, 66%, 9%, 0.15);
+  --milestone-primary-midnight-blue--dark: hsla(207, 66%, 7%, 1);
+  --milestone-primary-midnight-blue--darkest: hsla(207, 66%, 5%, 1);
+
+  --milestone-primary-misty-gray: hsla(210, 12%, 93%, 1);
+  --milestone-primary-misty-gray--light: hsla(210, 12%, 93%, 0.68);
+  --milestone-primary-misty-gray--lighter: hsla(210, 12%, 93%, 0.39);
+  --milestone-primary-misty-gray--lightest: hsla(210, 12%, 93%, 0.15);
+  --milestone-primary-misty-gray--dark: hsla(210, 12%, 90%, 1);
+
+  --milestone-primary-milestone-blue: hsla(198, 100%, 43%, 1);
+  --milestone-secondary-dark-blue: hsla(200, 95%, 16%, 1);
+  --milestone-secondary-cobalt-blue: hsla(208, 87%, 36%, 1);
+  --milestone-secondary-cobalt-blue--dark: hsla(208, 87%, 20%, 1);
+  --milestone-secondary-cobalt-blue--light: hsla(208, 87%, 45%, 1);
+  --milestone-secondary-sky-blue: hsla(203, 87%, 91%, 1);
+  --milestone-secondary-stone-gray: hsla(189, 11%, 65%, 1);
+  --milestone-secondary-forest-green: hsla(140, 59%, 42%, 1);
+  --milestone-secondary-sunny-yellow: hsla(54, 100%, 50%, 1);
+}
+
+[data-md-color-scheme="milestone-light"] {
+  /* Default color shades */
+  --md-primary-fg-color: var(--milestone-secondary-cobalt-blue);
+  --md-primary-fg-color--dark: var(--milestone-secondary-cobalt-blue--dark);
+  --md-primary-fg-color--light: var(--milestone-secondary-cobalt-blue--light);
+  --md-default-fg-color: var(--milestone-primary-midnight-blue);
+  --md-default-fg-color--light: var(--milestone-primary-midnight-blue--light);
+  --md-default-fg-color--lighter: var(--milestone-primary-midnight-blue--lighter);
+  --md-default-fg-color--lightest: var(--milestone-primary-midnight-blue--lightest);
+  --md-default-bg-color: var(--milestone-primary-misty-gray);
+  --md-default-bg-color--light: var(--milestone-primary-misty-gray--light);
+  --md-default-bg-color--lighter: var(--milestone-primary-misty-gray--lighter);
+  --md-default-bg-color--lightest: var(--milestone-primary-misty-gray--lightest);
+
+  /* Code color shades */
+  --md-code-fg-color: var(--md-code-hl-keyword-color);
+  --md-code-bg-color: var(--milestone-primary-misty-gray--dark);
+
+  /* Code highlighting color shades */
+  --md-code-hl-color: hsla(207, 73%, 77%, 1);
+  --md-code-hl-color--light: hsla(207, 73%, 77%, 0.9);
+
+  /* Code highlighting syntax color shades */
+  --md-code-hl-number-color: #800080;
+  --md-code-hl-special-color: var(--md-code-hl-name-color);
+  --md-code-hl-function-color: var(--md-code-hl-name-color);
+  --md-code-hl-constant-color: #006161;
+  --md-code-hl-keyword-color: #00008b;
+  --md-code-hl-string-color: #8b0000;
+  --md-code-hl-name-color: #8a2be2;
+  --md-code-hl-operator-color: var(--md-code-hl-punctuation-color);
+  --md-code-hl-punctuation-color: #696969;
+  --md-code-hl-comment-color: #006400;
+  --md-code-hl-generic-color: var(--md-code-hl-punctuation-color);
+  --md-code-hl-variable-color: #a82d00;
+
+  /* Typeset color shades */
+  --md-typeset-color: var(--md-default-fg-color);
+
+  /* Typeset `a` color shades */
+  --md-typeset-a-color: var(--md-primary-fg-color);
+  --md-accent-fg-color: var(--milestone-secondary-cobalt-blue--light);
+
+  /* Typeset `del` and `ins` color shades */
+  --md-typeset-del-color: hsla(6, 90%, 60%, 0.15);
+  --md-typeset-ins-color: hsla(150, 90%, 44%, 0.15);
+
+  /* Typeset `kbd` color shades */
+  --md-typeset-kbd-color: var(--milestone-primary-misty-gray--lightest);
+  --md-typeset-kbd-accent-color: var(--milestone-primary-misty-gray--lightest);
+  --md-typeset-kbd-border-color: var(--milestone-secondary-stone-gray);
+
+  /* Typeset `table` color shades */
+  --md-typeset-table-color: hsla(0, 0%, 0%, 0.12);
+  --md-typeset-table-color--light: hsla(0, 0%, 0%, 0.035);
+
+  /* Admonition color shades */
+  --md-admonition-fg-color: var(--md-default-fg-color);
+  --md-admonition-bg-color: var(--md-default-bg-color);
+
+  /* Warning color shades */
+  --md-warning-fg-color: hsla(0, 0%, 0%, 0.87);
+  --md-warning-bg-color: hsla(60, 100%, 80%, 1);
+
+  /* Footer color shades */
+  --md-footer-fg-color: var(--milestone-primary-misty-gray);
+  --md-footer-fg-color--light: var(--milestone-primary-misty-gray);
+  --md-footer-fg-color--lighter: var(--milestone-primary-misty-gray--light);
+  --md-footer-bg-color: var(--milestone-primary-midnight-blue--dark);
+  --md-footer-bg-color--dark: var(--milestone-primary-midnight-blue--darkest);
+}
+
+[data-md-color-scheme="milestone-dark"] {
+  /* Default color shades */
+  --md-primary-fg-color: var(--milestone-secondary-cobalt-blue);
+  --md-primary-fg-color--dark: var(--milestone-secondary-cobalt-blue--dark);
+  --md-primary-fg-color--light: var(--milestone-secondary-cobalt-blue--light);
+  --md-default-fg-color: var(--milestone-primary-misty-gray);
+  --md-default-fg-color--light: var(--milestone-primary-misty-gray--light);
+  --md-default-fg-color--lighter: var(--milestone-primary-misty-gray--lighter);
+  --md-default-fg-color--lightest: var(--milestone-primary-misty-gray--lightest);
+  --md-default-bg-color: var(--milestone-primary-midnight-blue);
+  --md-default-bg-color--light: var(--milestone-primary-midnight-blue--light);
+  --md-default-bg-color--lighter: var(--milestone-primary-midnight-blue--lighter);
+  --md-default-bg-color--lightest: var(--milestone-primary-midnight-blue--lightest);
+
+  /* Code color shades */
+  --md-code-fg-color: var(--md-code-hl-keyword-color);
+  --md-code-bg-color: #011627;
+
+  /* Code highlighting color shades */
+  --md-code-hl-color: hsla(202, 77%, 12%, 1);
+  --md-code-hl-color--light: hsla(202, 77%, 12%, 0.9);
+
+  /* Code highlighting syntax color shades */
+  --md-code-hl-number-color: #f78c6c;
+  --md-code-hl-special-color: var(--md-code-hl-name-color);
+  --md-code-hl-function-color: var(--md-code-hl-name-color);
+  --md-code-hl-constant-color: #c792ea;
+  --md-code-hl-keyword-color: #c792ea;
+  --md-code-hl-string-color: #ddc48d;
+  --md-code-hl-name-color: #82aaff;
+  --md-code-hl-operator-color: #c792ea;
+  --md-code-hl-punctuation-color: #179fff;
+  --md-code-hl-comment-color: #637777;
+  --md-code-hl-generic-color: var(--md-code-hl-punctuation-color);
+  --md-code-hl-variable-color: #a82d00;
+
+  /* Typeset color shades */
+  --md-typeset-color: var(--md-default-fg-color);
+
+  /* Typeset `a` color shades */
+  --md-typeset-a-color: var(--md-primary-fg-color);
+  --md-accent-fg-color: var(--milestone-secondary-cobalt-blue--light);
+
+  /* Typeset `del` and `ins` color shades */
+  --md-typeset-del-color: hsla(6, 90%, 60%, 0.15);
+  --md-typeset-ins-color: hsla(150, 90%, 44%, 0.15);
+
+  /* Typeset `kbd` color shades */
+  --md-typeset-kbd-color: var(--milestone-primary-midnight-blue--lighter);
+  --md-typeset-kbd-accent-color: var(--milestone-primary-midnight-blue--lightest);
+  --md-typeset-kbd-border-color: var(--milestone-secondary-stone-gray);
+
+  /* Typeset `table` color shades */
+  --md-typeset-table-color: hsla(0, 0%, 0%, 0.12);
+  --md-typeset-table-color--light: hsla(0, 0%, 0%, 0.035);
+
+  /* Admonition color shades */
+  --md-admonition-fg-color: var(--md-default-fg-color);
+  --md-admonition-bg-color: var(--md-default-bg-color);
+
+  /* Warning color shades */
+  --md-warning-fg-color: hsla(0, 0%, 0%, 0.87);
+  --md-warning-bg-color: hsla(60, 100%, 80%, 1);
+
+  /* Footer color shades */
+  --md-footer-fg-color: var(--milestone-primary-misty-gray);
+  --md-footer-fg-color--light: var(--milestone-primary-misty-gray);
+  --md-footer-fg-color--lighter: var(--milestone-primary-misty-gray--light);
+  --md-footer-bg-color: var(--milestone-primary-midnight-blue--dark);
+  --md-footer-bg-color--dark: var(--milestone-primary-midnight-blue--darkest);
+}
