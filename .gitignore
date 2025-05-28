@@ -1,0 +1,14 @@
+# Don't check in the Output dir
+[O|o]utput/
+[O|o]bj/
+[B|b]in/
+.cache/
+scratch/
+tests/out/testResults.xml
+.env
+.suo
+.vs/
+.checksums
+
+# Auto-generated
+compatibility.mdtable

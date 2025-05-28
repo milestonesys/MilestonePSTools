@@ -1,0 +1,7 @@
+/*
+  Content-Security-Policy: default-src 'unsafe-inline' 'unsafe-eval' data: https://*
+  Content-Security-Policy-Report-Only: default-src 'unsafe-inline' 'unsafe-eval' data: https://*; report-uri https://milestonepstools.report-uri.com/r/d/csp/reportOnly
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: clipboard-write=(self)

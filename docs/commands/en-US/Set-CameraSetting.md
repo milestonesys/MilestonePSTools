@@ -1,0 +1,154 @@
+---
+external help file: MilestonePSTools.dll-Help.xml
+Module Name: MilestonePSTools
+online version: https://www.milestonepstools.com/commands/en-US/Set-CameraSetting/
+schema: 2.0.0
+---
+
+# Set-CameraSetting
+
+## SYNOPSIS
+
+Deprecated. Use `Set-VmsCameraGeneralSetting` and `Set-VmsCameraStream` instead.
+
+## SYNTAX
+
+### GeneralSettings
+```
+Set-CameraSetting -Camera <Camera> [-General] -Name <String> -Value <String> [<CommonParameters>]
+```
+
+### StreamSettings
+```
+Set-CameraSetting -Camera <Camera> [-Stream] [-StreamNumber <Int32>] -Name <String> -Value <String>
+ [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+Deprecated. Use `Set-VmsCameraGeneralSetting` and `Set-VmsCameraStream` instead.
+
+REQUIREMENTS  
+
+- Requires VMS connection and will attempt to connect automatically
+
+## EXAMPLES
+
+### Example 1
+
+```powershell
+# Deprecated
+```
+
+Deprecated. Use `Set-VmsCameraGeneralSetting` and `Set-VmsCameraStream` instead.
+
+## PARAMETERS
+
+### -Camera
+
+Deprecated. Use `Set-VmsCameraGeneralSetting` and `Set-VmsCameraStream` instead.
+
+```yaml
+Type: Camera
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -General
+
+Deprecated. Use `Set-VmsCameraGeneralSetting` and `Set-VmsCameraStream` instead.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: GeneralSettings
+Aliases:
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+
+Deprecated. Use `Set-VmsCameraGeneralSetting` and `Set-VmsCameraStream` instead.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Stream
+
+Deprecated. Use `Set-VmsCameraGeneralSetting` and `Set-VmsCameraStream` instead.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: StreamSettings
+Aliases:
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StreamNumber
+
+Deprecated. Use `Set-VmsCameraGeneralSetting` and `Set-VmsCameraStream` instead.
+
+```yaml
+Type: Int32
+Parameter Sets: StreamSettings
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Value
+
+Deprecated. Use `Set-VmsCameraGeneralSetting` and `Set-VmsCameraStream` instead.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+### VideoOS.Platform.ConfigurationItems.Camera
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS

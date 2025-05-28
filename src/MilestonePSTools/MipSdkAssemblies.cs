@@ -1,0 +1,161 @@
+// Copyright 2025 Milestone Systems A/S
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System.Collections.Generic;
+
+namespace MilestonePSTools
+{
+    internal static class MipSdkAssemblies
+  {
+    public static IEnumerable<string> Managed { get; } = new[]
+    {
+      "Autofac.dll",
+      "Azure.Core.dll",
+      "Azure.Identity.dll",
+      "C5.dll",
+      "CsvHelper.dll",
+      "Microsoft.ApplicationInsights.dll",
+      "Microsoft.AspNetCore.JsonPatch.dll",
+      "Microsoft.Bcl.AsyncInterfaces.dll",
+      "Microsoft.Bcl.HashCode.dll",
+      "Microsoft.Data.SqlClient.dll",
+      "Microsoft.Extensions.Configuration.Abstractions.dll",
+      "Microsoft.Extensions.Configuration.Binder.dll",
+      "Microsoft.Extensions.Configuration.dll",
+      "Microsoft.Extensions.Configuration.EnvironmentVariables.dll",
+      "Microsoft.Extensions.Configuration.FileExtensions.dll",
+      "Microsoft.Extensions.Configuration.Json.dll",
+      "Microsoft.Extensions.FileProviders.Abstractions.dll",
+      "Microsoft.Extensions.FileProviders.Physical.dll",
+      "Microsoft.Extensions.FileSystemGlobbing.dll",
+      "Microsoft.Extensions.Primitives.dll",
+      "Microsoft.Identity.Client.dll",
+      "Microsoft.Identity.Client.Extensions.Msal.dll",
+      "Microsoft.IdentityModel.Abstractions.dll",
+      "Microsoft.IdentityModel.JsonWebTokens.dll",
+      "Microsoft.IdentityModel.Logging.dll",
+      "Microsoft.IdentityModel.Protocols.dll",
+      "Microsoft.IdentityModel.Protocols.OpenIdConnect.dll",
+      "Microsoft.IdentityModel.Tokens.dll",
+      "Microsoft.Owin.dll",
+      "Microsoft.Win32.Registry.dll",
+      "Microsoft.Xaml.Behaviors.dll",
+      "MilestonePSTools.dll",
+      "NAudio.Asio.dll",
+      "NAudio.Core.dll",
+      "NAudio.dll",
+      "NAudio.Midi.dll",
+      "NAudio.Wasapi.dll",
+      "NAudio.WinForms.dll",
+      "NAudio.WinMM.dll",
+      "netstandard.dll",
+      "Newtonsoft.Json.dll",
+      "Owin.dll",
+      "System.Buffers.dll",
+      "System.ClientModel.dll",
+      "System.Diagnostics.DiagnosticSource.dll",
+      "System.IdentityModel.Tokens.Jwt.dll",
+      "System.IO.FileSystem.AccessControl.dll",
+      "System.IO.Pipelines.dll",
+      "System.Management.Automation.dll",
+      "System.Memory.Data.dll",
+      "System.Memory.dll",
+      "System.Net.Http.Formatting.dll",
+      "System.Numerics.Vectors.dll",
+      "System.Runtime.CompilerServices.Unsafe.dll",
+      "System.Runtime.InteropServices.RuntimeInformation.dll",
+      "System.Security.AccessControl.dll",
+      "System.Security.Cryptography.ProtectedData.dll",
+      "System.Security.Cryptography.Xml.dll",
+      "System.Security.Principal.Windows.dll",
+      "System.Text.Encodings.Web.dll",
+      "System.Text.Json.dll",
+      "System.Threading.Tasks.Extensions.dll",
+      "System.ValueTuple.dll",
+      "System.Web.Http.dll",
+      "System.Web.Http.Owin.dll",
+      "VideoOS.Common.Definition.dll",
+      "VideoOS.Common.dll",
+      "VideoOS.Common.EnvironmentServices.dll",
+      "VideoOS.Common.Login.dll",
+      "VideoOS.Common.State.dll",
+      "VideoOS.Common.WebSockets.dll",
+      "VideoOS.ConfigurationAPI.dll",
+      "VideoOS.DatabaseUtility.Common.dll",
+      "VideoOS.DatabaseUtility.MediaStorage.dll",
+      "VideoOS.EventServer.Events.EventStatusSubscriptionWsApi.Client.dll",
+      "VideoOS.IdentityServer.Common.dll",
+      "VideoOS.LogServer.Communication.dll",
+      "VideoOS.Management.Common.dll",
+      "VideoOS.Management.VmoClient.dll",
+      "VideoOS.Platform.Common.dll",
+      "VideoOS.Platform.dll",
+      // Loading MediaProcessing results in an assembly load error
+      // due to missing nvidia dependencies
+      //"VideoOS.Platform.MediaProcessing.dll",
+      "VideoOS.Platform.Primitives.dll",
+      "VideoOS.Platform.resources.dll",
+      "VideoOS.Platform.SDK.dll",
+      "VideoOS.Platform.SDK.Export.dll",
+      "VideoOS.Platform.SDK.Export.resources.dll",
+      "VideoOS.Platform.SDK.Log.dll",
+      "VideoOS.Platform.SDK.Media.dll",
+      "VideoOS.Platform.SDK.RemoteRetrievalTasks.dll",
+      "VideoOS.Platform.SDK.resources.dll",
+      "VideoOS.Platform.SDK.UI.dll",
+      "VideoOS.Platform.SDK.UI.resources.dll",
+      "VideoOS.Platform.Transact.dll",
+      "VideoOS.Telemetry.dll",
+      "VideoOS.Toolkit.dll",
+      "VideoOS.UI.Common.WPF.dll",
+      "VideoOS.UI.Common.WPF.resources.dll",
+      "VideoOS.UI.Common.WPF.VideoPlayer.dll",
+      "VideoOS.UI.Common.WPF.VideoPlayer.resources.dll",
+      "VideoOS.Utilities.dll",
+      "VideoOS.WebService.Common.dll",
+    };
+
+    public static IEnumerable<string> Unmanaged { get; } = new[]
+    {
+      "AVIExporterClientMW.dll",
+      "concrt140.dll",
+      "CoreToolkits.dll",
+      "cudart64_110.dll",
+      "cudart64_12.dll",
+      "IMV1.dll",
+      "libmfxaudiosw64.dll",
+      "libmfxsw64.dll",
+      "mfxplugin64_hevcd_sw.dll",
+      "msvcp140.dll",
+      "msvcp140_1.dll",
+      "msvcp140_2.dll",
+      "msvcp140_atomic_wait.dll",
+      "msvcp140_codecvt_ids.dll",
+      "nppc64_11.dll",
+      "nppc64_12.dll",
+      "nppig64_12.dll",
+      "ServerCommandServiceClient.dll",
+      "ToolkitFactoryProvider.dll",
+      "vccorlib140.dll",
+      "vcruntime140.dll",
+      "vcruntime140_1.dll",
+      "vcruntime140_threads.dll",
+      "xerces-c-vc142_3_2_4.dll",
+      "xerces-c-vc143_3_3_0.dll",
+      "xqilla-vc142_234_324.dll",
+      "xqilla-vc143_234_330.dll",
+    };
+  }
+}
+

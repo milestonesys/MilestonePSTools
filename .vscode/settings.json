@@ -1,0 +1,37 @@
+{
+    "cSpell.words": [
+        "Adminstrative"
+    ],
+    "files.autoSave": "onFocusChange",
+    "editor.formatOnSave": false,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "[json]": {
+        "editor.formatOnSave": false
+    },
+    "[yaml]": {
+        "editor.tabSize": 2
+    },
+    "powershell.codeFormatting.preset": "OTBS",
+    "powershell.codeFormatting.addWhitespaceAroundPipe": true,
+    "powershell.codeFormatting.avoidSemicolonsAsLineTerminators": true,
+    "powershell.codeFormatting.ignoreOneLineBlock": true,
+    "powershell.codeFormatting.trimWhitespaceAroundPipe": true,
+    "powershell.codeFormatting.useConstantStrings": true,
+    "powershell.codeFormatting.useCorrectCasing": true,
+    "powershell.codeFormatting.whitespaceAfterSeparator": true,
+    "powershell.codeFormatting.whitespaceBetweenParameters": true,
+    "powershell.codeFormatting.whitespaceInsideBrace": true,
+    "powershell.debugging.createTemporaryIntegratedConsole": true,
+    "powershell.enableProfileLoading": false,
+    "powershell.integratedConsole.suppressStartupBanner": true,
+    "csharp.showOmnisharpLogOnError": true,
+    "omnisharp.autoStart": true,
+    "omnisharp.useModernNet": false,
+    "dotnet.server.useOmnisharp": true,
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+    "dotnet.defaultSolution": "src/MilestonePSTools/MilestonePSTools.sln",
+    "powershell.powerShellDefaultVersion": "Windows PowerShell (x64)",
+    "terminal.integrated.defaultProfile.windows": "Windows PowerShell",
+    "dotnet.preferCSharpExtension": true,
+}

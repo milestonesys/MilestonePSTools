@@ -1,0 +1,197 @@
+site_name: MilestonePSTools Module
+site_url: https://www.milestonepstools.com
+site_dir: Output/site
+site_description: "Configure. Automate. Report. You decide what is possible on the Open Platform."
+docs_dir: docs
+remote_branch: gh-pages
+repo_name: milestonesystemsinc/powershellsamples
+repo_url: https://github.com/MilestoneSystemsInc/PowerShellSamples
+edit_uri: ""
+copyright: <a href="#__consent" class="md-button">Change cookie settings</a><br/> Copyright &copy; 2019-2024 Milestone Systems A/S. All rights reserved.
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  logo: assets/images/logo-white.svg
+  icon:
+    logo: milestone/logo-white
+    repo: fontawesome/brands/github
+  font:
+    text: Open Sans
+    code: Cascadia Code
+  palette:
+    - scheme: milestone-light
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: milestone-dark
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  features:
+    - announce.dismiss
+    - content.code.annotate
+    - content.code.copy
+    - content.footnote.tooltips
+    - content.tabs.link
+    - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.path
+    - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - toc.follow
+
+plugins:
+  search:
+  typeset:
+  optimize:
+    enabled: !ENV [CI, false]
+  privacy:
+    enabled: !ENV [CI, false]
+  social:
+    debug: false
+    cards_layout: milestone-default
+    cards_layout_dir: docs/layouts
+    cards_layout_options:
+      font_family: Bricolage Grotesque
+      color: "#eceef0"
+      background_color: "#081927"
+  git-revision-date-localized:
+    enabled: false
+    enable_creation_date: true
+  awesome-pages:
+    collapse_single_pages: true
+  blog: 
+    post_slugify: !!python/object/apply:pymdownx.slugs.slugify
+      kwds:
+        case: lower
+    categories_slugify: !!python/object/apply:pymdownx.slugs.slugify
+      kwds:
+        case: lower
+  glightbox:
+    touchNavigation: true
+    loop: false
+    effect: zoom
+    slide_effect: slide
+    width: 100%
+    height: auto
+    zoomable: true
+    draggable: true
+    auto_caption: false
+    caption_position: bottom
+  tags:
+    tags_slugify: !!python/object/apply:pymdownx.slugs.slugify
+      kwds:
+        case: lower
+  rss:
+    image: assets/images/milestonelogo.png
+    match_path: blog/posts/.*
+    date_from_meta:
+      as_creation: date
+    categories:
+      - categories
+      - tags
+
+extra:
+  consent:
+    title: We value your privacy
+    description: >- #
+      We value your privacy. We (Milestone Systems) and certain third parties
+      use cookies on this website. By choosing ‘Allow all cookies’ you consent
+      to our usage of cookies as described in our Cookie Policy and will get
+      the best possible experience on our website. You can also choose to only
+      accept the cookies that are strictly necessary for the website
+      functionality. For more details about the cookies, their purpose and the
+      third parties involved, click ‘Show details’.<br/><br/>
+
+      For cookies, your consent applies to the following domain:
+      <a href="https://www.milestonepstools.com">milestonepstools.com + subdomains</a>.
+      For Google cookies, you may also install a Google Analytics opt-out
+      browser add-on by going here: <a href="https://tools.google.com/dlpage/gaoptout?hl=en-US">https://tools.google.com/dlpage/gaoptout?hl=en-US</a>.
+      You can always change your consent from the link in the footer at the
+      bottom of every page.
+  social:
+    - icon: fontawesome/solid/rss
+      link: /feed_rss_created.xml
+      name: RSS Feed
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/MilestoneDevCom
+      name: MilestoneDevCom on Twitter
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/milestone-systems/
+      name: Milestone Systems on LinkedIn
+    - icon: fontawesome/brands/github
+      link: https://github.com/milestonesys
+      name: Milestone Systems on GitHub
+    - icon: fontawesome/brands/discord
+      link: https://discord.milestonepstools.com/
+      name: Milestone Systems on Discord
+
+markdown_extensions:
+  - abbr
+  - attr_list
+  - admonition
+  - footnotes
+  - meta
+  - md_in_html
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - overrides/.icons
+  - pymdownx.highlight:
+      linenums_style: pymdownx-inline
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets:
+      base_path:
+        - docs
+      check_paths: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - javascripts/tablesort.js
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Commands:
+    - ... | flat | commands/en-US/*.md
+  - Examples:
+    - ... | flat | examples/*.md
+  - Blog:
+    - blog/index.md
+  - Changelog: changelog.md
+  - Help:
+    - help/support.md
+    - help/howto.md
+    - help/compatibility.md
+    - help/faq.md

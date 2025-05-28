@@ -1,0 +1,249 @@
+---
+external help file: MilestonePSTools.dll-Help.xml
+Module Name: MilestonePSTools
+online version: https://www.milestonepstools.com/commands/en-US/Get-VmsOutput/
+schema: 2.0.0
+---
+
+# Get-VmsOutput
+
+## SYNOPSIS
+Gets output devices from the currently connected XProtect VMS site.
+
+## SYNTAX
+
+### QueryItems (Default)
+```
+Get-VmsOutput [[-Name] <String>] [[-Description] <String>] [[-Channel] <Int32[]>]
+ [[-EnableFilter] <EnableFilter>] [[-Comparison] <Operator>] [[-MaxResults] <Int32>] [<CommonParameters>]
+```
+
+### Hardware
+```
+Get-VmsOutput [-Hardware] <Hardware[]> [[-Name] <String>] [[-Description] <String>] [[-Channel] <Int32[]>]
+ [[-EnableFilter] <EnableFilter>] [[-Comparison] <Operator>] [<CommonParameters>]
+```
+
+### Id
+```
+Get-VmsOutput [-Id] <Guid[]> [<CommonParameters>]
+```
+
+### Path
+```
+Get-VmsOutput [-Path] <String[]> [<CommonParameters>]
+```
+
+## DESCRIPTION
+The `Get-VmsOutput` cmdlet gets output devices from the currently connected XProtect VMS site. Outputs are logical child
+devices attached to "hardware" which are most often an IP camera. The `VideoOS.Platform.ConfigurationItems.Output`
+object returned from this command represents a configurable device on the XProtect VMS.
+
+The corresponding `Set-VmsOutput` command can be used in conjunction with this cmdlet to modify the device settings.
+
+REQUIREMENTS  
+
+- Requires VMS connection and will attempt to connect automatically
+
+## EXAMPLES
+
+### Example 1
+```powershell
+Get-VmsOutput
+```
+
+Get all enabled output devices.
+
+### Example 2
+```powershell
+$recorder = Get-VmsRecordingServer | Out-GridView -OutputMode Multiple
+$recorder | Get-VmsHardware | Get-VmsOutput
+```
+
+Get all enabled output devices from the selected recording server(s).
+
+### Example 3
+```powershell
+Get-VmsOutput -Name 'garage'
+```
+
+Get all enabled outputs with the case-insensitive word "garage" in the name.
+
+### Example 4
+```powershell
+Get-VmsOutput -EnableFilter Disabled
+```
+
+Get all **disabled** outputs.
+
+### Example 5
+```powershell
+Get-VmsOutput -EnableFilter All -Channel 0 | Set-VmsOutput -Enabled $true -PassThru
+Get-VmsOutput -EnableFilter All -Channel (1..64) | Set-VmsOutput -Enabled $false -PassThru
+```
+
+Get all outputs with a channel value of "0" (port number 1), and enable them if they aren't enabled already. Then get all
+outputs with a higher channel number from 1 to 64, and disable them. In most cases this should leave you with only the
+first output enabled.
+
+## PARAMETERS
+
+### -Channel
+When providing one or more channel numbers, only devices with a matching channel number are returned. Channel numbering
+starts at zero, which means the first device of any given type will be assigned channel number "0", the second device
+will be assigned channel number "1", and so on.
+
+```yaml
+Type: Int32[]
+Parameter Sets: QueryItems, Hardware
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Comparison
+When providing a value for the `Name`, or `Description` parameters, the `Comparison` operator determines how thes values
+are compared with the corresponding device properties. The default value is **Contains**.
+
+```yaml
+Type: Operator
+Parameter Sets: QueryItems, Hardware
+Aliases:
+Accepted values: Equals, NotEquals, LessThan, GreaterThan, Contains, BeginsWith
+
+Required: False
+Position: 4
+Default value: Contains
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Specifies all, or part of a device description which is used with the `Comparison` parameter to filter the results of
+the request.
+
+```yaml
+Type: String
+Parameter Sets: QueryItems, Hardware
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableFilter
+Specifies whether to return enabled, disabled, or all matching devices. By default, only enabled devices are returned.
+
+```yaml
+Type: EnableFilter
+Parameter Sets: QueryItems, Hardware
+Aliases:
+Accepted values: All, Enabled, Disabled
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Hardware
+Specifies the hardware object(s) from which to return matching devices.
+
+```yaml
+Type: Hardware[]
+Parameter Sets: Hardware
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Id
+Specifies the Id of an existing device.
+
+```yaml
+Type: Guid[]
+Parameter Sets: Id
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -MaxResults
+Specifies the maximum number of matching devices to return. On a very large XProtect VMS, setting a reasonable number
+may result in better performance. The default value is `[int]::MaxValue` or 2147483647.
+
+```yaml
+Type: Int32
+Parameter Sets: QueryItems
+Aliases:
+
+Required: False
+Position: 5
+Default value: 2147483647
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Specifies all, or part of a device name which is used with the `Comparison` parameter to filter the results of the
+request.
+
+```yaml
+Type: String
+Parameter Sets: QueryItems, Hardware
+Aliases:
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Path
+The Milestone Configuration API string representing the device in the format `DeviceType[DeviceId]`.
+
+```yaml
+Type: String[]
+Parameter Sets: Path
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+### VideoOS.Platform.ConfigurationItems.Hardware[]
+
+### System.Guid[]
+
+## OUTPUTS
+
+### VideoOS.Platform.ConfigurationItems.Output
+
+## NOTES
+
+## RELATED LINKS

@@ -1,0 +1,74 @@
+name: CI
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'v*.*.*'
+    paths-ignore:
+      - '.github/workflows/Docs.yml'
+      - '.github/workflows/license-header-check.yml'
+      - '.github/workflows/publish.yml'
+      - '.github/workflows/update-release-draft.yml'
+      - 'docs/**'
+      - 'mkdocs/**'
+      - 'tests/**'
+      - 'azure*.yml'
+      - '*.md'
+      - 'mkdocs*.yml'
+  pull_request:
+    branches:
+      - 'main'
+    paths-ignore:
+      - '.github/workflows/Docs.yml'
+      - '.github/workflows/license-header-check.yml'
+      - '.github/workflows/publish.yml'
+      - '.github/workflows/update-release-draft.yml'
+      - 'mkdocs/**'
+      - 'tests/**'
+      - 'azure*.yml'
+      - '*.md'
+      - 'mkdocs*.yml'
+
+permissions:
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  BuildModule:
+    name: Build module
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v4
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+
+      - name: Build and Test
+        id: runtests
+        env:
+          VAULT_PASSWORD_DEFAULT: ${{ secrets.SecretStorePassword }}
+        shell: powershell
+        run: |
+          .\build.ps1 -Task RunTests -Bootstrap -SkipIsolation -ErrorAction Stop
+          "BHBuildOutput=$($env:BHBuildOutput)" | Add-Content "$($env:GITHUB_OUTPUT)"
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/windows@v2
+        if: always()
+        continue-on-error: true
+        with:
+          nunit_files: "tests/out/*.xml"
+      
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MilestonePSTools
+          path: ${{ steps.runtests.outputs.BHBuildOutput }}
