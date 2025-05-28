@@ -1,9 +1,8 @@
 [![CI](https://github.com/milestonesys/MilestonePSTools/actions/workflows/CI.yml/badge.svg)](https://github.com/milestonesys/MilestonePSTools/actions/workflows/CI.yml)
 [![Docs](https://github.com/milestonesys/MilestonePSTools/actions/workflows/Docs.yml/badge.svg)](https://github.com/milestonesys/MilestonePSTools/actions/workflows/Docs.yml)
 [![Issues][issues-shield]][issues-url]
-[![PowerShell Gallery[downloads-url]][downloads-shield]
+[![PowerShell Gallery][downloads-shield]][downloads-url]
 [![Apache 2.0][license-shield]][license-url]
-
 
 <!-- PROJECT LOGO -->
 <br />
