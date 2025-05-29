@@ -18,4 +18,5 @@
     'Set-MetadataSetting'      = 'Set-VmsDeviceGeneralSetting and Get-VmsDeviceStreamSetting'
     'Set-InputSetting'         = 'Set-VmsDeviceGeneralSetting and Get-VmsDeviceStreamSetting'
     'Set-OutputSetting'        = 'Set-VmsDeviceGeneralSetting and Get-VmsDeviceStreamSetting'
+    'Get-AlarmDefinition'      = 'Get-VmsAlarmDefinition'
 }

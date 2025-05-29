@@ -1,5 +1,5 @@
 {
-    "Date":  "\/Date(1748010671664)\/",
+    "Date":  "\/Date(1748460653247)\/",
     "Commands":  [
                      {
                          "Aliases":  "",
@@ -1172,7 +1172,7 @@
                          "AliasedTo":  null
                      },
                      {
-                         "Aliases":  "",
+                         "Aliases":  "Get-AlarmDefinition",
                          "Module":  "MilestonePSTools",
                          "Name":  "Get-VmsAlarmDefinition",
                          "VersionAdded":  "24.2.18",

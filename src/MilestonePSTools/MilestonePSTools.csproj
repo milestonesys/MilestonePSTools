@@ -102,7 +102,6 @@
     <Compile Include="DeviceCommands\GetSequenceData.cs" />
     <Compile Include="EventCommands\AddGenericEvent.cs" />
     <Compile Include="EventCommands\AddUserDefinedEvent.cs" />
-    <Compile Include="AlarmCommands\GetAlarmDefinition.cs" />
     <Compile Include="DeviceCommands\GetOutputSetting.cs" />
     <Compile Include="DeviceCommands\GetInputSetting.cs" />
     <Compile Include="DeviceCommands\GetMetadataSetting.cs" />
