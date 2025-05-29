@@ -1,10 +1,4 @@
 @{
-    PSDependOptions = @{
-        Target = 'CurrentUser'
-        Parameters = @{
-            Scope = 'CurrentUser'
-        }
-    }
     'BuildHelpers' = @{
         Version = '2.0.16'
     }

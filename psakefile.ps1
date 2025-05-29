@@ -1,5 +1,4 @@
 Properties {
-    & dotnet tool restore
     $Configuration = 'Release'
 
     $usings = @'

@@ -22,3 +22,8 @@ if ($null -eq (Get-Command choco -ErrorAction Ignore)) {
 }
 
 & choco install $PSScriptRoot\choco-packages.config -y --no-progress
+
+if ((dotnet nuget list source) -eq 'No sources found.') {
+    dotnet nuget add source -n 'nuget.org' 'https://api.nuget.org/v3/index.json'
+}
+& dotnet tool restore
