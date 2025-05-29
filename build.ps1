@@ -24,8 +24,6 @@ param(
     [switch]$SkipHelp
 )
 
-$ErrorActionPreference = 'Stop'
-$ProgressPreference = 'SilentlyContinue'
 if ($Help) {
     Get-PSakeScriptTasks -buildFile $psakeFile  | Format-Table -Property Name, Description, Alias, DependsOn
 } elseif (-not $SkipIsolation) {
@@ -58,18 +56,26 @@ if ($Help) {
     Write-Verbose "Executing '$command'"
     & powershell.exe -NoProfile -NoLogo -Command $command
 } else {
+    $ErrorActionPreference = 'Stop'
+    $ProgressPreference = 'SilentlyContinue'
+
     Write-Verbose "Current PID = $PID"
     $previousPWD = $PWD
     Push-Location $PSScriptRoot
     [Environment]::CurrentDirectory = $PSScriptRoot
     try {
+        $cachedModulePath = (New-Item "$PSScriptRoot/.cache/modules/" -ItemType Directory -Force).FullName
+        if ($env:PSModulePath -notmatch [regex]::Escape($cachedModulePath)) {
+            $env:PSModulePath = $cachedModulePath + [io.path]::PathSeparator + $env:PSModulePath
+        }
+
         # Bootstrap dependencies
-        if ($Bootstrap.IsPresent) {
-            . $PSScriptRoot\bootstrap.ps1
+        if ($Bootstrap) {
+            . $PSScriptRoot\bootstrap\bootstrap.ps1
         }
 
         # Execute psake task(s)
-        $psakeFile = './psakefile.ps1'
+        $psakeFile = "$PSScriptRoot/psakefile.ps1"
         if ($PSCmdlet.ParameterSetName -eq 'Help') {
             Get-PSakeScriptTasks -buildFile $psakeFile |
             Format-Table -Property Name, Description, Alias, DependsOn
@@ -78,7 +84,7 @@ if ($Help) {
             $Parameters.SkipHelp = $SkipHelp.ToBool()
             $env:VMS_ApplicationInsights__Enabled = $false
             if ($Task -contains 'SignModule') {
-                Invoke-psake -buildFile $psakeFile -taskList SignModule -nologo -properties $Properties -parameters $Parameters;
+                Invoke-psake -buildFile $psakeFile -taskList SignModule -nologo -properties $Properties -parameters $Parameters
             } else {
                 Invoke-psake -buildFile $psakeFile -taskList $Task -nologo -properties $Properties -parameters $Parameters -framework 4.7x64
             }

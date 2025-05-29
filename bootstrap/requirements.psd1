@@ -1,26 +1,26 @@
 @{
-    PSDependOptions = @{
-        Target = 'CurrentUser'
-        Parameters = @{
-            Scope = 'CurrentUser'
-        }
-    }
     'BuildHelpers' = @{
         # License: MIT
         # Purpose: Sets build environment variables
         # Url: https://github.com/RamblingCookieMonster/BuildHelpers
+        Name = 'BuildHelpers'
+        DependencyType = 'PSGalleryModule'
         Version = '2.0.16'
     }
     'PowerShellBuild' = @{
         # License: MIT
         # Purpose: Contains build tasks for PowerShell modules
         # Url: https://github.com/psake/PowerShellBuild
+        Name = 'PowerShellBuild'
+        DependencyType = 'PSGalleryModule'
         Version = '0.7.2'
     }
     'Pester' = @{
         # License: Apache-2.0
         # Purpose: Testing framework for PowerShell
         # Url: https://github.com/pester/pester
+        Name = 'Pester'
+        DependencyType = 'PSGalleryModule'
         Version = '5.7.1'
         Parameters = @{
             SkipPublisherCheck = $true
@@ -30,6 +30,8 @@
         # License: MIT
         # Purpose: Static code analysis for PowerShell
         # Url: https://github.com/PowerShell/PSScriptAnalyzer
+        Name = 'PSScriptAnalyzer'
+        DependencyType = 'PSGalleryModule'
         Version = '1.20.0'
         Parameters = @{
             Scope = 'CurrentUser'
@@ -39,12 +41,16 @@
         # License: MIT
         # Purpose: Build automation tool for PowerShell
         # Url: https://github.com/psake/psake
+        Name = 'psake'
+        DependencyType = 'PSGalleryModule'
         Version = '4.9.0'
     }
-    'platyPS' = @{
+    'PlatyPS' = @{
         # License: MIT
         # Purpose: Generate markdown and maml help files for PowerShell modules
         # Url: https://github.com/PowerShell/platyPS
+        Name = 'PlatyPS'
+        DependencyType = 'PSGalleryModule'
         Version = '0.14.2'
         Parameters = @{
             SkipPublisherCheck = $true
@@ -54,24 +60,30 @@
         # License: MIT
         # Purpose: Interact with Visual Studio Setup
         # Url: https://github.com/microsoft/vssetup.powershell
+        Name = 'VSSetup'
+        DependencyType = 'PSGalleryModule'
         Version = '2.2.16'
     }
     'Microsoft.PowerShell.SecretManagement' = @{
         # License: MIT
         # Purpose: Secret management interface for local development and CI
         # Url: https://github.com/PowerShell/SecretManagement
+        Name = 'Microsoft.PowerShell.SecretManagement'
+        DependencyType = 'PSGalleryModule'
         Version = '1.1.2'
     }
     'Microsoft.PowerShell.SecretStore' = @{
         # License: MIT
         # Purpose: Secret store for local development and CI
         # Url: https://github.com/PowerShell/SecretStore
+        Name = 'Microsoft.PowerShell.SecretStore'
+        DependencyType = 'PSGalleryModule'
         Version = '1.0.6'
         DependsOn = 'Microsoft.PowerShell.SecretManagement'
     }
     'InitializeSecretStore' = @{
         DependencyType = 'task'
-        Target = 'bootstrap\Initialize-SecretStore.ps1'
+        Target = 'Initialize-SecretStore.ps1'
         DependsOn = 'Microsoft.PowerShell.SecretStore'
     }
     'Chocolatey' = @{
@@ -79,14 +91,14 @@
         # Purpose: Package manager for Windows
         # Url: https://github.com/chocolatey/choco
         DependencyType = 'task'
-        Target = 'bootstrap\Install-Chocolatey.ps1'
+        Target = 'Install-Chocolatey.ps1'
     }
     'VSBuildTools' = @{
         # License: Proprietary
         # Purpose: Build tools for Visual Studio
         # Url: https://visualstudio.microsoft.com/license-terms/vs2022-ga-diagnosticbuildtools/
         DependencyType = 'task'
-        Target = 'bootstrap\Install-VSBuildTools.ps1'
+        Target = 'Install-VSBuildTools.ps1'
         DependsOn = 'VSSetup'
     }
 }
