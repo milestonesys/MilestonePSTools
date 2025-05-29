@@ -14,6 +14,7 @@
 
 function Get-VmsAlarmDefinition {
     [CmdletBinding()]
+    [Alias("Get-AlarmDefinition")]
     [OutputType([VideoOS.Platform.ConfigurationItems.AlarmDefinition])]
     [RequiresVmsConnection()]
     param (
@@ -26,6 +27,7 @@ function Get-VmsAlarmDefinition {
 
     begin {
         Assert-VmsRequirementsMet
+        Show-DeprecationWarning $MyInvocation
     }
 
     process {
