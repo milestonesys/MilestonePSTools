@@ -36,7 +36,7 @@
     
     'InitializeSecretStore' = @{
         DependencyType = 'task'
-        Target = 'bootstrap\Initialize-SecretStore.ps1'
+        Target = 'Initialize-SecretStore.ps1'
         DependsOn = 'Microsoft.PowerShell.SecretStore'
     }
 }
