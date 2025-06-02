@@ -22,8 +22,9 @@ function Add-VmsHardware {
         $HardwareScan,
 
         [Parameter(ParameterSetName = 'Manual', Mandatory, ValueFromPipeline)]
-        [RecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer]
         $RecordingServer,
 
         [Parameter(ParameterSetName = 'Manual', Mandatory, ValueFromPipelineByPropertyName)]
@@ -183,9 +184,3 @@ function Set-NewHardwareConfig {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Add-VmsHardware -ParameterName RecordingServer -ScriptBlock {
-    $values = (Get-VmsRecordingServer).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

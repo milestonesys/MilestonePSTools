@@ -25,6 +25,7 @@ function Get-VmsViewGroup {
         [Parameter(ParameterSetName = 'Default', Position = 1)]
         [ValidateNotNullOrEmpty()]
         [SupportsWildcards()]
+        [ArgumentCompleter([MipItemNameCompleter[ViewGroup]])]
         [string[]]
         $Name = '*',
 
@@ -82,32 +83,3 @@ function Get-VmsViewGroup {
         }
     }
 }
-
-function ViewGroupArgumentCompleter{
-    param ( $commandName,
-            $parameterName,
-            $wordToComplete,
-            $commandAst,
-            $fakeBoundParameters )
-
-    $folder = (Get-VmsManagementServer).ViewGroupFolder
-    if ($fakeBoundParameters.ContainsKey('Parent')) {
-        $folder = $fakeBoundParameters.Parent.ViewGroupFolder
-    }
-
-    $possibleValues = $folder.ViewGroups.DisplayName
-    $wordToComplete = $wordToComplete.Trim("'").Trim('"')
-    if (-not [string]::IsNullOrWhiteSpace($wordToComplete)) {
-        $possibleValues = $possibleValues | Where-Object { $_ -like "$wordToComplete*" }
-    }
-    $possibleValues | Foreach-Object {
-        if ($_ -like '* *') {
-            "'$_'"
-        } else {
-            $_
-        }
-    }
-}
-
-Register-ArgumentCompleter -CommandName Get-VmsViewGroup -ParameterName Name -ScriptBlock (Get-Command ViewGroupArgumentCompleter).ScriptBlock
-

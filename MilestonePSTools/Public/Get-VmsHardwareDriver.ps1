@@ -19,12 +19,15 @@ function Get-VmsHardwareDriver {
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'RecordingServer')]
-        [RecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer[]]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer[]]
         $RecordingServer,
 
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'Hardware')]
-        [VideoOS.Platform.ConfigurationItems.Hardware[]]
+        [ArgumentCompleter([MipItemNameCompleter[Hardware]])]
+        [MipItemTransformation([Hardware])]
+        [Hardware[]]
         $Hardware
     )
 
@@ -70,9 +73,3 @@ function Get-VmsHardwareDriver {
         $driversByRecorder.Clear()
     }
 }
-
-Register-ArgumentCompleter -CommandName Get-VmsHardwareDriver -ParameterName RecordingServer -ScriptBlock {
-    $values = (Get-VmsRecordingServer).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

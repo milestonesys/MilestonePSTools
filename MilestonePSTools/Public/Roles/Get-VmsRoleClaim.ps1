@@ -20,8 +20,9 @@ function Get-VmsRoleClaim {
     param (
         [Parameter(ValueFromPipeline, Position = 0)]
         [Alias('RoleName')]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role[]]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role[]]
         $Role,
 
         [Parameter(Position = 1)]
@@ -29,8 +30,9 @@ function Get-VmsRoleClaim {
         $ClaimName,
 
         [Parameter()]
-        [LoginProviderTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.LoginProvider]
+        [ArgumentCompleter([MipItemNameCompleter[LoginProvider]])]
+        [MipItemTransformation([LoginProvider])]
+        [LoginProvider]
         $LoginProvider
     )
 
@@ -61,18 +63,7 @@ function Get-VmsRoleClaim {
     }
 }
 
-Register-ArgumentCompleter -CommandName Get-VmsRoleClaim -ParameterName Role -ScriptBlock {
-    $values = (Get-VmsRole).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
 Register-ArgumentCompleter -CommandName Get-VmsRoleClaim -ParameterName ClaimName -ScriptBlock {
     $values = (Get-VmsLoginProvider | Get-VmsLoginProviderClaim).Name | Sort-Object
     Complete-SimpleArgument -Arguments $args -ValueSet $values
 }
-
-Register-ArgumentCompleter -CommandName Get-VmsRoleClaim -ParameterName LoginProvider -ScriptBlock {
-    $values = (Get-VmsLoginProvider).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

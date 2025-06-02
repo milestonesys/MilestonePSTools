@@ -19,8 +19,9 @@ function Get-VmsRoleMember {
     param (
         [Parameter(ValueFromPipeline, Position = 0)]
         [Alias('RoleName')]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role[]]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role[]]
         $Role
     )
 
@@ -39,9 +40,3 @@ function Get-VmsRoleMember {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Get-VmsRoleMember -ParameterName Role -ScriptBlock {
-    $values = (Get-VmsRole).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

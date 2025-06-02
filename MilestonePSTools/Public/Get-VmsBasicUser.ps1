@@ -18,6 +18,7 @@ function Get-VmsBasicUser {
     [RequiresVmsConnection()]
     param (
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ArgumentCompleter([MipItemNameCompleter[BasicUser]])]
         [string]
         $Name,
 

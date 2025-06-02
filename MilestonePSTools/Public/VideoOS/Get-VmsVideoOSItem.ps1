@@ -31,7 +31,8 @@ function Get-VmsVideoOSItem {
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'GetItem')]
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'GetItems')]
-        [KindNameTransformAttribute()]
+        [ArgumentCompleter([KindArgumentCompleter])]
+        [KindNameTransform()]
         [guid]
         $Kind,
 
@@ -106,9 +107,3 @@ function Get-VmsVideoOSItem {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Get-VmsVideoOSItem -ParameterName Kind -ScriptBlock {
-    $values = ([videoos.platform.kind].DeclaredMembers | Where-Object { $_.MemberType -eq 'Field' -and $_.FieldType -eq [guid] }).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

@@ -19,11 +19,15 @@ function Get-VmsViewGroupAcl {
     [OutputType([VmsViewGroupAcl])]
     param (
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [VideoOS.Platform.ConfigurationItems.ViewGroup]
+        [ArgumentCompleter([MipItemNameCompleter[ViewGroup]])]
+        [MipItemTransformation([ViewGroup])]
+        [ViewGroup]
         $ViewGroup,
 
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'FromRole')]
-        [VideoOS.Platform.ConfigurationItems.Role[]]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role[]]
         $Role,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'FromRoleId')]
@@ -31,6 +35,7 @@ function Get-VmsViewGroupAcl {
         $RoleId,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'FromRoleName')]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
         [string]
         $RoleName
     )

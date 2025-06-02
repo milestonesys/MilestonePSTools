@@ -142,6 +142,8 @@
     <Compile Include="Lpr\ClearLprMatchListCommand.cs" />
     <Compile Include="Lpr\ImportLprMatchListCommand.cs" />
     <Compile Include="Lpr\RemoveLprMatchListEntryCommand.cs" />
+    <Compile Include="Utility\KindArgumentCompleter.cs" />
+    <Compile Include="Utility\KindNameTransformAttribute.cs" />
     <Compile Include="Utility\MipItemNameArgumentCompleter.cs" />
     <Compile Include="Utility\AviCodecArgumentCompleter.cs" />
     <Compile Include="Lpr\NewLprMatchListCommand.cs" />

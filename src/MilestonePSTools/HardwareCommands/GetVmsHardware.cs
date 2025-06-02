@@ -30,17 +30,18 @@ namespace MilestonePSTools.HardwareCommands
         public SwitchParameter All { get; set; }
 
         [Parameter(ValueFromPipeline = true, ParameterSetName = "Filtered")]
+        [ArgumentCompleter(typeof(MipItemNameCompleter<RecordingServer>))]
+        [MipItemTransformation(typeof(RecordingServer))]
         public RecordingServer RecordingServer { get; set; }
 
         [Parameter(ParameterSetName = "Filtered")]
-        [ArgumentCompleter(typeof(MipItemIdCompleter<Hardware>))]
         [Alias("HardwareId")]
         public Guid Id { get; set; }
 
         [Parameter(ParameterSetName = "Filtered")]
         public Guid RecorderId { get; set; }
 
-        [Parameter(ParameterSetName = "Filtered")]
+        [Parameter(ParameterSetName = "Filtered", Position = 0)]
         [ArgumentCompleter(typeof(MipItemNameCompleter<Hardware>))]
         [SupportsWildcards]
         public string Name { get; set; }

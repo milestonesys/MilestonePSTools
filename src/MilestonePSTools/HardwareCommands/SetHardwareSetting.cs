@@ -15,6 +15,7 @@
 using MilestoneLib;
 using System.Linq;
 using System.Management.Automation;
+using MilestonePSTools.Utility;
 using VideoOS.Platform.ConfigurationItems;
 
 namespace MilestonePSTools.HardwareCommands
@@ -24,6 +25,8 @@ namespace MilestonePSTools.HardwareCommands
     public class SetHardwareSetting : ConfigApiCmdlet
     {
         [Parameter(ValueFromPipeline = true, Mandatory = true)]
+        [ArgumentCompleter(typeof(MipItemNameCompleter<Hardware>))]
+        [MipItemTransformation(typeof(Hardware))]
         public Hardware Hardware { get; set; }
 
         [Parameter(Position = 1, Mandatory = true)]

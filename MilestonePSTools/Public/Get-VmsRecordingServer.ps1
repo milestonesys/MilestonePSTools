@@ -19,7 +19,7 @@ function Get-VmsRecordingServer {
     [RequiresVmsConnection()]
     param (
         [Parameter(Position = 0, ValueFromPipeline, ValueFromPipelineByPropertyName, ParameterSetName = 'ByName')]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.RecordingServer]])]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
         [string]
         $Name = '*',
 

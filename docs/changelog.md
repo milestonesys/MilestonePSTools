@@ -7,6 +7,22 @@ hide:
 
 ## [vNext] unreleased
 
+### 🐛 Fixed
+
+- Fixed an issue with the `Get-VideoDeviceStatistics` command where an error would be thrown if MilestonePSTools was not
+  installed into one of the default paths where PowerShell looks to automatically find and import modules.
+
+### 🔄 Changed
+
+- Updated ~54 commands to either add, or improve argument completers and transformation attributes. These are PowerShell
+  features that allow you to tab through recording server names or press ++control+space++ after typing
+  `Get-VmsRecordingServer -Name `. Interactive users will now find completions for more parameters, on more commands,
+  with more consistency.
+
+### 🗑️ Removed
+
+- Removed `Get-AlarmDefinition` and added the name as an alias to `Get-VmsAlarmDefinition`.
+
 ## [25.1.39] 2025-05-23
 
 ### ⚠️ Breaking Changes

@@ -19,8 +19,9 @@ function Get-VmsRoleOverallSecurity {
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
         [Alias('RoleName')]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role]
         $Role,
 
         [Parameter()]
@@ -68,14 +69,7 @@ function Get-VmsRoleOverallSecurity {
     }
 }
 
-
-Register-ArgumentCompleter -CommandName Get-VmsRoleOverallSecurity -ParameterName Role -ScriptBlock {
-    $values = ((Get-VmsManagementServer).RoleFolder.Roles | Where-Object RoleType -EQ 'UserDefined').Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
 Register-ArgumentCompleter -CommandName Get-VmsRoleOverallSecurity -ParameterName SecurityNamespace -ScriptBlock {
     $values = (Get-SecurityNamespaceValues).SecurityNamespacesByName.Keys | Sort-Object
     Complete-SimpleArgument -Arguments $args -ValueSet $values
 }
-

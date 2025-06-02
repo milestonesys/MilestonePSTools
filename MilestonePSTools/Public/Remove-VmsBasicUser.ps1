@@ -17,7 +17,9 @@ function Remove-VmsBasicUser {
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [VideoOS.Platform.ConfigurationItems.BasicUser[]]
+        [ArgumentCompleter([MipItemNameCompleter[BasicUser]])]
+        [MipItemTransformation([BasicUser])]
+        [BasicUser[]]
         $InputObject
     )
 

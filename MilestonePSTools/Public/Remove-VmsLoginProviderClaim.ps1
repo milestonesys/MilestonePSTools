@@ -19,8 +19,9 @@ function Remove-VmsLoginProviderClaim {
     param (
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'All')]
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'Name')]
-        [LoginProviderTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.LoginProvider]
+        [ArgumentCompleter([MipItemNameCompleter[LoginProvider]])]
+        [MipItemTransformation([LoginProvider])]
+        [LoginProvider]
         $LoginProvider,
 
         [Parameter(Mandatory, ParameterSetName = 'All')]
@@ -65,13 +66,7 @@ function Remove-VmsLoginProviderClaim {
     }
 }
 
-Register-ArgumentCompleter -CommandName Remove-VmsLoginProviderClaim -ParameterName LoginProvider -ScriptBlock {
-    $values = (Get-VmsLoginProvider).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
 Register-ArgumentCompleter -CommandName Remove-VmsLoginProviderClaim -ParameterName ClaimName -ScriptBlock {
     $values = (Get-VmsLoginProvider | Get-VmsLoginProviderClaim).Name | Sort-Object
     Complete-SimpleArgument -Arguments $args -ValueSet $values
 }
-

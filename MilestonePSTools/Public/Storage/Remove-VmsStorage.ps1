@@ -17,8 +17,9 @@ function Remove-VmsStorage {
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'ByName')]
-        [RecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer]
         $RecordingServer,
 
         [Parameter(Mandatory, ParameterSetName = 'ByName')]
@@ -57,8 +58,7 @@ function Remove-VmsStorage {
     }
 }
 
-Register-ArgumentCompleter -CommandName Remove-VmsStorage -ParameterName RecordingServer -ScriptBlock {
-    $values = (Get-VmsRecordingServer).Name | Sort-Object
+Register-ArgumentCompleter -CommandName Remove-VmsStorage -ParameterName Name -ScriptBlock {
+    $values = (Get-VmsRecordingServer | Get-VmsStorage).Name | Select-Object -Unique | Sort-Object
     Complete-SimpleArgument -Arguments $args -ValueSet $values
 }
-

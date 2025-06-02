@@ -18,16 +18,16 @@ function Add-VmsRoleClaim {
     [RequiresVmsVersion('22.1')]
     param (
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0)]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.Role]])]
         [Alias('RoleName')]
         [ValidateNotNull()]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role[]]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role[]]
         $Role,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, Position = 1)]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.LoginProvider]])]
-        [LoginProviderTransformAttribute()]
+        [ArgumentCompleter([MipItemNameCompleter[LoginProvider]])]
+        [MipItemTransformation([LoginProvider])]
         [VideoOS.Platform.ConfigurationItems.LoginProvider]
         $LoginProvider,
 

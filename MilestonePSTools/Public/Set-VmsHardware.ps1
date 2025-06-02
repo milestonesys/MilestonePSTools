@@ -19,7 +19,9 @@ function Set-VmsHardware {
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [VideoOS.Platform.ConfigurationItems.Hardware[]]
+        [ArgumentCompleter([MipItemNameCompleter[Hardware]])]
+        [MipItemTransformation([Hardware])]
+        [Hardware[]]
         $Hardware,
 
         [Parameter()]

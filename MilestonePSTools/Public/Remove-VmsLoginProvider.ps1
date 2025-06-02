@@ -18,7 +18,9 @@ function Remove-VmsLoginProvider {
     [RequiresVmsVersion('22.1')]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [VideoOS.Platform.ConfigurationItems.LoginProvider]
+        [ArgumentCompleter([MipItemNameCompleter[LoginProvider]])]
+        [MipItemTransformation([LoginProvider])]
+        [LoginProvider]
         $LoginProvider,
 
         [Parameter()]
@@ -64,4 +66,3 @@ function Remove-VmsLoginProvider {
         }
     }
 }
-

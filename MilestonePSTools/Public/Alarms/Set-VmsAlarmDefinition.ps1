@@ -16,8 +16,10 @@ function Set-VmsAlarmDefinition {
     [CmdletBinding(SupportsShouldProcess)]
     [RequiresVmsConnection()]
     param (
-        [Parameter(Mandatory, ValueFromPipeline)]
-        [VideoOS.Platform.ConfigurationItems.AlarmDefinition[]]
+        [Parameter(Mandatory, ValueFromPipeline, Position = 0)]
+        [ArgumentCompleter([MipItemNameCompleter[AlarmDefinition]])]
+        [MipItemTransformation([AlarmDefinition])]
+        [AlarmDefinition[]]
         $AlarmDefinition,
 
         [Parameter()]

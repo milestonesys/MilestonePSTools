@@ -14,6 +14,7 @@
 
 using System;
 using System.Management.Automation;
+using MilestonePSTools.Utility;
 using VideoOS.Platform.ConfigurationItems;
 using VideoOS.Platform.SDK.Proxy.Status2;
 
@@ -25,6 +26,8 @@ namespace MilestonePSTools.RecordingServerCommands
     public class GetRecorderStatusService2 : ConfigApiCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FromRecordingServer")]
+        [ArgumentCompleter(typeof(MipItemNameCompleter<RecordingServer>))]
+        [MipItemTransformation(typeof(RecordingServer))]
         public RecordingServer RecordingServer { get; set; }
 
         [Parameter(Mandatory = true, ParameterSetName = "FromUri")]

@@ -18,8 +18,9 @@ function Add-VmsLoginProviderClaim {
     [RequiresVmsVersion('22.1')]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [LoginProviderTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.LoginProvider]
+        [ArgumentCompleter([MipItemNameCompleter[LoginProvider]])]
+        [MipItemTransformation([LoginProvider])]
+        [LoginProvider]
         $LoginProvider,
 
         [Parameter(Mandatory)]
@@ -60,9 +61,3 @@ function Add-VmsLoginProviderClaim {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Add-VmsLoginProviderClaim -ParameterName LoginProvider -ScriptBlock {
-    $values = (Get-VmsLoginProvider).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

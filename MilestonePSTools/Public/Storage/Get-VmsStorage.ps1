@@ -18,8 +18,9 @@ function Get-VmsStorage {
     [RequiresVmsConnection()]
     param (
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName, ParameterSetName = 'FromName')]
-        [RecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer[]]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer[]]
         $RecordingServer,
 
         [Parameter(ParameterSetName = 'FromName')]
@@ -74,8 +75,7 @@ function Get-VmsStorage {
     }
 }
 
-Register-ArgumentCompleter -CommandName Get-VmsStorage -ParameterName RecordingServer -ScriptBlock {
-    $values = (Get-VmsRecordingServer).Name | Sort-Object
+Register-ArgumentCompleter -CommandName Get-VmsStorage -ParameterName Name -ScriptBlock {
+    $values = (Get-VmsRecordingServer | Get-VmsStorage).Name | Select-Object -Unique | Sort-Object
     Complete-SimpleArgument -Arguments $args -ValueSet $values
 }
-

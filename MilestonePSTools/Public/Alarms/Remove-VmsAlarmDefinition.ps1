@@ -17,7 +17,9 @@ function Remove-VmsAlarmDefinition {
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [VideoOS.Platform.ConfigurationItems.AlarmDefinition[]]
+        [ArgumentCompleter([MipItemNameCompleter[AlarmDefinition]])]
+        [MipItemTransformation([AlarmDefinition])]
+        [AlarmDefinition[]]
         $AlarmDefinition
     )
 

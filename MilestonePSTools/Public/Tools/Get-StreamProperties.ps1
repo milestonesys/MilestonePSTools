@@ -20,7 +20,9 @@ function Get-StreamProperties {
         # Specifies the camera to retrieve stream properties for
         [Parameter(ValueFromPipeline, Mandatory, ParameterSetName = 'ByName')]
         [Parameter(ValueFromPipeline, Mandatory, ParameterSetName = 'ByNumber')]
-        [VideoOS.Platform.ConfigurationItems.Camera]
+        [ArgumentCompleter([MipItemNameCompleter[Camera]])]
+        [MipItemTransformation([Camera])]
+        [Camera]
         $Camera,
 
         # Specifies a StreamUsageChildItem from Get-Stream

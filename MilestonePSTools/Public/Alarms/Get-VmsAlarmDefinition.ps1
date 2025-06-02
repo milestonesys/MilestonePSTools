@@ -20,7 +20,7 @@ function Get-VmsAlarmDefinition {
     param (
         [Parameter()]
         [SupportsWildcards()]
-        [System.Management.Automation.ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.AlarmDefinition]])]
+        [ArgumentCompleter([MipItemNameCompleter[AlarmDefinition]])]
         [string]
         $Name
     )

@@ -2,10 +2,13 @@ Properties {
     $Configuration = 'Release'
 
     $usings = @'
-using namespace MilestonePSTools
 using namespace System.Collections.Generic
+using namespace System.Management.Automation
 using namespace System.Text.RegularExpressions
 using namespace System.Windows.Forms
+using namespace MilestonePSTools
+using namespace MilestonePSTools.Utility
+using namespace VideoOS.Platform.ConfigurationItems
 '@
     $functions = Join-Path $psake.build_script_dir 'build.functions.ps1'
     . $functions
