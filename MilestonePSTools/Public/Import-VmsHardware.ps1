@@ -25,7 +25,9 @@ function Import-VmsHardware {
         $LiteralPath,
 
         [Parameter()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer]
         $RecordingServer,
 
         [Parameter()]

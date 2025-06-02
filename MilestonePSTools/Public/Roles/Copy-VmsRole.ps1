@@ -18,9 +18,9 @@ function Copy-VmsRole {
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.Role]])]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role]
         $Role,
 
         [Parameter(Mandatory, Position = 0)]

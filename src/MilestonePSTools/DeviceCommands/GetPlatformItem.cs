@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
+using MilestonePSTools.Utility;
 using VideoOS.Platform;
 
 namespace MilestonePSTools.DeviceCommands
@@ -64,6 +65,8 @@ namespace MilestonePSTools.DeviceCommands
         /// <para type="description">Specifies the GUID constant for the Kind of object you want to return</para>
         /// </summary>
         [Parameter(Position = 1, ValueFromPipeline = true, ParameterSetName = "ByKind")]
+        [ArgumentCompleter(typeof(KindArgumentCompleter))]
+        [KindNameTransform()]
         public Guid Kind { get; set; }
 
         /// <summary>

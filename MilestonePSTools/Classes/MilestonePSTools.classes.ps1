@@ -330,34 +330,6 @@ class VmsViewGroupAcl {
     [hashtable] $SecurityAttributes
 }
 
-class RoleNameTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
-    [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
-        if ($inputData -is [VideoOS.Platform.ConfigurationItems.Role] -or ($inputData -is [system.collections.ienumerable] -and $inputData[0] -is [VideoOS.Platform.ConfigurationItems.Role])) {
-            return $inputData
-        }
-        try {
-            if ($inputData.Role) {
-                $inputData = $inputData.Role
-            }
-            if ($inputData -is [string] -or ($inputData -is [system.collections.ienumerable] -and $inputData[0] -is [string])) {
-                $items = (Get-VmsManagementServer).RoleFolder.Roles | Where-Object Name -Like $inputData
-                if ($inputData -is [string]) {
-                    return $items[0]
-                }
-                return $items
-            } else {
-                throw "Unexpected type '$($inputData.GetType().FullName)'"
-            }
-        } catch {
-            throw $_.Exception
-        }
-    }
-
-    [string] ToString() {
-        return '[RoleNameTransformAttribute()]'
-    }
-}
-
 class SecurityNamespaceTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
     [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
         if ($null -eq $inputData -or $inputData.Count -eq 0) { return [guid]::Empty }
@@ -454,40 +426,6 @@ class TimeProfileNameTransformAttribute : System.Management.Automation.ArgumentT
 
     [string] ToString() {
         return '[TimeProfileNameTransformAttribute()]'
-    }
-}
-
-class RecorderNameTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
-    [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
-        if ($inputData -is [VideoOS.Platform.ConfigurationItems.RecordingServer] -or ($inputData -is [system.collections.ienumerable] -and $inputData[0] -is [VideoOS.Platform.ConfigurationItems.RecordingServer])) {
-            return $inputData
-        }
-        try {
-            if ($inputData.RecordingServer) {
-                $inputData = $inputData.RecordingServer
-            }
-            if ($inputData -is [string] -or ($inputData -is [system.collections.ienumerable] -and $inputData[0] -is [string])) {
-                $items = $inputData | ForEach-Object {
-                    Get-VmsRecordingServer -Name $_
-                }
-                if ($items.Count -eq 0) {
-                    throw 'No matching RecordingServer(s) found.'
-                }
-                if ($inputData -is [string]) {
-                    return $items[0]
-                } else {
-                    return $items
-                }
-            } else {
-                throw "Unexpected type '$($inputData.GetType().FullName)'"
-            }
-        } catch {
-            throw $_.Exception
-        }
-    }
-
-    [string] ToString() {
-        return '[RecorderNameTransformAttribute()]'
     }
 }
 
@@ -593,28 +531,7 @@ class HardwareDriverTransformAttribute : System.Management.Automation.ArgumentTr
     }
 
     [string] ToString() {
-        return '[RecorderNameTransformAttribute()]'
-    }
-}
-
-class ConfigurationItemPathTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
-    [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
-        return ($inputData | ForEach-Object {
-                $obj = $_
-                if ($obj -as [guid]) {
-                    $obj
-                    return
-                }
-                $configItemPath = $obj -as [VideoOS.Platform.Proxy.ConfigApi.ConfigurationItemPath]
-                if ($null -eq $configItemPath) {
-                    throw ([InvalidOperationException]::new("Invalid configuration item path string '$obj'"))
-                }
-                $configItemPath
-            })
-    }
-
-    [string] ToString() {
-        return '[ConfigurationItemPathTransformAttribute()]'
+        return '[HardwareDriverTransformAttribute()]'
     }
 }
 
@@ -658,37 +575,6 @@ class BoolTransformAttribute : System.Management.Automation.ArgumentTransformati
     }
 }
 
-class LoginProviderTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
-    [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
-        if ($inputData -is [VideoOS.Platform.ConfigurationItems.LoginProvider] -or ($inputData -is [system.collections.ienumerable] -and $inputData[0] -is [VideoOS.Platform.ConfigurationItems.LoginProvider])) {
-            return $inputData
-        }
-        try {
-            if ($inputData.LoginProvider) {
-                $inputData = $inputData.LoginProvider
-            }
-            if ($inputData -is [string] -or ($inputData -is [system.collections.ienumerable] -and $inputData[0] -is [string])) {
-                $items = Get-VmsLoginProvider | Where-Object Name -EQ $inputData
-                if ($null -eq $items -or $items.Count -eq 0) {
-                    throw ([System.Management.Automation.ItemNotFoundException]::new("Login provider '$($inputData)' not found."))
-                }
-                if ($inputData -is [string]) {
-                    return $items[0]
-                }
-                return $items
-            } else {
-                throw "Unexpected type '$($inputData.GetType().FullName)'"
-            }
-        } catch {
-            throw $_.Exception
-        }
-    }
-
-    [string] ToString() {
-        return '[LoginProviderTransformAttribute()]'
-    }
-}
-
 class ClaimTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
     [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
         if ($inputData -is [VideoOS.Platform.ConfigurationItems.ClaimChildItem] -or ($inputData -is [system.collections.ienumerable] -and $inputData[0] -is [VideoOS.Platform.ConfigurationItems.ClaimChildItem])) {
@@ -714,38 +600,6 @@ class ClaimTransformAttribute : System.Management.Automation.ArgumentTransformat
 
     [string] ToString() {
         return '[LoginProviderTransformAttribute()]'
-    }
-}
-
-class ClientProfileTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
-    [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
-        $expectedType = [VideoOS.Platform.ConfigurationItems.ClientProfile]
-        $itemType = $expectedType.Name
-
-        if ($inputData -is $expectedType -or ($inputData -is [system.collections.ienumerable] -and $inputData[0] -is $expectedType)) {
-            return $inputData
-        }
-        try {
-            $items = $inputData | ForEach-Object {
-                $stringValue = $_.ToString() -replace "^$ItemType\[(.+)\](?:/.+)?", '$1'
-                $id = [guid]::Empty
-                if ([guid]::TryParse($stringValue, [ref]$id)) {
-                    Get-VmsClientProfile -Id $stringValue -ErrorAction Stop
-                } else {
-                    Get-VmsClientProfile | Where-Object Name -EQ $_
-                }
-            }
-            if ($null -eq $items) {
-                throw ([System.Management.Automation.ItemNotFoundException]::new("$itemType '$($inputData)' not found."))
-            }
-            return $items
-        } catch {
-            throw $_.Exception
-        }
-    }
-
-    [string] ToString() {
-        return '[ClientProfileTransformAttribute()]'
     }
 }
 
@@ -804,99 +658,3 @@ class RuleNameTransformAttribute : System.Management.Automation.ArgumentTransfor
         return '[RuleNameTransformAttribute()]'
     }
 }
-
-class FailoverGroupNameTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
-    [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
-        $expectedType = [VideoOS.Platform.ConfigurationItems.FailoverGroup]
-        $itemType = 'FailoverGroup'
-
-        if ($null -eq ($inputData | Where-Object { $null -ne $_ -and $_ -isnot $expectedType })) {
-            return $inputData
-        }
-
-        try {
-            $items = $inputData | ForEach-Object {
-                $stringValue = $_.ToString() -replace "^$ItemType\[(.+)\](?:/.+)?", '$1'
-                $id = [guid]::Empty
-                if ([guid]::TryParse($stringValue, [ref]$id)) {
-                    Get-VmsFailoverGroup -Id $stringValue -ErrorAction SilentlyContinue
-                } else {
-                    Get-VmsFailoverGroup | Where-Object Name -EQ $stringValue | Select-Object -First 1
-                }
-            }
-            if ($null -eq $items) {
-                throw ([System.Management.Automation.ItemNotFoundException]::new("$itemType '$($inputData)' not found."))
-            }
-            return $items
-        } catch {
-            throw $_.Exception
-        }
-    }
-
-    [string] ToString() {
-        return '[FailoverGroupNameTransformAttribute()]'
-    }
-}
-
-class FailoverRecorderNameTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
-    [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
-        $expectedType = [VideoOS.Platform.ConfigurationItems.FailoverRecorder]
-        $itemType = 'FailoverRecorder'
-
-        if ($null -eq ($inputData | Where-Object { $null -ne $_ -and $_ -isnot $expectedType })) {
-            return $inputData
-        }
-
-        try {
-            $items = $inputData | ForEach-Object {
-                $stringValue = $_.ToString() -replace "^$ItemType\[(.+)\](?:/.+)?", '$1'
-                $id = [guid]::Empty
-                if ([guid]::TryParse($stringValue, [ref]$id)) {
-                    Get-VmsFailoverRecorder -Id $id -ErrorAction SilentlyContinue
-                } else {
-                    Get-VmsFailoverRecorder | Where-Object Name -EQ $stringValue | Select-Object -First 1
-                }
-            }
-            if ($null -eq $items) {
-                throw ([System.Management.Automation.ItemNotFoundException]::new("$itemType '$($inputData)' not found."))
-            }
-            return $items
-        } catch {
-            throw $_.Exception
-        }
-    }
-
-    [string] ToString() {
-        return '[FailoverRecorderNameTransformAttribute()]'
-    }
-}
-
-class KindNameTransformAttribute : System.Management.Automation.ArgumentTransformationAttribute {
-    [object] Transform([System.Management.Automation.EngineIntrinsics]$engineIntrinsics, [object] $inputData) {
-        $expectedType = [guid]
-
-        if ($null -eq ($inputData | Where-Object { $_ -isnot $expectedType })) {
-            return $inputData
-        }
-
-        try {
-            $items = $inputData | ForEach-Object {
-                $kind = [VideoOS.Platform.Kind]::($_.ToString())
-                if ($kind -is [guid]) {
-                    $kind
-                }
-            }
-            if ($null -eq $items) {
-                throw ([System.Management.Automation.ItemNotFoundException]::new("VideoOS item kind '$($inputData)' not found."))
-            }
-            return $items
-        } catch {
-            throw $_.Exception
-        }
-    }
-
-    [string] ToString() {
-        return '[KindNameTransformAttribute()]'
-    }
-}
-

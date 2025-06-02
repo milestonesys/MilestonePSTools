@@ -18,8 +18,9 @@ function Start-VmsHardwareScan {
     [RequiresVmsConnection()]
     param(
         [Parameter(Mandatory, ValueFromPipeline)]
-        [RecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer[]]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer[]]
         $RecordingServer,
 
         [Parameter(Mandatory, ParameterSetName = 'Express')]
@@ -199,9 +200,3 @@ function Start-VmsHardwareScan {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Start-VmsHardwareScan -ParameterName RecordingServer -ScriptBlock {
-    $values = (Get-VmsRecordingServer).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

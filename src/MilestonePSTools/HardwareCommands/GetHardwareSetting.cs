@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using MilestoneLib;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using MilestoneLib;
+using MilestonePSTools.Utility;
 using VideoOS.Platform.ConfigurationItems;
 
 namespace MilestonePSTools.HardwareCommands
@@ -26,6 +27,8 @@ namespace MilestonePSTools.HardwareCommands
     public class GetHardwareSetting : ConfigApiCmdlet
     {
         [Parameter(ValueFromPipeline = true, Mandatory = true)]
+        [ArgumentCompleter(typeof(MipItemNameCompleter<Hardware>))]
+        [MipItemTransformation(typeof(Hardware))]
         public Hardware Hardware { get; set; }
 
         [Parameter]

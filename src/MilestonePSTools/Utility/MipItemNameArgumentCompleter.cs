@@ -21,6 +21,7 @@ using System.Management.Automation;
 using System.Management.Automation.Language;
 using System.Text.RegularExpressions;
 using VideoOS.ConfigurationApi.ClientService;
+using VideoOS.Platform.ConfigurationItems;
 
 namespace MilestonePSTools.Utility
 {
@@ -30,6 +31,42 @@ namespace MilestonePSTools.Utility
         private readonly string _propertyName;
         private readonly Operator _operator;
 
+        
+        /// <summary>
+        /// Transform an incoming string value into a designated <paramref name="type"/> from the
+        /// VideoOS.Platform.ConfigurationItems namespace by matching the
+        /// string to an item by name.
+        /// </summary>
+        /// <param name="type">A type from the VideoOS.Platform.ConfigurationItems namespace</param>
+        public MipItemTransformationAttribute(Type type)
+        {
+            _type = type;
+            _propertyName = "Name";
+            _operator = Operator.Equals;
+        }
+
+        /// <summary>
+        /// Transform an incoming string value into a designated <paramref name="type"/> from the
+        /// VideoOS.Platform.ConfigurationItems namespace by matching the
+        /// string to an item based on the provided <paramref name="propertyName"/>.
+        /// </summary>
+        /// <param name="type">A type from the VideoOS.Platform.ConfigurationItems namespace</param>
+        /// <param name="propertyName">The name of a property to match the incoming string value with</param>
+        public MipItemTransformationAttribute(Type type, string propertyName)
+        {
+            _type = type;
+            _propertyName = propertyName;
+            _operator = Operator.Equals;
+        }
+
+        /// <summary>
+        /// Transform an incoming string value into a designated <paramref name="type"/> from the
+        /// VideoOS.Platform.ConfigurationItems namespace by matching the
+        /// string to an item based on the provided <paramref name="propertyName"/> and <paramref name="comparisonOperator"/>.
+        /// </summary>
+        /// <param name="type">A type from the VideoOS.Platform.ConfigurationItems namespace</param>
+        /// <param name="propertyName">The name of a property to match the incoming string value with</param>
+        /// <param name="comparisonOperator"></param>
         public MipItemTransformationAttribute(Type type, string propertyName, Operator comparisonOperator = Operator.Equals)
         {
             _type = type;
@@ -42,40 +79,80 @@ namespace MilestonePSTools.Utility
             if (inputData == null) throw new NullReferenceException($"Unable to process null {_type.Name} value.");
             if (inputData is IEnumerable<object> objArray)
             {
-                if (!_type.IsAssignableFrom(typeof(IEnumerable<object>)))
-                {
-                    throw new ArgumentException($"Expected a single object but received multiple objects instead.");
-                }
-                return (objArray.Select(obj => ResolveMipItem(obj)));
+                return objArray.Select(obj => ResolveMipItem(obj));
             }
-            return ResolveMipItem(inputData);
+            else
+            {
+                return ResolveMipItem(inputData);
+            }
         }
 
         private object ResolveMipItem(object inputData)
         {
-            var inputType = inputData.GetType();
+            var inputObject = inputData is PSObject psObject ? psObject.BaseObject : inputData;
+            var inputType = inputObject.GetType();
             if (_type.IsAssignableFrom(inputType))
             {
-                return inputData;
+                return inputObject;
             }
-            if (typeof(string).IsAssignableFrom(inputType))
+
+            if (!typeof(string).IsAssignableFrom(inputType))
             {
-                var inputString = (string)inputData;
-                var queryService = new QueryItems(MilestoneConnection.Instance.CurrentSite.FQID.ServerId);
-                var filter = new ItemFilter(_type.Name, new PropertyFilter[] { new PropertyFilter(_propertyName, _operator, inputString) });
-                var result = queryService.Query(filter, int.MaxValue);
-                if (result.Count == 0)
-                {
-                    throw new ItemNotFoundException($"{_type.Name} item not found where {_propertyName} {_operator.ToString().ToLower()} \"{inputString}\".");
-                }
-                if (result.Count > 1)
-                {
-                    throw new ItemNotFoundException($"Ambiguous query result. Multiple {_type.Name} items found where {_propertyName} {_operator.ToString().ToLower()} \"{inputString}\".");
-                }
-                
-                return result.First();
+                var invalidCastMessage = $"{nameof(MipItemTransformationAttribute)} accepts only {nameof(inputData)} of type [string].";
+                var message = $"Expected a value of type [string] or [{_type.FullName}], but received a [{inputType.FullName}].";
+                throw new ArgumentTransformationMetadataException(
+                    message,
+                    new PSInvalidCastException(message));
             }
-            throw new ArgumentException($"Unable to convert object of type {inputType.FullName} to {_type.FullName}.");
+
+            // Special handler for emitting time profiles with the expected paths for Always and Default.
+            // These are used in the Import-VmsRole command.
+            if (_type == typeof(TimeProfile))
+            {
+                if (inputObject.ToString().Equals("Always", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new TimeProfile(
+                        MilestoneConnection.Instance.ManagementServer.ServerId,
+                        new ConfigurationItem
+                        {
+                            DisplayName = "Always",
+                            ItemCategory = "Item",
+                            ItemType = "TimeProfile",
+                            Path = "TimeProfile[11111111-1111-1111-1111-111111111111]",
+                            ParentPath = "/TimeProfileFolder"
+                        }
+                    );
+                }
+                else if (inputObject.ToString().Equals("Default", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new TimeProfile(
+                        MilestoneConnection.Instance.ManagementServer.ServerId,
+                        new ConfigurationItem
+                        {
+                            DisplayName = "Default",
+                            ItemCategory = "Item",
+                            ItemType = "TimeProfile",
+                            Path = "TimeProfile[00000000-0000-0000-0000-000000000000]",
+                            ParentPath = "/TimeProfileFolder"
+                        }
+                    );
+                }
+            }
+
+            var inputString = (string)inputObject;
+            var queryService = new QueryItems(MilestoneConnection.Instance.CurrentSite.FQID.ServerId);
+            var filter = new ItemFilter(_type.Name, new PropertyFilter[] { new PropertyFilter(_propertyName, _operator, inputString) });
+            var result = queryService.Query(filter, int.MaxValue);
+            if (result.Count == 0)
+            {
+                throw new ItemNotFoundException($"{_type.Name} item not found where {_propertyName} {_operator.ToString().ToLower()} \"{inputString}\".");
+            }
+            if (result.Count > 1)
+            {
+                throw new ItemNotFoundException($"Ambiguous query result. Multiple {_type.Name} items found where {_propertyName} {_operator.ToString().ToLower()} \"{inputString}\".");
+            }
+
+            return result.First();
         }
     }
 
@@ -102,18 +179,19 @@ namespace MilestonePSTools.Utility
             var prop = typeof(T).GetProperty(Property);
             if (prop == null) yield break;
 
-            foreach (var item in queryService.Query(filter, int.MaxValue))
+            foreach (var item in queryService.Query(filter, int.MaxValue).OrderBy(i => prop.GetValue(i)))
             {
                 var completion = prop.GetValue(item)?.ToString();
                 if (completion == null) continue;
 
-                if (wordToComplete == string.Empty)
+                if (string.IsNullOrEmpty(wordToComplete) || completion.StartsWith(wordToComplete.Trim('\'', '"'), StringComparison.OrdinalIgnoreCase))
                 {
-                    yield return new CompletionResult(WrapWithQuotesIfNeeded(completion));
-                }
-                else if (item.Name.StartsWith(wordToComplete, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    yield return new CompletionResult(WrapWithQuotesIfNeeded(completion));
+                    yield return new CompletionResult(
+                            completionText: WrapWithQuotesIfNeeded(completion),
+                            listItemText: completion,
+                            resultType: CompletionResultType.ParameterValue,
+                            toolTip: $"{typeof(T).Name} {Property}: {completion}"
+                        );
                 }
             }
         }
@@ -135,18 +213,4 @@ namespace MilestonePSTools.Utility
             }
         }
     }
-
-
-    /// <summary>
-    /// Argument completer for the ID property of any MIP item of type T
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class MipItemIdCompleter<T> : MipItemNameCompleter<T>
-    {
-        public MipItemIdCompleter()
-        {
-            Property = "Id";
-        }
-    }
 }
-

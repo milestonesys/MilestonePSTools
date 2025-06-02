@@ -19,7 +19,9 @@ function Get-VmsView {
     [OutputType([VideoOS.Platform.ConfigurationItems.View])]
     param (
         [Parameter(ValueFromPipeline, ParameterSetName = 'Default')]
-        [VideoOS.Platform.ConfigurationItems.ViewGroup[]]
+        [ArgumentCompleter([MipItemNameCompleter[ViewGroup]])]
+        [MipItemTransformation([ViewGroup])]
+        [ViewGroup[]]
         $ViewGroup,
 
         [Parameter(ParameterSetName = 'Default', Position = 1)]

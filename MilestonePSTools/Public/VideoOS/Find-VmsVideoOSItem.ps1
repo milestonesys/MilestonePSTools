@@ -32,7 +32,8 @@ function Find-VmsVideoOSItem {
         $MaxSeconds = 30,
 
         [Parameter()]
-        [KindNameTransformAttribute()]
+        [ArgumentCompleter([KindArgumentCompleter])]
+        [KindNameTransform()]
         [guid]
         $Kind,
 
@@ -67,9 +68,3 @@ function Find-VmsVideoOSItem {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Find-VmsVideoOSItem -ParameterName Kind -ScriptBlock {
-    $values = ([videoos.platform.kind].DeclaredMembers | Where-Object { $_.MemberType -eq 'Field' -and $_.FieldType -eq [guid] }).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

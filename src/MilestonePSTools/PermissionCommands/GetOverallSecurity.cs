@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System.Management.Automation;
+using MilestonePSTools.Utility;
 using VideoOS.Platform.ConfigurationItems;
 
 namespace MilestonePSTools.PermissionCommands
@@ -22,6 +23,8 @@ namespace MilestonePSTools.PermissionCommands
     public class SetOverallSecurity : ConfigApiCmdlet
     {
         [Parameter(ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(MipItemNameCompleter<Role>))]
+        [MipItemTransformation(typeof(Role))]
         public Role Role { get; set; }
 
         [Parameter]
@@ -45,6 +48,8 @@ namespace MilestonePSTools.PermissionCommands
     public class GetOverallSecurity : ConfigApiCmdlet
     {
         [Parameter(ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(MipItemNameCompleter<Role>))]
+        [MipItemTransformation(typeof(Role))]
         public Role Role { get; set; }
 
         [Parameter]

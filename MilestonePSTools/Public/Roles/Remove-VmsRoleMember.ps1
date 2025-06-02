@@ -19,8 +19,9 @@ function Remove-VmsRoleMember {
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = 'ByUser')]
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = 'BySid')]
         [Alias('RoleName')]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role[]]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role[]]
         $Role,
 
         [Parameter(Mandatory, Position = 1, ParameterSetName = 'ByUser')]

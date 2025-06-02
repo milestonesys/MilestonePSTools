@@ -18,8 +18,9 @@ function Set-VmsRole {
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role[]]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role[]]
         $Role,
 
         [Parameter()]
@@ -52,19 +53,22 @@ function Set-VmsRole {
 
         [Parameter()]
         [Alias('RoleClientLogOnTimeProfile')]
-        [TimeProfileNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.TimeProfile]
+        [ArgumentCompleter([MipItemNameCompleter[TimeProfile]])]
+        [MipItemTransformation([TimeProfile])]
+        [TimeProfile]
         $ClientLogOnTimeProfile,
 
         [Parameter()]
         [Alias('RoleDefaultTimeProfile')]
-        [TimeProfileNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.TimeProfile]
+        [ArgumentCompleter([MipItemNameCompleter[TimeProfile]])]
+        [MipItemTransformation([TimeProfile])]
+        [TimeProfile]
         $DefaultTimeProfile,
 
         [Parameter()]
-        [ClientProfileTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.ClientProfile]
+        [ArgumentCompleter([MipItemNameCompleter[ClientProfile]])]
+        [MipItemTransformation([ClientProfile])]
+        [ClientProfile]
         $ClientProfile,
 
         [Parameter()]
@@ -128,30 +132,3 @@ function Set-VmsRole {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Set-VmsRole -ParameterName Role -ScriptBlock {
-    $values = (Get-VmsRole).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
-Register-ArgumentCompleter -CommandName Set-VmsRole -ParameterName DefaultTimeProfile -ScriptBlock {
-    $values = @('Always')
-    (Get-VmsManagementServer).TimeProfileFolder.TimeProfiles.Name | Sort-Object | Foreach-Object {
-        $values += $_
-    }
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
-Register-ArgumentCompleter -CommandName Set-VmsRole -ParameterName ClientLogOnTimeProfile -ScriptBlock {
-    $values = @('Always')
-    (Get-VmsManagementServer).TimeProfileFolder.TimeProfiles.Name | Sort-Object | Foreach-Object {
-        $values += $_
-    }
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
-Register-ArgumentCompleter -CommandName Set-VmsRole -ParameterName ClientProfile -ScriptBlock {
-    $values = (Get-VmsClientProfile).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

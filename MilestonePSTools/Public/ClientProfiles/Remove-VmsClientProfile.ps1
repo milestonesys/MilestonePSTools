@@ -19,9 +19,9 @@ function Remove-VmsClientProfile {
     [RequiresVmsFeature('SmartClientProfiles')]
     param(
         [Parameter(Mandatory, ValueFromPipeline, Position = 0)]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.ClientProfile]])]
-        [ClientProfileTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.ClientProfile[]]
+        [ArgumentCompleter([MipItemNameCompleter[ClientProfile]])]
+        [MipItemTransformation([ClientProfile])]
+        [ClientProfile[]]
         $ClientProfile
     )
 

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using MilestonePSTools.Utility;
 using System;
 using System.Management.Automation;
 
@@ -39,6 +40,8 @@ namespace MilestonePSTools.DeviceCommands
         /// <para type="description">Item.FQID.Kind value as a Guid</para>
         /// </summary>
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "Convert")]
+        [ArgumentCompleter(typeof(KindArgumentCompleter))]
+        [KindNameTransform()]
         public Guid Kind { get; set; }
 
         /// <summary>

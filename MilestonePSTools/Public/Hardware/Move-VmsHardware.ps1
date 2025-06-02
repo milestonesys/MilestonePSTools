@@ -18,13 +18,15 @@ function Move-VmsHardware {
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, Position = 0, ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [VideoOS.Platform.ConfigurationItems.Hardware[]]
+        [ArgumentCompleter([MipItemNameCompleter[Hardware]])]
+        [MipItemTransformation([Hardware])]
+        [Hardware[]]
         $Hardware,
 
         [Parameter(Mandatory, Position = 1, ValueFromPipelineByPropertyName)]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[[VideoOS.Platform.ConfigurationItems.RecordingServer]]])]
-        [RecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer]
         $DestinationRecorder,
 
         [Parameter(Mandatory, Position = 2, ValueFromPipelineByPropertyName)]

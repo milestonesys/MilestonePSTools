@@ -19,8 +19,9 @@ function Remove-VmsFailoverGroup {
     [RequiresVmsFeature('RecordingServerFailover')]
     param(
         [Parameter(Mandatory, ValueFromPipeline, Position = 0)]
-        [FailoverGroupNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.FailoverGroup]
+        [ArgumentCompleter([MipItemNameCompleter[FailoverGroup]])]
+        [MipItemTransformation([FailoverGroup])]
+        [FailoverGroup]
         $FailoverGroup,
 
         [Parameter()]
@@ -57,9 +58,3 @@ function Remove-VmsFailoverGroup {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Remove-VmsFailoverGroup -ParameterName FailoverGroup -ScriptBlock {
-    $values = (Get-VmsFailoverGroup).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

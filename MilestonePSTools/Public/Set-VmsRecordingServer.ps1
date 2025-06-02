@@ -18,8 +18,9 @@ function Set-VmsRecordingServer {
     param (
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0)]
         [Alias('Recorder')]
-        [RecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer[]]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer[]]
         $RecordingServer,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -55,20 +56,23 @@ function Set-VmsRecordingServer {
 
         [Parameter()]
         [ValidateVmsFeature('RecordingServerFailover')]
-        [FailoverGroupNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.FailoverGroup]
+        [ArgumentCompleter([MipItemNameCompleter[FailoverGroup]])]
+        [MipItemTransformation([FailoverGroup])]
+        [FailoverGroup]
         $PrimaryFailoverGroup,
 
         [Parameter()]
         [ValidateVmsFeature('RecordingServerFailover')]
-        [FailoverGroupNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.FailoverGroup]
+        [ArgumentCompleter([MipItemNameCompleter[FailoverGroup]])]
+        [MipItemTransformation([FailoverGroup])]
+        [FailoverGroup]
         $SecondaryFailoverGroup,
 
         [Parameter()]
         [ValidateVmsFeature('RecordingServerFailover')]
-        [FailoverRecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.FailoverRecorder]
+        [ArgumentCompleter([MipItemNameCompleter[FailoverRecorder]])]
+        [MipItemTransformation([FailoverRecorder])]
+        [FailoverRecorder]
         $HotStandbyFailoverRecorder,
 
         [Parameter()]
@@ -215,24 +219,3 @@ function Set-VmsRecordingServer {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Set-VmsRecordingServer -ParameterName RecordingServer -ScriptBlock {
-    $values = (Get-VmsRecordingServer).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
-Register-ArgumentCompleter -CommandName Set-VmsRecordingServer -ParameterName PrimaryFailoverGroup -ScriptBlock {
-    $values = (Get-VmsFailoverGroup).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
-Register-ArgumentCompleter -CommandName Set-VmsRecordingServer -ParameterName SecondaryFailoverGroup -ScriptBlock {
-    $values = (Get-VmsFailoverGroup).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
-Register-ArgumentCompleter -CommandName Set-VmsRecordingServer -ParameterName HotStandbyFailoverRecorder -ScriptBlock {
-    $values = (Get-VmsFailoverRecorder -Unassigned).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

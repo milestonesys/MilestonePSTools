@@ -20,8 +20,9 @@ function Set-VmsFailoverGroup {
     [RequiresVmsFeature('RecordingServerFailover')]
     param (
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [FailoverGroupNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.FailoverGroup]
+        [ArgumentCompleter([MipItemNameCompleter[FailoverGroup]])]
+        [MipItemTransformation([FailoverGroup])]
+        [FailoverGroup]
         $FailoverGroup,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, Position = 0)]
@@ -63,9 +64,3 @@ function Set-VmsFailoverGroup {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Set-VmsFailoverGroup -ParameterName FailoverGroup -ScriptBlock {
-    $values = (Get-VmsFailoverGroup).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

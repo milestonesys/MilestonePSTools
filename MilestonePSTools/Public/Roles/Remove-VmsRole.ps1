@@ -18,10 +18,10 @@ function Remove-VmsRole {
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, Position = 0, ValueFromPipelineByPropertyName, ParameterSetName = 'ByName')]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.Role]])]
         [Alias('RoleName', 'Name')]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role]
         $Role,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ById')]

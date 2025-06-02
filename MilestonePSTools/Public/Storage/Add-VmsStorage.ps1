@@ -19,8 +19,9 @@ function Add-VmsStorage {
     param(
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'WithoutEncryption')]
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'WithEncryption')]
-        [RecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer]
         $RecordingServer,
 
         [Parameter(Mandatory, ParameterSetName = 'WithoutEncryption')]
@@ -85,6 +86,7 @@ function Add-VmsStorage {
                     Write-Error -Message $taskInfo.ErrorText
                     return
                 }
+                $storageFolder.ClearChildrenCache()
             }
             catch {
                 Write-Error $_
@@ -131,9 +133,3 @@ function Add-VmsStorage {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Add-VmsStorage -ParameterName RecordingServer -ScriptBlock {
-    $values = (Get-VmsRecordingServer).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

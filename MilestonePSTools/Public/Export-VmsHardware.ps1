@@ -19,7 +19,9 @@ function Export-VmsHardware {
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName, ParameterSetName = 'Path')]
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName, ParameterSetName = 'LiteralPath')]
         [ValidateNotNull()]
-        [VideoOS.Platform.ConfigurationItems.Hardware[]]
+        [ArgumentCompleter([MipItemNameCompleter[Hardware]])]
+        [MipItemTransformation([Hardware])]
+        [Hardware[]]
         $Hardware,
 
         [Parameter(Mandatory, Position = 0, ParameterSetName = 'Path')]

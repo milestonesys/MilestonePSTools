@@ -19,8 +19,9 @@ function Set-VmsRoleOverallSecurity {
     param (
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [Alias('RoleName')]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role]
         $Role,
 
         [Parameter(ValueFromPipelineByPropertyName)]

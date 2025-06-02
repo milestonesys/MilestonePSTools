@@ -20,9 +20,9 @@ function Get-VmsClientProfileAttributes {
     [RequiresVmsFeature('SmartClientProfiles')]
     param(
         [Parameter(Mandatory, ValueFromPipeline)]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.ClientProfile]])]
-        [ClientProfileTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.ClientProfile]
+        [ArgumentCompleter([MipItemNameCompleter[ClientProfile]])]
+        [MipItemTransformation([ClientProfile])]
+        [ClientProfile]
         $ClientProfile,
 
         [Parameter(Position = 0)]

@@ -18,11 +18,11 @@ function Add-VmsRoleMember {
     param (
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = 'ByAccountName')]
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = 'BySid')]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.Role]])]
         [Alias('RoleName')]
         [ValidateNotNull()]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role[]]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role[]]
         $Role,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, Position = 1, ParameterSetName = 'ByAccountName')]

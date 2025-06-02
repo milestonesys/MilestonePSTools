@@ -19,7 +19,9 @@ function Set-VmsViewGroup {
     [OutputType([VideoOS.Platform.ConfigurationItems.ViewGroup])]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [VideoOS.Platform.ConfigurationItems.ViewGroup]
+        [ArgumentCompleter([MipItemNameCompleter[ViewGroup]])]
+        [MipItemTransformation([ViewGroup])]
+        [ViewGroup]
         $ViewGroup,
 
         [Parameter()]
@@ -56,4 +58,3 @@ function Set-VmsViewGroup {
         }
     }
 }
-

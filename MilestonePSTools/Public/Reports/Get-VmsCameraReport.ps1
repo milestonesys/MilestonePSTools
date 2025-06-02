@@ -17,9 +17,9 @@ function Get-VmsCameraReport {
     [RequiresVmsConnection()]
     param (
         [Parameter()]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.RecordingServer]])]
-        [RecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.RecordingServer[]]
+        [ArgumentCompleter([MipItemNameCompleter[RecordingServer]])]
+        [MipItemTransformation([RecordingServer])]
+        [RecordingServer[]]
         $RecordingServer,
 
         [Parameter()]

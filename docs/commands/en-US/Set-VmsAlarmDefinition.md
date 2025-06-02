@@ -14,7 +14,7 @@ Sets one or more properties of an existing alarm definition.
 
 ### SmartMap
 ```
-Set-VmsAlarmDefinition -AlarmDefinition <AlarmDefinition[]> [-Name <String>] [-Source <String[]>]
+Set-VmsAlarmDefinition [-AlarmDefinition] <AlarmDefinition[]> [-Name <String>] [-Source <String[]>]
  [-RelatedCameras <String[]>] [-TimeProfile <String>] [-EnabledBy <String[]>] [-DisabledBy <String[]>]
  [-Instructions <String>] [-Priority <String>] [-Category <String>] [-AssignableToAdmins] [-Timeout <TimeSpan>]
  [-TimeoutAction <String[]>] [-SmartMap] [-Owner <String>] [-EventsToTrigger <String[]>] [-PassThru] [-WhatIf]
@@ -23,7 +23,7 @@ Set-VmsAlarmDefinition -AlarmDefinition <AlarmDefinition[]> [-Name <String>] [-S
 
 ### RelatedMap
 ```
-Set-VmsAlarmDefinition -AlarmDefinition <AlarmDefinition[]> [-Name <String>] [-Source <String[]>]
+Set-VmsAlarmDefinition [-AlarmDefinition] <AlarmDefinition[]> [-Name <String>] [-Source <String[]>]
  [-RelatedCameras <String[]>] [-TimeProfile <String>] [-EnabledBy <String[]>] [-DisabledBy <String[]>]
  [-Instructions <String>] [-Priority <String>] [-Category <String>] [-AssignableToAdmins] [-Timeout <TimeSpan>]
  [-TimeoutAction <String[]>] [-RelatedMap <String>] [-Owner <String>] [-EventsToTrigger <String[]>] [-PassThru]
@@ -61,7 +61,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False

@@ -20,8 +20,9 @@ function Set-VmsFailoverRecorder {
     [RequiresVmsFeature('RecordingServerFailover')]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [FailoverRecorderNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.FailoverRecorder]
+        [ArgumentCompleter([MipItemNameCompleter[FailoverRecorder]])]
+        [MipItemTransformation([FailoverRecorder])]
+        [FailoverRecorder]
         $FailoverRecorder,
 
         [Parameter()]
@@ -114,9 +115,3 @@ function Set-VmsFailoverRecorder {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Set-VmsFailoverRecorder -ParameterName FailoverRecorder -ScriptBlock {
-    $values = (Get-VmsFailoverRecorder -Recurse).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

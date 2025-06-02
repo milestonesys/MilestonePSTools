@@ -19,8 +19,9 @@ function Set-VmsLoginProvider {
     [RequiresVmsVersion('22.1')]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [LoginProviderTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.LoginProvider]
+        [ArgumentCompleter([MipItemNameCompleter[LoginProvider]])]
+        [MipItemTransformation([LoginProvider])]
+        [LoginProvider]
         $LoginProvider,
 
         [Parameter()]
@@ -129,9 +130,3 @@ function Set-VmsLoginProvider {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName Set-VmsLoginProvider -ParameterName LoginProvider -ScriptBlock {
-    $values = (Get-VmsLoginProvider).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

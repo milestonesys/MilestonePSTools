@@ -20,14 +20,16 @@ function Remove-VmsRoleClaim {
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0)]
         [Alias('RoleName')]
         [ValidateNotNull()]
-        [RoleNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.Role[]]
+        [ArgumentCompleter([MipItemNameCompleter[Role]])]
+        [MipItemTransformation([Role])]
+        [Role[]]
         $Role,
 
         [Parameter(ValueFromPipelineByPropertyName, Position = 1)]
         [Alias('ClaimProvider')]
-        [LoginProviderTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.LoginProvider]
+        [ArgumentCompleter([MipItemNameCompleter[LoginProvider]])]
+        [MipItemTransformation([LoginProvider])]
+        [LoginProvider]
         $LoginProvider,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, Position = 2)]
@@ -69,18 +71,7 @@ function Remove-VmsRoleClaim {
     }
 }
 
-Register-ArgumentCompleter -CommandName Remove-VmsRoleClaim -ParameterName Role -ScriptBlock {
-    $values = (Get-VmsRole).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
-Register-ArgumentCompleter -CommandName Remove-VmsRoleClaim -ParameterName LoginProvider -ScriptBlock {
-    $values = (Get-VmsLoginProvider).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
 Register-ArgumentCompleter -CommandName Remove-VmsRoleClaim -ParameterName ClaimName -ScriptBlock {
     $values = (Get-VmsLoginProvider | Get-VmsLoginProviderClaim).Name | Sort-Object
     Complete-SimpleArgument -Arguments $args -ValueSet $values
 }
-

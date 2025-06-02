@@ -19,9 +19,9 @@ function Export-VmsClientProfile {
     [RequiresVmsFeature('SmartClientProfiles')]
     param (
         [Parameter(ValueFromPipeline)]
-        [ArgumentCompleter([MilestonePSTools.Utility.MipItemNameCompleter[VideoOS.Platform.ConfigurationItems.ClientProfile]])]
-        [ClientProfileTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.ClientProfile[]]
+        [ArgumentCompleter([MipItemNameCompleter[ClientProfile]])]
+        [MipItemTransformation([ClientProfile])]
+        [ClientProfile[]]
         $ClientProfile,
 
         [Parameter(Mandatory, Position = 0)]

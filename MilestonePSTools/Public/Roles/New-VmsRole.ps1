@@ -48,19 +48,22 @@ function New-VmsRole {
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [Alias('RoleClientLogOnTimeProfile')]
-        [TimeProfileNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.TimeProfile]
+        [ArgumentCompleter([MipItemNameCompleter[TimeProfile]])]
+        [MipItemTransformation([TimeProfile])]
+        [TimeProfile]
         $ClientLogOnTimeProfile,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [Alias('RoleDefaultTimeProfile')]
-        [TimeProfileNameTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.TimeProfile]
+        [ArgumentCompleter([MipItemNameCompleter[TimeProfile]])]
+        [MipItemTransformation([TimeProfile])]
+        [TimeProfile]
         $DefaultTimeProfile,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ClientProfileTransformAttribute()]
-        [VideoOS.Platform.ConfigurationItems.ClientProfile]
+        [ArgumentCompleter([MipItemNameCompleter[ClientProfile]])]
+        [MipItemTransformation([ClientProfile])]
+        [ClientProfile]
         $ClientProfile,
 
         [Parameter()]
@@ -125,19 +128,3 @@ function New-VmsRole {
         }
     }
 }
-
-Register-ArgumentCompleter -CommandName New-VmsRole -ParameterName DefaultTimeProfile -ScriptBlock {
-    $values = (Get-VmsManagementServer).TimeProfileFolder.TimeProfiles.Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
-Register-ArgumentCompleter -CommandName New-VmsRole -ParameterName ClientLogOnTimeProfile -ScriptBlock {
-    $values = (Get-VmsManagementServer).TimeProfileFolder.TimeProfiles.Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-
-Register-ArgumentCompleter -CommandName New-VmsRole -ParameterName ClientProfile -ScriptBlock {
-    $values = (Get-VmsClientProfile).Name | Sort-Object
-    Complete-SimpleArgument -Arguments $args -ValueSet $values
-}
-

@@ -18,7 +18,9 @@ function New-VmsView {
     [RequiresVmsVersion('21.1')]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
-        [VideoOS.Platform.ConfigurationItems.ViewGroup]
+        [ArgumentCompleter([MipItemNameCompleter[ViewGroup]])]
+        [MipItemTransformation([ViewGroup])]
+        [ViewGroup]
         $ViewGroup,
 
         [Parameter(Mandatory, Position = 1)]
