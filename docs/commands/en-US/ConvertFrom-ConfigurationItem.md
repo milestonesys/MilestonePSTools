@@ -85,6 +85,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### VideoOS.Platform.ConfigurationItems.IConfigurationItem
+
 ## NOTES
 
 Not all ItemType's available through the Configuration API have matching "strongly typed" classes, so for less commonly used item types, you may see an error when using this function.

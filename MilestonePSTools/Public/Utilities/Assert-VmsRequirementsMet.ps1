@@ -22,6 +22,9 @@ function Assert-VmsRequirementsMet {
         if ($frame.InvocationInfo.MyCommand.CommandType -ne 'Function') {
             return
         }
+        # Re-using this cmdlet for telemetry calls since it is already called by all functions.
+        # The alternative is to create add a separate call to telemetry in every function begin block.
+        [MilestonePSTools.Telemetry.AppInsightsTelemetry]::SendInvokeCommandTelemetry($frame.InvocationInfo, 'NotSpecified')
         foreach ($attribute in $frame.InvocationInfo.MyCommand.ScriptBlock.Attributes) {
             try {
                 if (($requirement = $attribute -as [MilestonePSTools.IVmsRequirementValidator])) {

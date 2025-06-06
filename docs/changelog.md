@@ -7,16 +7,27 @@ hide:
 
 ## [vNext] unreleased
 
+### ➕ Added
+
+- If [telemetry](./commands/en-US/about_Telemetry.md) is enabled, the use of any MilestonePSTools command will be
+  reported to Azure Application Insights once per PowerShell session. The name of the command used, and the name of the
+  parameter set will be reported. Specific parameter names, values, results, or errors are _not included_ in any
+  telemetry data. See [about_Telemetry](./commands/en-US/about_Telemetry.md) to learn more about telemetry, how to
+  enable local logging of telemetry data, or how to disable telemetry in your environment.
+
 ### 🐛 Fixed
 
 - Fixed an issue with the `Get-VideoDeviceStatistics` command where an error would be thrown if MilestonePSTools was not
   installed into one of the default paths where PowerShell looks to automatically find and import modules.
+- Fixed an issue where `Get-SequenceData` did not work if the device ID in the `Path` parameter was not provided in
+  lower-case. The value of `Path` is now automatically passed to `VideoOS.Platform.Configuration.Instance.GetItemsBySearch`
+  in lower-case.
 
 ### 🔄 Changed
 
 - Updated ~54 commands to either add, or improve argument completers and transformation attributes. These are PowerShell
   features that allow you to tab through recording server names or press ++control+space++ after typing
-  `Get-VmsRecordingServer -Name `. Interactive users will now find completions for more parameters, on more commands,
+  `Get-VmsRecordingServer -Name`. Interactive users will now find completions for more parameters, on more commands,
   with more consistency.
 
 ### 🗑️ Removed

@@ -67,7 +67,7 @@ namespace MilestonePSTools.ConnectionCommands
     /// </summary>
     [Cmdlet(VerbsCommunications.Connect, "ManagementServer")]
     [RequiresVmsConnection(false)]
-    public class ConnectManagementServer : PSCmdlet
+    public class ConnectManagementServer : VmsCmdlet
     {
         private bool _connected;
 

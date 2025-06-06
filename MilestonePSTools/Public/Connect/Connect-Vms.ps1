@@ -16,6 +16,7 @@ function Connect-Vms {
     [CmdletBinding(DefaultParameterSetName = 'ConnectionProfile')]
     [OutputType([VideoOS.Platform.ConfigurationItems.ManagementServer])]
     [RequiresVmsConnection($false)]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='The noun is an acronym.')]
     param (
         [Parameter(ParameterSetName = 'ConnectionProfile', ValueFromPipelineByPropertyName, Position = 0)]
         [Parameter(ParameterSetName = 'ServerAddress')]

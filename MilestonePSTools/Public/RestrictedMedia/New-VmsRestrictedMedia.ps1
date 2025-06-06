@@ -19,6 +19,7 @@ function New-VmsRestrictedMedia {
     [RequiresVmsVersion('23.2')]
     [RequiresVmsFeature('RestrictedMedia')]
     [OutputType([VideoOS.Common.Proxy.Server.WCF.RestrictedMedia])]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Media can also be singular.')]
     param (
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [Alias('Id')]

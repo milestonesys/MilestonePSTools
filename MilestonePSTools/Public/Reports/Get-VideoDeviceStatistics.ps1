@@ -15,6 +15,7 @@
 function Get-VideoDeviceStatistics {
     [CmdletBinding()]
     [RequiresVmsConnection()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Command has already been published.')]
     param (
         # Specifies one or more Recording Server ID's to which the results will be limited. Omit this parameter if you want device status from all Recording Servers
         [Parameter(ValueFromPipelineByPropertyName)]

@@ -21,6 +21,10 @@ function Get-VmsOpenIdConfig {
         $Address
     )
 
+    begin {
+        Assert-VmsRequirementsMet
+    }
+
     process {
         if (-not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey('Address')) {
             $loginSettings = Get-LoginSettings

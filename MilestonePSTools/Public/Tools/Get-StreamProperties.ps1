@@ -16,6 +16,7 @@ function Get-StreamProperties {
     [CmdletBinding()]
     [OutputType([VideoOS.ConfigurationApi.ClientService.Property[]])]
     [RequiresVmsConnection()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Command has already been published.')]
     param (
         # Specifies the camera to retrieve stream properties for
         [Parameter(ValueFromPipeline, Mandatory, ParameterSetName = 'ByName')]

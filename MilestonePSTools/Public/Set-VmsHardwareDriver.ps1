@@ -156,7 +156,7 @@ function Set-VmsHardwareDriver {
 
 Register-ArgumentCompleter -CommandName Set-VmsHardwareDriver -ParameterName Driver -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $values = Get-RecordingServer | Select-Object -First 1 | Get-VmsHardwareDriver |
+    $values = Get-VmsRecordingServer | Select-Object -First 1 | Get-VmsHardwareDriver |
         Where-Object Name -like "$wordToComplete*" |
         Sort-Object Name |
         Select-Object -ExpandProperty Name -Unique

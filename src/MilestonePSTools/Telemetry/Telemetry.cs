@@ -270,9 +270,24 @@ namespace MilestonePSTools.Telemetry
             return id;
         }
 
+        private static readonly HashSet<string> _invokedCommands = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         public static void SendInvokeCommandTelemetry(InvocationInfo myInvocation, string parameterSetName = "na")
         {
+            // Do not send telemetry if the user has opted out
             if (!CanSendTelemetry)
+            {
+                return;
+            }
+
+            // Do not send telemetry for commands invoked by the module itself
+            if (myInvocation.CommandOrigin == CommandOrigin.Internal &&
+                myInvocation.PSScriptRoot.StartsWith(Module.ModuleDirectory, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            // Only send event once per command per session
+            if (_invokedCommands.Contains(myInvocation.MyCommand.Name))
             {
                 return;
             }
@@ -286,6 +301,7 @@ namespace MilestonePSTools.Telemetry
             try
             {
                 TelemetryClient.TrackEvent(TelemetryType.InvokeCommand.ToString(), properties);
+                _invokedCommands.Add(myInvocation.MyCommand.Name);
             }
             catch (Exception ex)
             {

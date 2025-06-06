@@ -18,6 +18,7 @@ function Get-VmsLicensedProducts {
     [OutputType([VideoOS.Platform.ConfigurationItems.LicenseInstalledProductChildItem])]
     [RequiresVmsConnection()]
     [RequiresVmsVersion('20.2')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Command has already been published.')]
     param ()
 
     begin {

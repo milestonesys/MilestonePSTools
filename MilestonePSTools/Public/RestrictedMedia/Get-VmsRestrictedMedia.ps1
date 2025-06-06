@@ -20,6 +20,7 @@ function Get-VmsRestrictedMedia {
     [RequiresVmsFeature('RestrictedMedia')]
     [OutputType([VideoOS.Common.Proxy.Server.WCF.RestrictedMedia])]
     [OutputType([VideoOS.Common.Proxy.Server.WCF.RestrictedMediaLive])]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Media can also be singular.')]
     param (
         [Parameter()]
         [switch]

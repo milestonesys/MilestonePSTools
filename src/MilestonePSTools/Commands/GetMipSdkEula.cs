@@ -27,7 +27,7 @@ namespace MilestonePSTools.Commands
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "MipSdkEula")]
     [RequiresVmsConnection(false)]
-    public class GetMipSdkEula : PSCmdlet
+    public class GetMipSdkEula : VmsCmdlet
     {
         /// <summary>
         ///

@@ -28,7 +28,7 @@ namespace MilestonePSTools.Commands
     /// </summary>
     [Cmdlet(VerbsLifecycle.Invoke, "MipSdkEula")]
     [RequiresVmsConnection(false)]
-    public class InvokeMipSdkEula : PSCmdlet
+    public class InvokeMipSdkEula : VmsCmdlet
     {
         /// <summary>
         ///

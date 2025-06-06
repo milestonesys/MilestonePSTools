@@ -14,6 +14,7 @@
 
 function Get-SecurityNamespaceValues {
     [CmdletBinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Private function.')]
     param ()
     
     process {

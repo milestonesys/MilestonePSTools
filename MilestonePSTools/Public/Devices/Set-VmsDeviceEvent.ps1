@@ -16,7 +16,7 @@ function Set-VmsDeviceEvent {
     [CmdletBinding(SupportsShouldProcess)]
     [MilestonePSTools.RequiresVmsConnection()]
     [MilestonePSTools.RequiresVmsVersion('21.1')]
-    [OutputType('None')]
+    [OutputType([VideoOS.Platform.ConfigurationItems.HardwareDeviceEventChildItem])]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
         [ValidateScript({

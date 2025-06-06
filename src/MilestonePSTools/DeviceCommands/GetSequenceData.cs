@@ -110,7 +110,7 @@ namespace MilestonePSTools.DeviceCommands
                 : StartTime.ToUniversalTime();
             EndTime = EndTime.ToUniversalTime();
             
-            var items = Configuration.Instance.GetItemsBySearch(Path, 1, TimeoutSeconds, out var result);
+            var items = Configuration.Instance.GetItemsBySearch(Path.ToLower(), 1, TimeoutSeconds, out var result);
             if (result == SearchResult.Error || items == null || items.Count != 1)
             {
                 WriteError(

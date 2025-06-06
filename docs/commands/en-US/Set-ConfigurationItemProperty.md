@@ -116,7 +116,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### VideoOS.ConfigurationApi.ClientService.ConfigurationItem
+
 ## OUTPUTS
+
+### VideoOS.ConfigurationApi.ClientService.ConfigurationItem
 
 ## NOTES
 
