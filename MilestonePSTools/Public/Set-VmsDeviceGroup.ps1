@@ -15,6 +15,7 @@
 function Set-VmsDeviceGroup {
     [CmdletBinding(SupportsShouldProcess)]
     [RequiresVmsConnection()]
+    [OutputType([VideoOS.Platform.ConfigurationItems.IConfigurationItem])]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
         [ValidateVmsItemType('CameraGroup', 'MicrophoneGroup', 'MetadataGroup', 'SpeakerGroup', 'InputEventGroup', 'OutputGroup')]

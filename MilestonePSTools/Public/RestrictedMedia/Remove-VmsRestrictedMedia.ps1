@@ -18,6 +18,7 @@ function Remove-VmsRestrictedMedia {
     [RequiresVmsConnection()]
     [RequiresVmsVersion('23.2')]
     [RequiresVmsFeature('RestrictedMedia')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Media can also be singular.')]
     param (
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'RestrictedMedia')]
         [VideoOS.Common.Proxy.Server.WCF.RestrictedMedia]

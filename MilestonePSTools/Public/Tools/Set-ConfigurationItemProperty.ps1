@@ -15,6 +15,7 @@
 function Set-ConfigurationItemProperty {
     [CmdletBinding()]
     [RequiresVmsConnection($false)]
+    [OutputType([VideoOS.ConfigurationApi.ClientService.ConfigurationItem])]
     param(
         [Parameter(Mandatory, ValueFromPipeline)]
         [VideoOS.ConfigurationApi.ClientService.ConfigurationItem]

@@ -16,6 +16,7 @@ function Set-VmsRule {
     [CmdletBinding(SupportsShouldProcess)]
     [RequiresVmsConnection()]
     [RequiresVmsVersion('20.1')]
+    [OutputType([VideoOS.ConfigurationApi.ClientService.ConfigurationItem])]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
         [RuleNameTransformAttribute()]

@@ -98,7 +98,7 @@ function Get-VmsCameraReport {
             }
             if (-not $RecordingServer) {
                 Write-Verbose $script:Messages.ListingAllRecorders
-                $RecordingServer = Get-RecordingServer
+                $RecordingServer = Get-VmsRecordingServer
             }
             $cache = @{
                 DeviceState    = @{}

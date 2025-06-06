@@ -20,7 +20,7 @@ Get-VmsHardware [-All] [-CaseSensitive] [<CommonParameters>]
 
 ### Filtered
 ```
-Get-VmsHardware [-RecordingServer <RecordingServer>] [-Id <Guid>] [-RecorderId <Guid>] [-Name <String>]
+Get-VmsHardware [-RecordingServer <RecordingServer>] [-Id <Guid>] [-RecorderId <Guid>] [[-Name] <String>]
  [-CaseSensitive] [<CommonParameters>]
 ```
 
@@ -129,7 +129,7 @@ Parameter Sets: Filtered
 Aliases:
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: True

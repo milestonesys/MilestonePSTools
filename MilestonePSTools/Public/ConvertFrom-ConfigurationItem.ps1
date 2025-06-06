@@ -15,6 +15,8 @@
 function ConvertFrom-ConfigurationItem {
     [CmdletBinding()]
     [RequiresVmsConnection()]
+    [OutputType([VideoOS.Platform.ConfigurationItems.IConfigurationItem])]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseOutputTypeCorrectly', '', Justification='ManagementServer inherits from IConfigurationItem')]
     param(
         # Specifies the Milestone Configuration API 'Path' value of the configuration item. For example, 'Hardware[a6756a0e-886a-4050-a5a5-81317743c32a]' where the guid is the ID of an existing Hardware item.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]

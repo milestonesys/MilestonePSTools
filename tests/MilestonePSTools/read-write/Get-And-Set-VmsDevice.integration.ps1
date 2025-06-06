@@ -6,7 +6,7 @@ Context 'Read and write device settings' -Skip:($script:SkipReadWriteTests)  {
 
         $ProgressPreference = 'SilentlyContinue'
         try {
-            $rec = Get-RecordingServer | Select-Object -First 1
+            $rec = Get-VmsRecordingServer | Select-Object -First 1
             $address = [uri]('http://{0}' -f $rec.HostName)
             $rec | Get-VmsHardware | Where-Object { [uri]$_.Address -eq $address } | Remove-Hardware -Confirm:$false
             $cred = [pscredential]::new('a', ('a' | ConvertTo-SecureString -AsPlainText -Force))

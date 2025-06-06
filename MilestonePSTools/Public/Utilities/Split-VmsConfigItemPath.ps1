@@ -37,7 +37,11 @@ function Split-VmsConfigItemPath {
         [switch]
         $ParentItemType
     )
-        
+
+    begin {
+        Assert-VmsRequirementsMet
+    }
+
     process {
         if ($null -eq $Path) { $Path = '' }
         foreach ($record in $Path) {

@@ -15,6 +15,7 @@
 function Disconnect-Vms {
     [CmdletBinding()]
     [RequiresVmsConnection($false)]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='The noun is an acronym.')]
     param ()
 
     begin {

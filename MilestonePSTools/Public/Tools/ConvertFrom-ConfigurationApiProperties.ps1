@@ -15,6 +15,7 @@
 function ConvertFrom-ConfigurationApiProperties {
     [CmdletBinding()]
     [RequiresVmsConnection()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Command has already been published.')]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
         [VideoOS.Platform.ConfigurationItems.ConfigurationApiProperties]

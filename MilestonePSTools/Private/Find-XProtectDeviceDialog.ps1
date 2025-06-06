@@ -74,6 +74,8 @@ function Find-XProtectDeviceDialog {
 "@
 
         function Clear-Results {
+            [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Private function.')]
+            param()
             $var_dgrResults.Columns.Clear()
             $var_dgrResults.Items.Clear()
             $var_txtTotalResults.Clear()
@@ -105,6 +107,7 @@ function Find-XProtectDeviceDialog {
         $excludedItems = "Folder|Path|Icon|Enabled|DisplayName|RecordingFramerate|ItemCategory|Wrapper|Address|Channel"
 
         $var_cboItemType.Add_SelectionChanged( {
+                [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidAssignmentToAutomaticVariable', '', Justification='This is an event handler.')]
                 param($sender, $e)
                 $itemType = $e.AddedItems[0].Content
 

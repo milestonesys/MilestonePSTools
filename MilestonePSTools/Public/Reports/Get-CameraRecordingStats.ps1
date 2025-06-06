@@ -15,6 +15,7 @@
 function Get-CameraRecordingStats {
     [CmdletBinding()]
     [RequiresVmsConnection()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Command has already been published.')]
     param(
         # Specifies the Id's of cameras for which to retrieve recording statistics
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]

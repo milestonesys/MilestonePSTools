@@ -156,7 +156,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Object
+### VideoOS.Platform.ConfigurationItems.IConfigurationItem
+
 ## NOTES
 
 ## RELATED LINKS

@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using MilestonePSTools.Connection;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
+using MilestonePSTools.Connection;
+using MilestonePSTools.Telemetry;
 using VideoOS.Common.Proxy.Server.WCF;
 using VideoOS.ConfigurationApi.ClientService;
 using VideoOS.Platform;
@@ -56,9 +57,18 @@ namespace MilestonePSTools
         }
     }
 
-    public abstract class PSCmdletWithRequirements : PSCmdlet {
+    public abstract class VmsCmdlet : PSCmdlet
+    {
         protected override void BeginProcessing()
         {
+            AppInsightsTelemetry.SendInvokeCommandTelemetry(MyInvocation, ParameterSetName);
+        }
+    }
+
+    public abstract class PSCmdletWithRequirements : VmsCmdlet {
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
             foreach (var attribute in GetType().GetCustomAttributes(true))
             {
                 if (attribute is IVmsRequirementValidator requirement)

@@ -23,6 +23,7 @@ using namespace VideoOS.Platform.ConfigurationItems
     $PSBPreference.Test.OutputFile = 'out/testResults.xml'
     $PSBPreference.Test.SkipRemainingOnFailure = 'Run'
     $PSBPreference.Test.OutputVerbosity = 'Normal'
+    $PSBPreference.Test.ScriptAnalysis.SettingsPath = Join-Path $psake.build_script_dir 'tests\ScriptAnalyzerSettings.psd1'
 
     $psake.context.tasks.stagefiles.PostAction = {
         # Update the module version in the module manifest
@@ -45,17 +46,35 @@ using namespace VideoOS.Platform.ConfigurationItems
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-'@ -split "`n"
-        $content = $licenseHeader + (Get-Content -Path $outputPsm1Path | ForEach-Object {
-            foreach ($line in $licenseHeader) {
-                $pattern = [regex]::Escape($line)
-                if ($_ -match "^$pattern`$") {
-                    return
+'@ -split "\r?\n"
+        $stringBuilder = [text.stringbuilder]::new()
+        $licenseHeader | ForEach-Object {
+            $null = $stringBuilder.AppendLine($_)
+        }
+        
+        try {
+            $stream = [io.file]::OpenRead($outputPsm1Path)
+            $reader = [io.streamreader]::new($stream)
+            do {
+                $line = $reader.ReadLine()
+                if ($line -match '^#') {
+                    $isLicenseHeader = $false
+                    foreach ($headerLine in $licenseHeader) {
+                        if ($line -match "^$([regex]::Escape($headerLine))`$") {
+                            $isLicenseHeader = $true
+                            break
+                        }
+                    }
+                    if ($isLicenseHeader) {
+                        continue
+                    }
                 }
-            }
-            $_
-        })
-        $content | Set-Content -Path $outputPsm1Path
+                $null = $stringBuilder.AppendLine($line)
+            } while ($null -ne $line)
+        } finally {
+            $reader.Dispose()
+        }
+        [io.file]::WriteAllText($outputPsm1Path, $stringBuilder.ToString(), [text.encoding]::UTF8)
     }
 
     $psake.context.tasks.GenerateMAML.DependsOn += @('SetOnlineHelpUrls', 'AddCommandRequirementsToDocs')

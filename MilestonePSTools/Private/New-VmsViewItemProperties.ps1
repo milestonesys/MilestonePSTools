@@ -15,6 +15,7 @@
 function New-VmsViewItemProperties {
     [CmdletBinding()]
     [OutputType([VmsCameraViewItemProperties])]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Private function.')]
     param (
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]

@@ -21,7 +21,7 @@ function Get-DevicesByRecorder {
         server ID's and the values are lists of "VideoOS.Platform.Item" objects.
 
         The cmdlet will complete much quicker than if we were to use
-        Get-RecordingServer | Get-VmsCamera, because it does not rely on the
+        Get-VmsRecordingServer | Get-VmsCamera, because it does not rely on the
         configuration API at all. Instead, it has the same functionality as
         XProtect Smart Client where the command "sees" only the devices that are enabled
         and loaded by the Recording Server.

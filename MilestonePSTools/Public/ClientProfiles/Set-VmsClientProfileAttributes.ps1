@@ -17,6 +17,7 @@ function Set-VmsClientProfileAttributes {
     [RequiresVmsConnection()]
     [RequiresVmsVersion('21.2')]
     [RequiresVmsFeature('SmartClientProfiles')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification='Command has already been published.')]
     param(
         [Parameter(Mandatory, ValueFromPipeline)]
         [ArgumentCompleter([MipItemNameCompleter[ClientProfile]])]

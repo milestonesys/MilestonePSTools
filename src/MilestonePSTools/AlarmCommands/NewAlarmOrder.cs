@@ -31,7 +31,7 @@ namespace MilestonePSTools.AlarmCommands
     [Cmdlet(VerbsCommon.New, "AlarmOrder")]
     [OutputType(typeof(OrderBy))]
     [RequiresVmsConnection(false)]
-    public class NewAlarmOrder : PSCmdlet
+    public class NewAlarmOrder : VmsCmdlet
     {
         /// <summary>
         /// <para type="description">Specifies the order as either Ascending or Descending. Default is Ascending.</para>

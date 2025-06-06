@@ -35,12 +35,13 @@ namespace MilestonePSTools
         private static ModuleSettings _embeddedSettings;
         private static readonly string _appSettingsPath;
         private static readonly string _userAppSettingsPath;
-
+        private static readonly string _moduleRoot;
         public const string ModuleName = "MilestonePSTools";
         public const string ModuleId = "46909c4a-d5d8-4faf-830d-5a0df564fe7b";
         public const string CompanyName = "Milestone Systems, Inc.";
         public static string AppDataDirectory { get; } = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Milestone\MilestonePSTools";
         public static string ProgramDataDirectory { get; private set; }
+        public static string ModuleDirectory => _moduleRoot;
         public static string AssemblyVersion { get; } = FileVersionInfo.GetVersionInfo(typeof(Module).Assembly.Location).ProductVersion;
 
         internal static ModuleSettings EmbeddedSettings => _embeddedSettings;
@@ -61,6 +62,7 @@ namespace MilestonePSTools
             var assemblyFileInfo = new FileInfo(typeof(MilestoneConnection).Assembly.Location);
             _appSettingsPath = Path.Combine(assemblyFileInfo.DirectoryName, "appsettings.json");
             _userAppSettingsPath = Path.Combine(AppDataDirectory, "appsettings.user.json");
+            _moduleRoot = new FileInfo(typeof(Module).Assembly.Location).Directory.Parent.FullName;
         }
 
         public static void Initialize()
@@ -140,7 +142,7 @@ namespace MilestonePSTools
     [Cmdlet(VerbsCommon.Get, "VmsModuleConfig")]
     [OutputType(typeof(ModuleSettings))]
     [RequiresVmsConnection(false)]
-    public class GetModuleConfigCommand : PSCmdlet
+    public class GetModuleConfigCommand : VmsCmdlet
     {
         protected override void ProcessRecord()
         {
@@ -150,7 +152,7 @@ namespace MilestonePSTools
 
     [Cmdlet(VerbsCommon.Set, "VmsModuleConfig")]
     [RequiresVmsConnection(false)]
-    public class SetModuleConfigCommand : PSCmdlet
+    public class SetModuleConfigCommand : VmsCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = "InputObject")]
         public ModuleSettings InputObject { get; set; }

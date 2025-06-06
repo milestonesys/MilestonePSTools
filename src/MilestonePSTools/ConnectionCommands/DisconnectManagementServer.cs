@@ -31,7 +31,7 @@ namespace MilestonePSTools.ConnectionCommands
     /// </summary>
     [Cmdlet(VerbsCommunications.Disconnect, "ManagementServer")]
     [RequiresVmsConnection(false)]
-    public class DisconnectManagementServer : PSCmdlet
+    public class DisconnectManagementServer : VmsCmdlet
     {
         /// <summary>
         /// 

@@ -7,7 +7,7 @@ remote_branch: gh-pages
 repo_name: milestonesystemsinc/powershellsamples
 repo_url: https://github.com/MilestoneSystemsInc/PowerShellSamples
 edit_uri: ""
-copyright: <a href="#__consent" class="md-button">Change cookie settings</a><br/> Copyright &copy; 2019-2024 Milestone Systems A/S. All rights reserved.
+copyright: <a href="#__consent" class="md-button">Change cookie settings</a><br/> Copyright &copy; 2019-2025 Milestone Systems A/S. All rights reserved.
 
 theme:
   name: material

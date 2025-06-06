@@ -31,7 +31,7 @@ namespace MilestonePSTools.AlarmCommands
     [Cmdlet(VerbsCommon.New, "AlarmCondition")]
     [OutputType(typeof(Condition))]
     [RequiresVmsConnection(false)]
-    public class NewAlarmCondition : PSCmdlet
+    public class NewAlarmCondition : VmsCmdlet
     {
         /// <summary>
         /// <para type="description">Specifies the AlarmLine property to be used for this condition.</para>
