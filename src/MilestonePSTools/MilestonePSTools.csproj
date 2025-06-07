@@ -82,8 +82,6 @@
     <Compile Include="DeviceCommands\GetMetadataRecordCommand.cs" />
     <Compile Include="DeviceCommands\SetDeviceCommandBase.cs" />
     <Compile Include="EventCommands\MessageQueueMessage.cs" />
-    <Compile Include="Commands\GetMipSdkEula.cs" />
-    <Compile Include="Commands\InvokeMipSdkEula.cs" />
     <Compile Include="Commands\ClearVmsCache.cs" />
     <Compile Include="ConfigApiCommands\GetConfigurationService.cs" />
     <Compile Include="ConfigApiCommands\GetVmsIServiceRegistrationServiceCommand.cs" />

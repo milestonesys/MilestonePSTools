@@ -181,7 +181,6 @@ namespace MilestonePSTools.ConnectionCommands
                     return;
                 }
             }
-            if (!UserAcceptsEula()) return;
 
             try
             {
@@ -291,42 +290,6 @@ namespace MilestonePSTools.ConnectionCommands
         private void HandleLoginResult(bool connected)
         {
             _connected = connected;
-        }
-
-        private bool UserAcceptsEula()
-        {
-            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var file = new FileInfo(Path.Combine(appData, @"MilestonePSTools\user-accepted-eula.txt"));
-            if (file.Directory == null || file.DirectoryName == null) throw new DirectoryNotFoundException($"Failed to locate appdata directory for {file.FullName}");
-            if (!file.Directory.Exists)
-            {
-                Directory.CreateDirectory(file.DirectoryName);
-            }
-
-            if (file.Exists)
-            {
-                return true;
-            }
-
-            if (AcceptEula)
-            {
-                File.WriteAllText(file.FullName, string.Empty);
-                return true;
-            }
-
-            var modulePath = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), @"..");
-            var eulaPath = Path.Combine(modulePath, "assets\\MIPSDK_EULA.txt");
-            WriteError(
-                new ErrorRecord(
-                    new InvalidOperationException(
-                        "Please read and accept the end-user license agreement before using " +
-                        "MilestonePSTools. Use -AcceptEula to indicate agreement. This is only " +
-                        "required once for the current Windows user."),
-                    "AcceptEula",
-                    ErrorCategory.InvalidOperation,
-                    null));
-            Process.Start(eulaPath);
-            return false;
         }
     }
 }

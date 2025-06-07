@@ -15,7 +15,7 @@ using namespace VideoOS.Platform.ConfigurationItems
     $PSBPreference.General.ModuleVersion = (dotnet nbgv get-version -f json | ConvertFrom-Json).SimpleVersion
     $PSBPreference.Build.CompileModule = $true
     $PSBPreference.Build.CompileHeader = "$usings`r`nImport-Module `"`$PSScriptRoot\bin\MilestonePSTools.dll`""
-    $PSBPreference.Build.CopyDirectories = 'bin', 'assets', 'en-US'
+    $PSBPreference.Build.CopyDirectories = 'bin', 'en-US'
     $PSBPreference.Help.DefaultLocale = 'en-US'
     $PSBPreference.Docs.RootDir = './docs/commands'
     $PSBPreference.Docs.AlphabeticParamsOrder = $true

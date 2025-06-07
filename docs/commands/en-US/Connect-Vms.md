@@ -95,8 +95,8 @@ Show a Milestone login dialog, and on successful connection, add or update the c
 ## PARAMETERS
 
 ### -AcceptEula
-Indicates that you accept the terms of the end user license agreement supplied with the MilestonePSTools module, which
-is a copy of the agreement supplied with Milestone's SDK. You can review the EULA at any time using `Invoke-MipSdkEula`.
+Deprecated. Used to indicate that you accept the terms of the end user license agreement supplied with the
+MilestonePSTools module. It is no longer required indicate acceptance of the MIP SDK EULA.
 
 ```yaml
 Type: SwitchParameter

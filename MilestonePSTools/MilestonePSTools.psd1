@@ -17,7 +17,7 @@
     FunctionsToExport      = '*'
     CmdletsToExport        = '*'
     AliasesToExport        = '*'
-    FileList               = @('assets/MIPSDK_EULA.txt')
+    FileList               = @()
     PrivateData            = @{
         PSData = @{
             Tags         = 'PSEdition_Desktop', 'Windows', 'Milestone', 'ConfigApi',
