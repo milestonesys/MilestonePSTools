@@ -112,11 +112,8 @@ Note: As a "Basic User", the user will not have access to child sites in a Miles
 
 ### -AcceptEula
 
-Acknowledge you have read and accept the end-user license agreement for the
-redistributable MIP SDK package. This command is required on the first use of
-`Connect-ManagementServer` for the current Windows user.
-
-*Note: A 0-byte file is placed at `%appdata%\MilestonePSTools\user-accepted-eula.txt` once the agreement has been accepted.*
+Deprecated. Used to indicate that you accept the terms of the end user license agreement supplied with the
+MilestonePSTools module. It is no longer required indicate acceptance of the MIP SDK EULA.
 
 ```yaml
 Type: SwitchParameter
