@@ -4,10 +4,10 @@
     ModuleVersion          = '0.0.1'
     CompatiblePSEditions   = 'Desktop'
     GUID                   = '46909c4a-d5d8-4faf-830d-5a0df564fe7b'
-    Author                 = 'Joshua Hendricks'
-    CompanyName            = 'Milestone Systems, Inc.'
-    Copyright              = '(c) 2019-2023 Milestone Systems. All rights reserved.'
-    Description            = 'Milestone XProtect VMS configuration and automation powered by the Milestone MIP SDK.'
+    Author                 = 'Milestone Systems'
+    CompanyName            = 'Milestone Systems'
+    Copyright              = 'Milestone Systems A/S. All rights reserved.'
+    Description            = 'Milestone XProtect VMS configuration and automation powered by Milestone''s MIP SDK.'
     PowerShellVersion      = '5.1'
     DotNetFrameworkVersion = '4.7'
     ProcessorArchitecture  = 'Amd64'
@@ -23,7 +23,8 @@
             Tags         = 'PSEdition_Desktop', 'Windows', 'Milestone', 'ConfigApi',
             'ConfigurationApi', 'XProtect', 'MIPSDK'
             ProjectUri   = 'https://www.milestonepstools.com/'
-            IconUri      = 'https://www.milestonepstools.com/assets/images/milestonelogo.png'
+            IconUri      = 'https://www.milestonepstools.com/assets/images/milestonelogo-85x85.png'
+            LicenseUri   = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
             ReleaseNotes = 'See the changelog at https://www.milestonepstools.com/changelog/'
         }
     }
