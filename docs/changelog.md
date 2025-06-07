@@ -7,6 +7,18 @@ hide:
 
 ## [vNext] unreleased
 
+### 🔄 Changed
+
+- Removed the logic behind the `AcceptEula` switch parameter on the `Connect-Vms` and `Connect-ManagementServer`
+  commands. The parameters still exists, but it does nothing and is no longer required on the first login.
+
+### 🗑️ Removed
+
+- The commands `Get-MipSdkEula` and `Invoke-MipSdkEula` have been removed in connection with the change in the
+  `AcceptEula` parameter behavior.
+
+## [25.1.50] 2025-06-06
+
 ### ➕ Added
 
 - If [telemetry](./commands/en-US/about_Telemetry.md) is enabled, the use of any MilestonePSTools command will be

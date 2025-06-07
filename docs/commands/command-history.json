@@ -1,5 +1,5 @@
 {
-    "Date":  "\/Date(1748460653247)\/",
+    "Date":  "\/Date(1749254285961)\/",
     "Commands":  [
                      {
                          "Aliases":  "",
@@ -2657,9 +2657,9 @@
                          "Name":  "Get-AlarmDefinition",
                          "VersionAdded":  "1.0.10",
                          "DatePublished":  "\/Date(1555654625000)\/",
-                         "VersionRemoved":  null,
-                         "DateRemoved":  null,
-                         "AliasedTo":  null
+                         "VersionRemoved":  "25.1.50",
+                         "DateRemoved":  "\/Date(1749260292000)\/",
+                         "AliasedTo":  "Get-VmsAlarmDefinition"
                      },
                      {
                          "Aliases":  "",
