@@ -6,35 +6,35 @@ ____________
 
 <div class="grid cards" markdown>
 
--   :octicons-device-camera-video-24:{ .lg .middle } __522,935 cameras__
+-   :octicons-device-camera-video-24:{ .lg .middle } __564,513 cameras__
 
     ---
 
-    More than 522k cameras have been managed by MilestonePSTools globally.
+    More than 564k cameras have been managed by MilestonePSTools globally.
 
--   :octicons-globe-24:{ .lg .middle } __53 countries__
-
-    ---
-
-    MilestonePSTools was used in at least 53 countries across the globe.
-
--   :fontawesome-solid-user-group:{ .lg .middle } __979 active users__
+-   :octicons-globe-24:{ .lg .middle } __48 countries__
 
     ---
 
-    In the last 30 days, at least 979 unique customers have used MilestonePSTools.
+    MilestonePSTools was used in at least 48 countries across the globe.
 
--   :material-login:{ .lg .middle } __638,922 sessions__
-
-    ---
-
-    There have been more than 638k PowerShell sessions using MilestonePSTools in the last 30 days.
-
--   :material-download:{ .lg .middle } __454,798 downloads__
+-   :fontawesome-solid-user-group:{ .lg .middle } __1020 active users__
 
     ---
 
-    MilestonePSTools has been downloaded more than 454k times since the initial release in 2019.
+    In the last 30 days, at least 1020 unique customers have used MilestonePSTools.
+
+-   :material-login:{ .lg .middle } __235,977 sessions__
+
+    ---
+
+    There have been more than 235k PowerShell sessions using MilestonePSTools in the last 30 days.
+
+-   :material-download:{ .lg .middle } __455,350 downloads__
+
+    ---
+
+    MilestonePSTools has been downloaded more than 455k times since the initial release in 2019.
 
     [:octicons-arrow-right-24: PowerShell Gallery](https://www.powershellgallery.com/packages/MilestonePSTools)
 
