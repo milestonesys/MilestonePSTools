@@ -440,7 +440,74 @@ Task -name PublishDocs -depends pull-mkdocs-material-insiders, generate-compatib
     }
 }
 
-Task -name mkdocs-build -depends pull-mkdocs-material-insiders, generate-compatibility-table -action {
+Task -name update-telemetry-template {
+    $telemetry = Get-Content (Join-Path $psake.build_script_dir 'docs/telemetry.json') | ConvertFrom-Json
+    $template = @'
+____________
+
+## In the last 30 days[^1][^2][^3]
+
+[^1]: Module usage is based on [optional telemetry](commands/en-US/about_Telemetry.md).
+[^2]: Numbers exclude telemetry related to test licenses.
+[^3]: Last updated on {9}.
+
+<div class="grid cards" markdown>
+
+-   :octicons-device-camera-video-24:{{ .lg .middle }} __{0} cameras__
+
+    ---
+
+    More than {1}k cameras have been managed by MilestonePSTools globally.
+
+-   :fontawesome-solid-server:{{ .lg .middle }} __{8} sites__
+
+    ---
+
+    MilestonePSTools has been used on at least {8} sites in the last 30 days.
+
+-   :octicons-globe-24:{{ .lg .middle }} __{2} countries__
+
+    ---
+
+    MilestonePSTools was used in at least {2} countries across the globe.
+
+-   :fontawesome-solid-user-group:{{ .lg .middle }} __{3} active users__
+
+    ---
+
+    In the last 30 days, at least {3} unique customers have used MilestonePSTools.
+
+-   :material-login:{{ .lg .middle }} __{4} sessions__
+
+    ---
+
+    There have been more than {5}k PowerShell sessions using MilestonePSTools in the last 30 days.
+
+-   :material-download:{{ .lg .middle }} __{6} downloads__
+
+    ---
+
+    MilestonePSTools has been downloaded more than {7}k times since the initial release in 2019.
+
+    [:octicons-arrow-right-24: PowerShell Gallery](https://www.powershellgallery.com/packages/MilestonePSTools)
+
+</div>
+'@ -f @(
+    $telemetry.TotalCameras.ToString('N0'),
+    ([int][math]::Floor($telemetry.TotalCameras / 1000)),
+    $telemetry.TotalCountries,
+    $telemetry.TotalUsers.ToString('N0'),
+    $telemetry.TotalSessions.ToString('N0'),
+    ([int][math]::Floor($telemetry.TotalSessions / 1000)),
+    $telemetry.Downloads.ToString('N0'),
+    ([int][math]::Floor($telemetry.Downloads / 1000)),
+    $telemetry.TotalSites.ToString('N0'),
+    $telemetry.LastUpdated.ToString('D')
+)
+    $template | Set-Content (Join-Path $psake.build_script_dir 'docs/telemetry.md.template')
+}
+
+Task -name mkdocs-build -depends pull-mkdocs-material-insiders, generate-compatibility-table, update-telemetry-template -action {
     $outputPath = [io.path]::combine($psake.build_script_dir, 'Output')
     $null = New-Item -Path $outputPath -ItemType Directory -Force
     Exec {
