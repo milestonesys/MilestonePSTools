@@ -1,0 +1,85 @@
+name: Update Telemetry
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '36 14 * * MON'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Azure login
+        if: github.ref == 'refs/heads/main'
+        uses: Azure/login@v2
+        with:
+          client-id: ${{ secrets.APPINSIGHTS_CLIENTID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Update telemetry
+        shell: pwsh
+        env:
+          WORKSPACEID: ${{ secrets.APPINSIGHTS_WORKSPACEID }}
+        run: |
+          # Import build functions and AppInsights queries
+          . .\build.functions.ps1
+          # Build list of commands from the MilestonePSTools module
+          $module = Find-Module MilestonePSTools
+          $commands = @{}
+          $module.AdditionalMetadata.Functions -split '\s+' | ForEach-Object {
+              $commands[$_] = $null
+          }
+          $module.AdditionalMetadata.Cmdlets -split '\s+' | ForEach-Object {
+              $commands[$_] = $null
+          }
+          # Scrape download count from PSGallery
+          $html = Invoke-WebRequest https://www.powershellgallery.com/packages/milestonePSTools
+          $downloadMatch = $html.RawContent | Select-String '<li class="package-details-info-main">\s+(?<downloads>[\d,]+)'
+          $downloads = [int]$downloadMatch.Matches[0].Groups['downloads'].Value
+          # Query AppInsights and generate JSON
+          # Retrieve token for AppInsights query
+          $token = (az account get-access-token --resource https://api.loganalytics.io | ConvertFrom-Json).accessToken
+          $splat = @{
+             WorkspaceId = $env:WORKSPACEID
+             Token       = $token
+          }
+          $telemetry = [pscustomobject]@{
+              LastUpdated    = Get-Date -AsUTC
+              Downloads      = $downloads
+              TotalSessions  = Invoke-AzWorkspaceQuery @splat -Query $AppInsightsQueries.TotalSessions | % TotalSessions
+              TotalUsers     = Invoke-AzWorkspaceQuery @splat -Query $AppInsightsQueries.TotalUsers | % TotalUsers
+              TotalSites     = Invoke-AzWorkspaceQuery @splat -Query $AppInsightsQueries.TotalSites | % TotalSites
+              TotalCameras   = Invoke-AzWorkspaceQuery @splat -Query $AppInsightsQueries.TotalCameras | % TotalCameras
+              TotalCountries = Invoke-AzWorkspaceQuery @splat -Query $AppInsightsQueries.TotalCountries | % TotalCountries
+              CommandUsage   = Invoke-AzWorkspaceQuery @splat -Query $AppInsightsQueries.CommandUsage | Where-Object {
+                  $commands.ContainsKey($_.Command)
+              }
+          } | ConvertTo-Json
+          # Write telemetry to file and create PR
+          $telemetry | Set-Content ./docs/telemetry.json
+
+      - name: Open pull-request
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Exit early if no changes have been made to telemetry.json
+          if ('docs/telemetry.json' -notin (git diff --name-only)) {
+            exit 0
+          }
+          $branchName = 'update-telemetry-{0}' -f (Get-Date -Format 'yyyyMMdd-HHmmss')
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git checkout -b $branchName
+          git add ./docs/telemetry.json
+          git commit -m "chore: Automated telemetry update"
+          git push --set-upstream origin $branchName
+          gh pr create -B main -H $branchName -t "Automated telemetry update" -b 'Automated telemetry update'

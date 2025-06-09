@@ -1267,3 +1267,60 @@ _usage based on optional telemetry_
         throw
     }
 }
+
+$script:AppInsightsQueries = @{
+
+    TotalSessions = @'
+AppEvents
+| where TimeGenerated  > ago(30d)
+| where Name == "NewVmsConnection"
+| where not(tostring(Properties.ProductName) matches regex "(Test)$")
+| distinct SessionId
+| summarize TotalSessions = count()
+'@
+
+    TotalUsers = @'
+AppEvents
+| where TimeGenerated  > ago(30d)
+| where Name == "NewVmsConnection"
+| where not(tostring(Properties.ProductName) matches regex "(Test)$")
+| distinct UserId
+| summarize TotalUsers = count()
+'@
+
+    TotalCameras = @'
+AppEvents
+| where TimeGenerated > ago(30d)
+| where Name == "NewVmsConnection"
+| where not(tostring(Properties.ProductName) matches regex "(Test)$")
+| extend CamerasOnSite = todouble(Measurements["CameraCount"]), SiteId = tostring(Properties["SiteId"])
+| summarize arg_max(TimeGenerated, *) by SiteId
+| summarize TotalCameras = sum(CamerasOnSite)
+'@
+
+    TotalCountries = @'
+AppEvents
+| where TimeGenerated > ago(30d)
+| where Name == "NewVmsConnection"
+| where not(tostring(Properties.ProductName) matches regex "(Test)$")
+| summarize TotalCountries = dcount(ClientCountryOrRegion)
+'@
+
+    TotalSites = @'
+AppEvents
+| where TimeGenerated > ago(30d)
+| where Name == "NewVmsConnection"
+| where not(tostring(Properties.ProductName) matches regex "(Test)$")
+| extend SiteId = tostring(Properties["SiteId"])
+| summarize TotalSites = dcount(SiteId)
+'@
+
+    CommandUsage = @'
+AppEvents
+| where TimeGenerated > ago(30d)
+| where Name == "InvokeCommand"
+| extend Command = tostring(Properties.Command)
+| summarize InvocationCount = count(), UserCount = dcount(UserId) by Command
+| order by Command asc
+'@
+}
