@@ -7,6 +7,8 @@ hide:
 
 ## [vNext] unreleased
 
+## [25.2.1] 2025-06-10
+
 ### 🔄 Changed
 
 - Updated MIP SDK package references from `25.1.3` to `25.2.1`.
