@@ -344,13 +344,6 @@ Task -name StageCmdletLib -depends CompileLib, ClearModuleBinaries -description 
     $null = New-Item -Path $sdkDst -ItemType Directory -Force
 
     Get-ChildItem -Path $sdkSrc | Copy-Item -Destination $sdkDst -Recurse
-
-    # Fixes issue #126 https://github.com/MilestoneSystemsInc/PowerShellSamples/issues/126
-    $h265_sw_lib = Join-Path $sdkDst '15dd936825ad475ea34e35f3f54217a6\mfxplugin64_hevcd_sw.dll'
-    if (Test-Path $h265_sw_lib) {
-        $dst = Join-Path $sdkDst 'mfxplugin64_sw.dll'
-        Copy-Item -Path $h265_sw_lib -Destination $dst
-    }
 }
 
 Task -name SignWithAzureSignTool {
