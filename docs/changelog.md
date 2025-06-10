@@ -9,6 +9,7 @@ hide:
 
 ### 🔄 Changed
 
+- Updated MIP SDK package references from `25.1.3` to `25.2.1`.
 - Removed the logic behind the `AcceptEula` switch parameter on the `Connect-Vms` and `Connect-ManagementServer`
   commands. The parameters still exists, but it does nothing and is no longer required on the first login.
 

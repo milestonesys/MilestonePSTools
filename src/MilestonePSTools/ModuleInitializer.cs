@@ -56,6 +56,7 @@ namespace MilestonePSTools
         {
             var thisAssembly = this.GetType().Assembly.Location;
             var folder = new FileInfo(thisAssembly).DirectoryName ?? throw new DirectoryNotFoundException($"Could not find the parent directory of {thisAssembly}.");
+            SetDllDirectory(folder);
             LoadedAssemblies = new Dictionary<string, Assembly>();
             foreach (var dll in Directory.GetFiles(folder, "*.dll", SearchOption.TopDirectoryOnly))
             {
@@ -64,7 +65,6 @@ namespace MilestonePSTools
                 var current = Assembly.LoadFile(dll);
                 LoadedAssemblies[current.FullName.Split(new[] { ',' })[0]] = current;
             }
-            SetDllDirectory(folder);
         }
 
         private static Assembly RedirectToLoadedAssemblies(object sender, ResolveEventArgs args)
