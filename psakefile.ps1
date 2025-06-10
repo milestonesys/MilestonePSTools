@@ -1,4 +1,4 @@
-Properties {
+﻿Properties {
     $Configuration = 'Release'
 
     $usings = @'
@@ -26,9 +26,10 @@ using namespace VideoOS.Platform.ConfigurationItems
     $PSBPreference.Test.ScriptAnalysis.SettingsPath = Join-Path $psake.build_script_dir 'tests\ScriptAnalyzerSettings.psd1'
 
     $psake.context.tasks.stagefiles.PostAction = {
-        # Update the module version in the module manifest
+        # Update the module version and copyright in the module manifest
         $outputManifestPath = [io.path]::Combine($PSBPreference.Build.ModuleOutDir, "$($PSBPreference.General.ModuleName).psd1")
         Update-Metadata -Path $outputManifestPath -PropertyName ModuleVersion -Value $PSBPreference.General.ModuleVersion
+        Update-Metadata -Path $outputManifestPath -PropertyName Copyright -Value "Copyright © $(Get-Date -Format yyyy) Milestone Systems A/S. All rights reserved."
 
         # Remove all the copies of license headers from the original ps1 files in "compiled" psm1 file
         $outputPsm1Path = [io.path]::Combine($PSBPreference.Build.ModuleOutDir, "$($PSBPreference.General.ModuleName).psm1")
