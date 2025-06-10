@@ -2,7 +2,7 @@ name: Update Telemetry
 on:
   workflow_dispatch:
   schedule:
-    - cron: '36 14 * * MON'
+    - cron: '36 18 * * MON'
 
 jobs:
   build:
