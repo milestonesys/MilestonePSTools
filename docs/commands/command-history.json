@@ -1,5 +1,5 @@
 {
-    "Date":  "\/Date(1749254285961)\/",
+    "Date":  "\/Date(1749600160571)\/",
     "Commands":  [
                      {
                          "Aliases":  "",
@@ -1117,8 +1117,8 @@
                          "Name":  "Invoke-MipSdkEula",
                          "VersionAdded":  "1.0.64",
                          "DatePublished":  "\/Date(1572664909000)\/",
-                         "VersionRemoved":  null,
-                         "DateRemoved":  null,
+                         "VersionRemoved":  "25.2.1",
+                         "DateRemoved":  "\/Date(1749623335000)\/",
                          "AliasedTo":  null
                      },
                      {
@@ -2447,8 +2447,8 @@
                          "Name":  "Get-MipSdkEula",
                          "VersionAdded":  "1.0.64",
                          "DatePublished":  "\/Date(1572664909000)\/",
-                         "VersionRemoved":  null,
-                         "DateRemoved":  null,
+                         "VersionRemoved":  "25.2.1",
+                         "DateRemoved":  "\/Date(1749623335000)\/",
                          "AliasedTo":  null
                      },
                      {
