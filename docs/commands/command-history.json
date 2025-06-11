@@ -1,5 +1,5 @@
 {
-    "Date":  "\/Date(1749600160571)\/",
+    "Date":  "\/Date(1749676405733)\/",
     "Commands":  [
                      {
                          "Aliases":  "",
@@ -362,7 +362,7 @@
                          "AliasedTo":  null
                      },
                      {
-                         "Aliases":  "Get-VmsCameraGeneralSetting Get-VmsInputGeneralSetting Get-VmsMetadataGeneralSetting Get-VmsMicrophoneGeneralSetting Get-VmsOutputGeneralSetting Get-VmsSpeakerGeneralSetting",
+                         "Aliases":  "Get-VmsCameraGeneralSetting Get-VmsHardwareGeneralSetting Get-VmsInputGeneralSetting Get-VmsMetadataGeneralSetting Get-VmsMicrophoneGeneralSetting Get-VmsOutputGeneralSetting Get-VmsSpeakerGeneralSetting",
                          "Module":  "MilestonePSTools",
                          "Name":  "Get-VmsDeviceGeneralSetting",
                          "VersionAdded":  "25.1.39",
@@ -622,7 +622,7 @@
                          "AliasedTo":  null
                      },
                      {
-                         "Aliases":  "Set-VmsCameraGeneralSetting Set-VmsInputGeneralSetting Set-VmsMetadataGeneralSetting Set-VmsMicrophoneGeneralSetting Set-VmsOutputGeneralSetting Set-VmsSpeakerGeneralSetting",
+                         "Aliases":  "Set-VmsCameraGeneralSetting Set-VmsHardwareGeneralSetting Set-VmsInputGeneralSetting Set-VmsMetadataGeneralSetting Set-VmsMicrophoneGeneralSetting Set-VmsOutputGeneralSetting Set-VmsSpeakerGeneralSetting",
                          "Module":  "MilestonePSTools",
                          "Name":  "Set-VmsDeviceGeneralSetting",
                          "VersionAdded":  "25.1.39",
