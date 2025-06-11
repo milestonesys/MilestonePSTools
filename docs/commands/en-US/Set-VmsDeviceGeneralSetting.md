@@ -76,7 +76,9 @@ that are not present on a camera.
 
 ```powershell
 $hardware = Get-VmsHardware | Out-GridView -OutputMode Single
-$hardware | Set-VmsHardwareGeneralSetting -Setting @{
+
+# You may also use the Set-VmsHardwareGeneralSetting alias
+$hardware | Set-VmsDeviceGeneralSetting -Setting @{
     FPS            = 30
     VideoCodec     = 'H264'
     VideoH264Files = '_1920x1080_30_5_shoes_short'

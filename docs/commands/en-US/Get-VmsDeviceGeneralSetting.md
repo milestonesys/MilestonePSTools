@@ -130,7 +130,9 @@ is displayed. You can see how the ValueTypeInfo collection maps the raw value
 
 ```powershell
 $hardware = Get-VmsHardware | Select-Object -First 1
-$hardware | Get-VmsHardwareGeneralSetting
+
+# You may also use the Get-VmsHardwareGeneralSetting alias
+$hardware | Get-VmsDeviceGeneralSetting
 ```
 
 In this example, one hardware object is stored in the `$hardware` variable, and then `$hardware` is piped to
