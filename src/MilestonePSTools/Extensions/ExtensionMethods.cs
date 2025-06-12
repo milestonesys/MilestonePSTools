@@ -59,7 +59,7 @@ namespace MilestonePSTools.Extensions
 
         public static Property GetProperty(this ConfigurationItem item, string key)
         {
-            return item.Properties.SingleOrDefault(p => Regex.IsMatch(Regex.Escape(p.Key), Regex.Escape(key), RegexOptions.IgnoreCase));
+            return item.Properties.SingleOrDefault(p => Regex.IsMatch(p.Key, $"(^|/){Regex.Escape(key)}(/|$)", RegexOptions.IgnoreCase));
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace MilestonePSTools.Extensions
         /// <returns>The updated Property or null if no matching property found.</returns>
         public static Property SetProperty(this ConfigurationItem item, string key, string value)
         {
-            var property = item.Properties.SingleOrDefault(p => Regex.IsMatch(Regex.Escape(p.Key), Regex.Escape(key), RegexOptions.IgnoreCase));
+            var property = item.Properties.SingleOrDefault(p => Regex.IsMatch(p.Key, $"(^|/){Regex.Escape(key)}(/|$)", RegexOptions.IgnoreCase));
             if (property == null)
             {
                 return null;

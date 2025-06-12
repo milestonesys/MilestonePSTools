@@ -18,6 +18,7 @@ using System.Collections;
 using System.Linq;
 using System.Management.Automation;
 using VideoOS.ConfigurationAPI;
+using VideoOS.Platform;
 using VideoOS.Platform.ConfigurationItems;
 using VideoOS.Platform.Proxy.ConfigApi;
 namespace MilestonePSTools.DeviceCommands
@@ -28,11 +29,12 @@ namespace MilestonePSTools.DeviceCommands
     [RequiresVmsConnection()]
     [Alias("Set-VmsCameraGeneralSetting", "Set-VmsMicrophoneGeneralSetting",
            "Set-VmsSpeakerGeneralSetting", "Set-VmsMetadataGeneralSetting",
-           "Set-VmsInputGeneralSetting", "Set-VmsOutputGeneralSetting")]
+           "Set-VmsInputGeneralSetting", "Set-VmsOutputGeneralSetting",
+           "Set-VmsHardwareGeneralSetting")]
     public class SetDeviceGeneralSettingCommand : ConfigApiCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position = 0, ParameterSetName = nameof(Device))]
-        [ValidateVmsItemType("Camera", "Microphone", "Speaker", "Metadata", "InputEvent", "Output")]
+        [ValidateVmsItemType("Camera", "Microphone", "Speaker", "Metadata", "InputEvent", "Output", "Hardware")]
         public IConfigurationItem Device { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, Position = 0, ParameterSetName = nameof(Id))]
@@ -57,23 +59,36 @@ namespace MilestonePSTools.DeviceCommands
                 WriteWarning($"The {nameof(Settings)} parameter is an empty hashtable.");
                 return;
             }
+            var driverSettingsPrefix = "Device";
             switch (ParameterSetName)
             {
                 case nameof(Device):
                     Id = Device.Guid;
+                    if (Device is Hardware)
+                    {
+                        driverSettingsPrefix = "Hardware";
+                    }
                     break;
                 case nameof(Id):
+                    if (Configuration.Instance.GetItem(Id, Kind.Hardware) != null)
+                    {
+                        driverSettingsPrefix = "Hardware";
+                    }
                     break;
                 case nameof(Path):
                     Id = new Guid(new ConfigurationItemPath(Path).Id);
+                    if (Path.StartsWith("Hardware", StringComparison.OrdinalIgnoreCase))
+                    {
+                        driverSettingsPrefix = "Hardware";
+                    }
                     break;
                 default:
                     throw new InvalidOperationException($"Parameter set '{ParameterSetName}' not implemented.");
             }
-            var deviceSettings = ConfigurationService.GetItem($"DeviceDriverSettings[{Id}]");
+            var deviceSettings = ConfigurationService.GetItem($"{driverSettingsPrefix}DriverSettings[{Id}]");
             var parentPath = new ConfigurationItemPath(deviceSettings.ParentPath);
             var name = Device?.Name ?? $"{parentPath.ParentItemType}[{parentPath.Id}]";
-            var generalSettings = deviceSettings?.Children.FirstOrDefault(child => child.ItemType == nameof(ItemTypes.DeviceDriverSettings));
+            var generalSettings = deviceSettings?.Children.FirstOrDefault(child => child.ItemType == nameof(ItemTypes.DeviceDriverSettings) || child.ItemType == nameof(ItemTypes.HardwareDriverSettings));
             if (generalSettings == null)
             {
                 WriteError(
@@ -89,14 +104,18 @@ namespace MilestonePSTools.DeviceCommands
             foreach (var key in Settings.Keys)
             {
                 var property = generalSettings.GetProperty(key.ToString());
-                var newValue = property?.GetResolvedValue(Settings[key].ToString());
-                
                 if (property == null)
                 {
                     WriteWarning($"A general setting named '{key}' was not found on {name}.");
                     continue;
                 }
-                
+                else if (!property.IsSettable)
+                {
+                    WriteWarning($"The general setting '{key}' on {name} is read-only.");
+                    continue;
+                }
+
+                var newValue = property?.GetResolvedValue(Settings[key].ToString());
                 if (property.Value != newValue)
                 {
                     if (ShouldProcess(name, $"Change {property.Key} from {property.Value} to {newValue}"))

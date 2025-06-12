@@ -48,7 +48,7 @@ REQUIREMENTS
 
 ## EXAMPLES
 
-### Example 1
+### Example 1 - Explore general settings for a camera
 ```powershell
 Connect-Vms -ShowDialog -AcceptEula
 $camera = Select-Camera -SingleSelect -Title 'Select a camera (double-click)'
@@ -126,15 +126,27 @@ For reference, the ValueTypeInfo collection for the BlackAndWhiteMode setting
 is displayed. You can see how the ValueTypeInfo collection maps the raw value
 "Yes" to the display value "Color".
 
+### Example 2 - Get all general settings for Hardware
+
+```powershell
+$hardware = Get-VmsHardware | Select-Object -First 1
+
+# You may also use the Get-VmsHardwareGeneralSetting alias
+$hardware | Get-VmsDeviceGeneralSetting
+```
+
+In this example, one hardware object is stored in the `$hardware` variable, and then `$hardware` is piped to
+`Get-VmsHardwareGeneralSetting` which returns all general setting keys and values in a `hashtable`.
+
 ## PARAMETERS
 
 ### -Device
 Specifies one or more devices returned by the commands `Get-VmsCamera`, `Get-VmsMicrophone`, `Get-VmsSpeaker`, `Get-VmsMetadata`,
-`Get-VmsInput`, `Get-VmsOutput`, or `Get-VmsDevice`.
+`Get-VmsInput`, `Get-VmsOutput`, `Get-VmsDevice`, or `Get-VmsHardware`.
 
 REQUIREMENTS  
 
-- Allowed item types: Camera, Microphone, Speaker, Metadata, InputEvent, Output
+- Allowed item types: Camera, Microphone, Speaker, Metadata, InputEvent, Output, Hardware
 
 ```yaml
 Type: IConfigurationItem
@@ -149,7 +161,7 @@ Accept wildcard characters: False
 ```
 
 ### -Id
-Specifies the Id of a Camera, Microphone, Speaker, Metadata, Input, or Output device.
+Specifies the Id of a Camera, Microphone, Speaker, Metadata, Input, Output or Hardware device.
 
 ```yaml
 Type: Guid
@@ -234,6 +246,7 @@ setting.
 This command has the following aliases:
 
 - Get-VmsCameraGeneralSetting
+- Get-VmsHardwareGeneralSetting
 - Get-VmsInputGeneralSetting
 - Get-VmsMetadataGeneralSetting
 - Get-VmsMicrophoneGeneralSetting
@@ -243,4 +256,3 @@ This command has the following aliases:
 ## RELATED LINKS
 
 [Set-VmsDeviceGeneralSetting](./Set-VmsDeviceGeneralSetting.md)
-

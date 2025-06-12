@@ -19,6 +19,7 @@ using System.Collections;
 using System.Linq;
 using System.Management.Automation;
 using VideoOS.ConfigurationAPI;
+using VideoOS.Platform;
 using VideoOS.Platform.Proxy.ConfigApi;
 
 namespace MilestonePSTools.DeviceCommands
@@ -29,11 +30,12 @@ namespace MilestonePSTools.DeviceCommands
     [RequiresVmsConnection()]
     [Alias("Get-VmsCameraGeneralSetting", "Get-VmsMicrophoneGeneralSetting",
            "Get-VmsSpeakerGeneralSetting", "Get-VmsMetadataGeneralSetting",
-           "Get-VmsInputGeneralSetting", "Get-VmsOutputGeneralSetting")]
+           "Get-VmsInputGeneralSetting", "Get-VmsOutputGeneralSetting",
+           "Get-VmsHardwareGeneralSetting")]
     public class GetDeviceGeneralSettingCommand : ConfigApiCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position = 0, ParameterSetName = nameof(Device))]
-        [ValidateVmsItemType("Camera", "Microphone", "Speaker", "Metadata", "InputEvent", "Output")]
+        [ValidateVmsItemType("Camera", "Microphone", "Speaker", "Metadata", "InputEvent", "Output", "Hardware")]
         public VideoOS.Platform.ConfigurationItems.IConfigurationItem Device { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, Position = 0, ParameterSetName = nameof(Id))]
@@ -60,31 +62,46 @@ namespace MilestonePSTools.DeviceCommands
 
         protected override void ProcessRecord()
         {
+            var driverSettingsPrefix = "Device";
             // Use the ConfigurationService instead of strongly typed objects because IConfigurationItem does
             // not have a DeviceDriverSettings property.
             switch (ParameterSetName)
             {
                 case nameof(Device):
                     Id = Device.Guid;
+                    if (Device is VideoOS.Platform.ConfigurationItems.Hardware)
+                    {
+                        driverSettingsPrefix = "Hardware";
+                    }
                     break;
                 case nameof(Id):
+                    if (Configuration.Instance.GetItem(Id, Kind.Hardware) != null)
+                    {
+                        driverSettingsPrefix = "Hardware";
+                    }
                     break;
                 case nameof(Path):
                     Id = new Guid(new ConfigurationItemPath(Path).Id);
+                    if (Path.StartsWith("Hardware", StringComparison.OrdinalIgnoreCase))
+                    {
+                        driverSettingsPrefix = "Hardware";
+                    }
                     break;
                 default:
                     throw new InvalidOperationException($"Parameter set '{ParameterSetName}' not implemented.");
             }
-            var deviceSettings = ConfigurationService.GetItem($"DeviceDriverSettings[{Id}]");
+            
+            // The driverSettingsPrefix is used here to allow the use of this command with Hardware as well as devices.
+            var deviceSettings = ConfigurationService.GetItem($"{driverSettingsPrefix}DriverSettings[{Id}]");
             var parentPath = new ConfigurationItemPath(deviceSettings.ParentPath);
             var name = Device?.Name ?? $"{parentPath.ParentItemType}[{parentPath.Id}]";
             var properties = deviceSettings?.Children
-                ?.FirstOrDefault(c => c.ItemType == nameof(ItemTypes.DeviceDriverSettings))
+                ?.FirstOrDefault(c => c.ItemType == nameof(ItemTypes.DeviceDriverSettings) || c.ItemType == nameof(ItemTypes.HardwareDriverSettings))
                 ?.Properties;
             if (properties == null)
             {
                 WriteError(new ErrorRecord(
-                    new ItemNotFoundException($"DeviceDriverSettings not found for device {name}"),
+                    new ItemNotFoundException($"{driverSettingsPrefix}DriverSettings not found for device {name}"),
                     string.Empty,
                     ErrorCategory.ObjectNotFound,
                     null));
