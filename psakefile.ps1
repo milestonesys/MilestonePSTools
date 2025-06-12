@@ -201,6 +201,11 @@ Task -name ExportCommandHistory -depends Build {
     }
 
     $mdTablePath = Join-Path -Path $PSBPreference.Docs.RootDir -ChildPath 'commands.mdtable'
+    $commandUsage = @{}
+    $telemetry = Get-Content (Join-Path $psake.build_script_dir 'docs/telemetry.json') | ConvertFrom-Json
+    $telemetry.CommandUsage | ForEach-Object {
+        $commandUsage[$_.Command] = $_.UserCount
+    }
     if ($updateCommandHistory -or -not (Test-Path $mdTablePath)) {
         $commands = $history.Commands | Where-Object { $null -eq $_.DateRemoved } | Sort-Object Name
         $columns = @(
@@ -231,6 +236,13 @@ Task -name ExportCommandHistory -depends Build {
                 Expression = {
                     $command = $_
                     ($_.Aliases | ForEach-Object { '[{0}]({1}.md)' -f $_, $command.Name }) -join ' '
+                }
+            }
+
+            @{
+                Name       = 'Users in the last 30 days'
+                Expression = {
+                    [int]$commandUsage[$_.Name]
                 }
             }
         )
