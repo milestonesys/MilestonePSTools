@@ -230,19 +230,19 @@ Task -name ExportCommandHistory -depends Build {
                     $_.DatePublished.ToString('yyyy-MM-dd')
                 }
             },
+
+            @{
+                Name       = 'Users in the last 30 days'
+                Expression = {
+                    [int]$commandUsage[$_.Name]
+                }
+            },
     
             @{
                 Name       = 'Aliases'
                 Expression = {
                     $command = $_
                     ($_.Aliases | ForEach-Object { '[{0}]({1}.md)' -f $_, $command.Name }) -join ' '
-                }
-            }
-
-            @{
-                Name       = 'Users in the last 30 days'
-                Expression = {
-                    [int]$commandUsage[$_.Name]
                 }
             }
         )
