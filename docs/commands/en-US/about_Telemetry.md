@@ -22,10 +22,21 @@ MilestonePSTools anonymizes the telemetry, and does not collect personally
 identifiable information, or information that can be used to indirectly
 associate telemetry data with an identifiable natural person.
 
-The following information is sent at the start of a new "session" which is
-created upon importing MilestonePSTools into a Windows PowerShell environment:
+Unless disabled, telemetry is sent on the following events:
 
-- The `ProductVersion` property for the __MilestonePSTools.dll__ assembly
+1. The MilestonePSTools module is imported into a PowerShell session
+2. A connection is established to a management server using `Connect-Vms` or `Connect-ManagementServer`
+3. A connection is closed using `Disconnect-Vms` or `Disconnect-ManagementServer`
+4. Any MilestonePSTools command is executed in the terminal or within a script
+
+## Telemetry Events
+
+### 1. When MilestonePSTools is imported
+
+The following information is sent at the start of a new "session" which is
+created upon importing MilestonePSTools into a Windows PowerShell environment...
+
+- The `ProductVersion` property for the **MilestonePSTools.dll** assembly
 - The Operating System version
 - The .NET Framework version
 - The total number of logical processors
@@ -40,8 +51,10 @@ created upon importing MilestonePSTools into a Windows PowerShell environment:
     discarded. Milestone does not include any public or private IP address
     information in the telemetry reported by MilestonePSTools.
 
-The following information is sent when connecting to an XProtect VMS with
-MilestonePSTools:
+### 2. When connected to an XProtect VMS
+
+The following information is sent after successfully connecting to an XProtect
+VMS...
 
 - A randomly generated GUID representing the XProtect Management Server site ID
 - The type of user used to connect to the XProtect VMS (Basic, Windows, OAuth)
@@ -49,16 +62,33 @@ MilestonePSTools:
 - Whether or not the connection to the XProtect VMS was established over HTTPS
 - The total number of child sites, recording servers, hardware, and enabled child devices including cameras, microphones, speakers, metadata channels, inputs, and outputs
 
-The following information is sent when an XProtect VMS connection is closed
-gracefully using `Disconnect-Vms`:
+### 3. When disconnected from an XProtect VMS
+
+The following information is sent after disconnecting from an XProtect VMS gracefully using `Disconnect-Vms`...
 
 - The duration of the XProtect VMS connection session
 - The value of `Process.GetCurrentProcess().PrivateMemorySize64`
 
-To opt-out of this telemetry, set the environment variable
-`$env:VMS_ApplicationInsights__Enabled` to `false`. For this environment
-variable to have any effect, it must be set before importing the
-MilestonePSTools module.
+### 4. When using any MilestonePSTools command
+
+When using any command provided by MilestonePSTools, the name of the command and the parameter set name will be sent
+_once_ per command, per session.
+
+For example, if you run `Get-VmsCamera -Name 'Garage'` twice in the same PowerShell session, an **InvokeCommand**
+telemetry event will be sent only once. If the command is used again in a new PowerShell terminal, it will again be
+sent only once.
+
+The body of the telemetry event will include the text "Get-VmsCamera", and the name of the parameter set which would be
+"QueryItems". No additional information such as the value provided for the `-Name` parameter is included.
+
+!!! note
+    These telemetry events enable us to show which commands are most used. See the sortable [command index](./index.md).
+
+## Opt-out
+
+To opt-out of this telemetry, set the environment variable `$env:VMS_ApplicationInsights__Enabled`
+to `false`. For this environment variable to have any effect, it must be set
+before importing the MilestonePSTools module.
 
 Alternatively, you can run the command `Set-VmsModuleConfig -EnableTelemetry $false`
 and it will take effect immediately. Module configuration values are persisted
@@ -165,4 +195,3 @@ The **NewVmsSession** event includes telemetry similar to the JSON document belo
   "Sequence": null
 }
 ```
-
