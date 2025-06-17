@@ -4,41 +4,41 @@ ____________
 
 [^1]: Module usage is based on [optional telemetry](commands/en-US/about_Telemetry.md).
 [^2]: Numbers exclude telemetry related to test licenses.
-[^3]: Last updated on Monday, June 9, 2025.
+[^3]: Last updated on Monday, June 16, 2025.
 
 <div class="grid cards" markdown>
 
--   :octicons-device-camera-video-24:{ .lg .middle } __548,799 cameras__
+-   :octicons-device-camera-video-24:{ .lg .middle } __513,164 cameras__
 
     ---
 
-    More than 548k cameras have been managed by MilestonePSTools globally.
+    More than 513k cameras have been managed by MilestonePSTools globally.
 
--   :fontawesome-solid-server:{ .lg .middle } __1168 sites__
-
-    ---
-
-    MilestonePSTools has been used on at least 1168 sites in the last 30 days.
-
--   :octicons-globe-24:{ .lg .middle } __47 countries__
+-   :fontawesome-solid-server:{ .lg .middle } __1,246 sites__
 
     ---
 
-    MilestonePSTools was used in at least 47 countries across the globe.
+    MilestonePSTools has been used on at least 1,246 sites in the last 30 days.
 
--   :fontawesome-solid-user-group:{ .lg .middle } __901 active users__
-
-    ---
-
-    In the last 30 days, at least 901 unique customers have used MilestonePSTools.
-
--   :material-login:{ .lg .middle } __235,550 sessions__
+-   :octicons-globe-24:{ .lg .middle } __48 countries__
 
     ---
 
-    There have been more than 235k PowerShell sessions using MilestonePSTools in the last 30 days.
+    MilestonePSTools was used in at least 48 countries across the globe.
 
--   :material-download:{ .lg .middle } __455,395 downloads__
+-   :fontawesome-solid-user-group:{ .lg .middle } __922 active users__
+
+    ---
+
+    In the last 30 days, at least 922 unique customers have used MilestonePSTools.
+
+-   :material-login:{ .lg .middle } __243,366 sessions__
+
+    ---
+
+    There have been more than 243k PowerShell sessions using MilestonePSTools in the last 30 days.
+
+-   :material-download:{ .lg .middle } __455,788 downloads__
 
     ---
 
