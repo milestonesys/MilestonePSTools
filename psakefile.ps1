@@ -87,6 +87,7 @@ using namespace VideoOS.Platform.ConfigurationItems
     #     $psake.context.tasks.GenerateMAML.DependsOn = $psake.context.tasks.GenerateMAML.DependsOn | Where-Object { $_ -ne 'GenerateMarkdown' }
     # }
 
+    $script:MkdocsImage = 'ghcr.io/milestonesystemsinc/mkdocs-material-insiders:latest'
     $script:EmbeddedModules = @(
         @{
             Name            = 'ImportExcel'
@@ -95,7 +96,7 @@ using namespace VideoOS.Platform.ConfigurationItems
     )
 }
 
-Task Default -depends StageCmdletLib, Build, UpdateModuleExports, ExportCommandHistory, generate-compatibility-table
+Task Default -depends StageCmdletLib, Build, UpdateModuleExports, ExportCommandHistory, UpdateCommandIndexTable, generate-compatibility-table
 
 Task Build -FromModule PowerShellBuild -minimumVersion '0.7.2'
 
@@ -199,58 +200,58 @@ Task -name ExportCommandHistory -depends Build {
     } else {
         Write-Host "No changes made to affect command-history.json." -ForegroundColor Magenta
     }
+}
 
+Task -name UpdateCommandIndexTable {
     $mdTablePath = Join-Path -Path $PSBPreference.Docs.RootDir -ChildPath 'commands.mdtable'
     $commandUsage = @{}
-    $telemetry = Get-Content (Join-Path $psake.build_script_dir 'docs/telemetry.json') | ConvertFrom-Json
+    $telemetry = Get-Content (Join-Path $psake.build_script_dir 'docs/telemetry.json') -ErrorAction Stop | ConvertFrom-Json
     $telemetry.CommandUsage | ForEach-Object {
         $commandUsage[$_.Command] = $_.UserCount
     }
-    if ($updateCommandHistory -or -not (Test-Path $mdTablePath)) {
-        $commands = $history.Commands | Where-Object { $null -eq $_.DateRemoved } | Sort-Object Name
-        $columns = @(
-            @{
-                Name       = 'Command'
-                Expression = {
-                    '[{0}]({0}.md)' -f $_.Name
-                }
-            },
-    
-            @{
-                Name       = 'From version'
-                Expression = {
-                    $version = $_.VersionAdded
-                    '[{0}]({1}){{:target="_blank"}}' -f $version, "https://www.powershellgallery.com/packages/$($_.Module)/$version"
-                }
-            },
-    
-            @{
-                Name       = 'Date Published'
-                Expression = {
-                    $_.DatePublished.ToString('yyyy-MM-dd')
-                }
-            },
-
-            @{
-                Name       = 'Users in the last 30 days'
-                Expression = {
-                    [int]$commandUsage[$_.Name]
-                }
-            },
-    
-            @{
-                Name       = 'Aliases'
-                Expression = {
-                    $command = $_
-                    ($_.Aliases | ForEach-Object { '[{0}]({1}.md)' -f $_, $command.Name }) -join ' '
-                }
+    $jsonPath = Join-Path -Path $PSBPreference.Docs.RootDir -ChildPath 'command-history.json'
+    $history = Get-Content -Path $jsonPath -ErrorAction Stop | ConvertFrom-Json
+    $commands = $history.Commands | Where-Object { $null -eq $_.DateRemoved } | Sort-Object Name
+    $columns = @(
+        @{
+            Name       = 'Command'
+            Expression = {
+                '[{0}]({0}.md)' -f $_.Name
             }
-        )
-        
-        $commands | Select-Object $columns | ConvertTo-MarkdownTable | Set-Content -Path $mdTablePath
-    } else {
-        Write-Host "No changes made to affect commands.mdtable." -ForegroundColor Magenta
-    }
+        },
+
+        @{
+            Name       = 'From version'
+            Expression = {
+                $version = $_.VersionAdded
+                '[{0}]({1}){{:target="_blank"}}' -f $version, "https://www.powershellgallery.com/packages/$($_.Module)/$version"
+            }
+        },
+
+        @{
+            Name       = 'Date Published'
+            Expression = {
+                $_.DatePublished.ToString('yyyy-MM-dd')
+            }
+        },
+
+        @{
+            Name       = 'Users in the last 30 days'
+            Expression = {
+                [int]$commandUsage[$_.Name]
+            }
+        },
+
+        @{
+            Name       = 'Aliases'
+            Expression = {
+                $command = $_
+                ([string[]]$_.Aliases | Where-Object { ![string]::IsNullOrWhiteSpace($_) } | ForEach-Object { '[{0}]({1}.md)' -f $_, $command.Name }) -join ' '
+            }
+        }
+    )
+    
+    $commands | Select-Object $columns | ConvertTo-MarkdownTable | Set-Content -Path $mdTablePath
 }
 
 Task -name SetOnlineHelpUrls {
@@ -391,12 +392,6 @@ Task -name PublishModule {
     Publish-Module -Path $modulePath -NuGetApiKey (${env:NUGETAPIKEY}) -Verbose
 }
 
-Task -name pull-mkdocs-material-insiders {
-    Assert (-not [string]::IsNullOrWhiteSpace($env:GHCR_TOKEN)) -failureMessage 'The GHCR_TOKEN environment variable must be set to pull the latest mkdocs-material-insiders image from ghcr.io.'
-    ${env:GHCR_TOKEN} | docker login -u joshooaj --password-stdin ghcr.io
-    docker pull ghcr.io/milestonesystemsinc/mkdocs-material-insiders:latest
-}
-
 Task -name generate-compatibility-table {
     $mdTablePath = Join-Path $psake.build_script_dir 'docs\compatibility.mdtable'
     Get-SupportedVmsTable -NotBefore (Get-Date).AddYears(-6) | Sort-Object Vms -Descending | ForEach-Object {
@@ -409,7 +404,7 @@ Task -name generate-compatibility-table {
     } | ConvertTo-MarkdownTable | Set-Content -Path $mdTablePath
 }
 
-Task -name PublishDocs -depends pull-mkdocs-material-insiders, generate-compatibility-table {
+Task -name PublishDocs -depends PullMkdocsMaterialImage, generate-compatibility-table, update-telemetry-template, UpdateCommandIndexTable {
     # Add block override to overrides\main.html (https://squidfunk.github.io/mkdocs-material/customization/#overriding-blocks)
     $mainPath = Join-Path $psake.build_script_dir 'docs\overrides\main.html'
 
@@ -442,12 +437,13 @@ Task -name PublishDocs -depends pull-mkdocs-material-insiders, generate-compatib
     }
 
     Exec {
-        docker run -v "$($psake.build_script_dir)`:/docs" -e 'CI=true' --entrypoint 'sh' ghcr.io/milestonesystemsinc/mkdocs-material-insiders:latest -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs gh-deploy --force'
+        docker run -v "$($psake.build_script_dir)`:/docs" -e 'CI=true' --entrypoint 'sh' $script:MkdocsImage -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs gh-deploy --force'
     }
 }
 
 Task -name update-telemetry-template {
     $telemetry = Get-Content (Join-Path $psake.build_script_dir 'docs/telemetry.json') | ConvertFrom-Json
+    $telemetry.LastUpdated = $telemetry.LastUpdated | Get-Date
     $template = @'
 ____________
 
@@ -513,30 +509,23 @@ ____________
     $template | Set-Content (Join-Path $psake.build_script_dir 'docs/telemetry.md.template')
 }
 
-Task -name mkdocs-build -depends pull-mkdocs-material-insiders, generate-compatibility-table, update-telemetry-template -action {
+Task -name mkdocs-build -depends PullMkdocsMaterialImage, generate-compatibility-table, update-telemetry-template, UpdateCommandIndexTable -action {
     $outputPath = [io.path]::combine($psake.build_script_dir, 'Output')
     $null = New-Item -Path $outputPath -ItemType Directory -Force
     Exec {
-        docker run -v "$($psake.build_script_dir)`:/docs" --entrypoint 'sh' ghcr.io/milestonesystemsinc/mkdocs-material-insiders:latest -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs build'
+        docker run -v "$($psake.build_script_dir)`:/docs" --entrypoint 'sh' $script:MkdocsImage -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs build'
     }
 }
 
-Task -name mkdocs-serve -depends pull-mkdocs-material-insiders, generate-compatibility-table -description 'Serve mkdocs site locally' {
-    $null = docker pull -q ghcr.io/milestonesystemsinc/mkdocs-material-insiders:latest 2>&1
-    if ($LASTEXITCODE -ne 0) {
-        $pat = ${env:GHCR_TOKEN}
-        if ([string]::IsNullOrWhiteSpace($pat)) {
-            $securePat = Read-Host -Prompt 'Please enter a personal access token to pull the mkdocs-material-insiders image' -AsSecureString
-            $pat = [pscredential]::new('a', $securePat).GetNetworkCredential().Password
-        }
-        $pat | docker login -u joshooaj --password-stdin ghcr.io
-        $output = docker pull ghcr.io/milestonesystemsinc/mkdocs-material-insiders:latest 2>&1
-        if (!$?) {
-            throw $output.Exception.Message
-        }
-        $output
+Task -name PullMkdocsMaterialImage {
+    $null = docker pull -q $script:MkdocsImage 2>&1
+    if ($LASTEXITCODE) {
+        throw "Failed to pull $script:MkdocsImage. Please login to ghcr.io with your GitHub PAT first. Example: `$pat | docker login -u <your-github-username> --password-stdin ghcr.io"
     }
-    docker run --rm -it -p 8000:8000 -v "$($psake.build_script_dir)`:/docs" --entrypoint 'sh' ghcr.io/milestonesystemsinc/mkdocs-material-insiders:latest -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs serve --dev-addr=0.0.0.0:8000'
+}
+
+Task -name mkdocs-serve -depends PullMkdocsMaterialImage, generate-compatibility-table, update-telemetry-template, UpdateCommandIndexTable -description 'Serve mkdocs site locally' {
+    docker run --rm -it -p 8000:8000 -v "$($psake.build_script_dir)`:/docs" --entrypoint 'sh' $script:MkdocsImage -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs serve --dev-addr=0.0.0.0:8000'
 }
 
 Task -name integration-tests -description 'Run integration tests from the tests/MilestonePSTools folder' {
