@@ -7,6 +7,8 @@ hide:
 
 ## [vNext] unreleased
 
+## [25.2.6] 2025-06-18
+
 ### ➕ Added
 
 - Added support for `Hardware` on the `Get-VmsDeviceGeneralSetting` and `Set-VmsDeviceGeneralSetting` commands, with new
