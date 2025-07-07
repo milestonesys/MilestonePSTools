@@ -31,6 +31,7 @@ jobs:
         env:
           GHCR_USER: ${{ secrets.GHCR_USER }}
           GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          AZURE_APPINSIGHTS_CONNECTION_STRING: ${{ vars.AZURE_APPINSIGHTS_CONNECTION_STRING }}
         run: |
           $env:GHCR_TOKEN | docker login -u $env:GHCR_USER --password-stdin ghcr.io
           .\build.ps1 -Bootstrap -SkipIsolation mkdocs-build

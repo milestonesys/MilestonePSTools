@@ -44,7 +44,6 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.top
-    - navigation.tracking
     - toc.follow
 
 plugins:
@@ -99,6 +98,9 @@ plugins:
       - tags
 
 extra:
+  analytics:
+    provider: custom
+    connection_string: !ENV [AZURE_APPINSIGHTS_CONNECTION_STRING, 'not-available']
   consent:
     title: We value your privacy
     description: >- #

@@ -513,7 +513,7 @@ Task -name mkdocs-build -depends PullMkdocsMaterialImage, generate-compatibility
     $outputPath = [io.path]::combine($psake.build_script_dir, 'Output')
     $null = New-Item -Path $outputPath -ItemType Directory -Force
     Exec {
-        docker run -v "$($psake.build_script_dir)`:/docs" --entrypoint 'sh' $script:MkdocsImage -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs build'
+        docker run -e AZURE_APPINSIGHTS_CONNECTION_STRING="$env:AZURE_APPINSIGHTS_CONNECTION_STRING" -v "$($psake.build_script_dir)`:/docs" --entrypoint 'sh' $script:MkdocsImage -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs build'
     }
 }
 
@@ -525,7 +525,7 @@ Task -name PullMkdocsMaterialImage {
 }
 
 Task -name mkdocs-serve -depends PullMkdocsMaterialImage, generate-compatibility-table, update-telemetry-template, UpdateCommandIndexTable -description 'Serve mkdocs site locally' {
-    docker run --rm -it -p 8000:8000 -v "$($psake.build_script_dir)`:/docs" --entrypoint 'sh' $script:MkdocsImage -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs serve --dev-addr=0.0.0.0:8000'
+    docker run --rm -it -p 8000:8000 -e AZURE_APPINSIGHTS_CONNECTION_STRING="$env:AZURE_APPINSIGHTS_CONNECTION_STRING" -v "$($psake.build_script_dir)`:/docs" --entrypoint 'sh' $script:MkdocsImage -c 'apk add --no-cache pngquant py3-cffi musl-dev pango && pip install -r requirements.txt && mkdocs serve --dev-addr=0.0.0.0:8000'
 }
 
 Task -name integration-tests -description 'Run integration tests from the tests/MilestonePSTools folder' {
