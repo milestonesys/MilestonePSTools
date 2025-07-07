@@ -43,8 +43,8 @@ function Remove-VmsArchiveStorage {
             }
 
             'ByStorage' {
-                $recorder = [VideoOS.Platform.ConfigurationItems.RecordingServer]::new((Get-VmsManagementServer).ServerId, $Storage.ParentItemPath)
                 $storage = [VideoOS.Platform.ConfigurationItems.Storage]::new((Get-VmsManagementServer).ServerId, $ArchiveStorage.ParentItemPath)
+                $recorder = [VideoOS.Platform.ConfigurationItems.RecordingServer]::new((Get-VmsManagementServer).ServerId, $Storage.ParentItemPath)
                 if ($PSCmdlet.ShouldProcess("Recording server $($recorder.Name)", "Delete archive $($ArchiveStorage.Name) from $($storage.Name)")) {
                     $folder = [VideoOS.Platform.ConfigurationItems.ArchiveStorageFolder]::new((Get-VmsManagementServer).ServerId, $ArchiveStorage.ParentPath)
                     [void]$folder.RemoveArchiveStorage($ArchiveStorage.Path)
