@@ -1,10 +1,10 @@
 {
-  "LastUpdated": "2025-07-07T15:33:08.0628017Z",
-  "Downloads": 457321,
-  "TotalSessions": 257469,
-  "TotalUsers": 1127,
-  "TotalSites": 1328,
-  "TotalCameras": 534677,
+  "LastUpdated": "2025-07-07T18:54:44.4736254Z",
+  "Downloads": 457328,
+  "TotalSessions": 257493,
+  "TotalUsers": 1129,
+  "TotalSites": 1331,
+  "TotalCameras": 535998,
   "TotalCountries": 49,
   "CommandUsage": [
     {
@@ -44,12 +44,12 @@
     },
     {
       "Command": "Connect-ManagementServer",
-      "InvocationCount": 11271,
+      "InvocationCount": 11468,
       "UserCount": 421
     },
     {
       "Command": "Connect-Vms",
-      "InvocationCount": 20447,
+      "InvocationCount": 20505,
       "UserCount": 300
     },
     {
@@ -59,12 +59,12 @@
     },
     {
       "Command": "Disconnect-ManagementServer",
-      "InvocationCount": 11070,
+      "InvocationCount": 11266,
       "UserCount": 245
     },
     {
       "Command": "Disconnect-Vms",
-      "InvocationCount": 7997,
+      "InvocationCount": 8050,
       "UserCount": 14
     },
     {
@@ -74,7 +74,7 @@
     },
     {
       "Command": "Export-VmsHardware",
-      "InvocationCount": 150,
+      "InvocationCount": 152,
       "UserCount": 66
     },
     {
@@ -139,7 +139,7 @@
     },
     {
       "Command": "Get-HardwareSetting",
-      "InvocationCount": 339,
+      "InvocationCount": 342,
       "UserCount": 25
     },
     {
@@ -154,7 +154,7 @@
     },
     {
       "Command": "Get-IServerCommandService",
-      "InvocationCount": 16709,
+      "InvocationCount": 16766,
       "UserCount": 111
     },
     {
@@ -189,7 +189,7 @@
     },
     {
       "Command": "Get-PlaybackInfo",
-      "InvocationCount": 106,
+      "InvocationCount": 107,
       "UserCount": 39
     },
     {
@@ -244,22 +244,22 @@
     },
     {
       "Command": "Get-VmsArchiveStorage",
-      "InvocationCount": 6553,
+      "InvocationCount": 6691,
       "UserCount": 13
     },
     {
       "Command": "Get-VmsBasicUser",
-      "InvocationCount": 547,
+      "InvocationCount": 556,
       "UserCount": 13
     },
     {
       "Command": "Get-VmsCamera",
-      "InvocationCount": 648,
+      "InvocationCount": 649,
       "UserCount": 127
     },
     {
       "Command": "Get-VmsCameraReport",
-      "InvocationCount": 18733,
+      "InvocationCount": 18790,
       "UserCount": 116
     },
     {
@@ -304,7 +304,7 @@
     },
     {
       "Command": "Get-VmsDeviceStatus",
-      "InvocationCount": 639,
+      "InvocationCount": 652,
       "UserCount": 9
     },
     {
@@ -319,7 +319,7 @@
     },
     {
       "Command": "Get-VmsHardware",
-      "InvocationCount": 540,
+      "InvocationCount": 544,
       "UserCount": 164
     },
     {
@@ -329,7 +329,7 @@
     },
     {
       "Command": "Get-VmsHardwarePassword",
-      "InvocationCount": 299,
+      "InvocationCount": 302,
       "UserCount": 30
     },
     {
@@ -344,7 +344,7 @@
     },
     {
       "Command": "Get-VmsLicenseDetails",
-      "InvocationCount": 1639,
+      "InvocationCount": 1670,
       "UserCount": 12
     },
     {
@@ -354,7 +354,7 @@
     },
     {
       "Command": "Get-VmsLicenseOverview",
-      "InvocationCount": 1639,
+      "InvocationCount": 1670,
       "UserCount": 12
     },
     {
@@ -384,7 +384,7 @@
     },
     {
       "Command": "Get-VmsManagementServer",
-      "InvocationCount": 342,
+      "InvocationCount": 344,
       "UserCount": 181
     },
     {
@@ -409,7 +409,7 @@
     },
     {
       "Command": "Get-VmsRecordingServer",
-      "InvocationCount": 6905,
+      "InvocationCount": 7041,
       "UserCount": 251
     },
     {
@@ -449,7 +449,7 @@
     },
     {
       "Command": "Get-VmsStorage",
-      "InvocationCount": 6707,
+      "InvocationCount": 6845,
       "UserCount": 157
     },
     {
@@ -459,7 +459,7 @@
     },
     {
       "Command": "Get-VmsToken",
-      "InvocationCount": 16713,
+      "InvocationCount": 16770,
       "UserCount": 115
     },
     {
@@ -489,7 +489,7 @@
     },
     {
       "Command": "Import-VmsHardware",
-      "InvocationCount": 47,
+      "InvocationCount": 49,
       "UserCount": 25
     },
     {
@@ -584,7 +584,7 @@
     },
     {
       "Command": "Remove-VmsArchiveStorage",
-      "InvocationCount": 1,
+      "InvocationCount": 3,
       "UserCount": 1
     },
     {
