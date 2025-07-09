@@ -181,7 +181,7 @@ function Get-DevicePropertyList {
     )
 
     begin {
-        $excludedProperties = 'Icon', 'ItemCategory', 'Methods', 'ServerId', 'CreatedDate', 'DisplayName', 'ParentItemPath', 'StreamDefinitions', 'StreamUsages', 'Guid'
+        $excludedProperties = 'Icon', 'ItemCategory', 'Methods', 'ServerId', 'CreatedDate', 'DisplayName', 'ParentItemPath', 'StreamDefinitions', 'StreamUsages', 'Guid', 'FailoverSettingValues'
         $orderPriority = 'Name', 'ShortName', 'HostName', 'WebServerUri', 'Address', 'UserName', 'Password', 'Enabled', 'Channel', 'GisPoint', 'ActiveWebServerUri', 'PublicAccessEnabled', 'PublicWebserverHostName', 'PublicWebserverPort'
         $rearOrderPriority = 'LastModified', 'Id'
 
@@ -511,7 +511,7 @@ function Import-DevicePropertyList {
     )
 
     begin {
-        $ignoredColumns = 'RecordingServer', 'Hardware', 'Address', 'LastModified', 'Id', 'MotionDetectionMethod', 'MotionGenerateMotionMetadata', 'MotionGridSize', 'MotionExcludeRegions', 'MotionHardwareAccelerationMode', 'MotionKeyframesOnly', 'MotionManualSensitivity', 'MotionManualSensitivityEnabled', 'MotionProcessTime', 'MotionThreshold', 'MotionUseExcludeRegions', 'PrivacyMaskXml', 'PausePatrollingTimeout', 'ReservedPTZTimeout', 'MulticastEnabled', 'Guid'
+        $ignoredColumns = 'RecordingServer', 'Hardware', 'Address', 'LastModified', 'Id', 'MotionDetectionMethod', 'MotionGenerateMotionMetadata', 'MotionGridSize', 'MotionExcludeRegions', 'MotionHardwareAccelerationMode', 'MotionKeyframesOnly', 'MotionManualSensitivity', 'MotionManualSensitivityEnabled', 'MotionProcessTime', 'MotionThreshold', 'MotionUseExcludeRegions', 'PrivacyMaskXml', 'PausePatrollingTimeout', 'ReservedPTZTimeout', 'MulticastEnabled', 'Guid', 'FailoverSettingValues'
         $recordingStorage = @{}
         Get-VmsRecordingServer -Name $Settings.RecordingServer | Get-VmsStorage | ForEach-Object {
             $recordingStorage[$_.Name] = $_
