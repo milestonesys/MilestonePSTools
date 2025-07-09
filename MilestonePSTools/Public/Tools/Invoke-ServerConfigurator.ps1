@@ -92,40 +92,33 @@ function Invoke-ServerConfigurator {
     process {
         $exePath = $Path
         if ([string]::IsNullOrWhiteSpace($exePath)) {
-            # Find ServerConfigurator.exe by locating either the Management Server or Recording Server installation path
-            $configurationInfo = try {
-                Get-ManagementServerConfig
+            $cimSplat = @{
+                ClassName = 'Win32_Service'
+                Filter    = 'DisplayName like "Milestone XProtect%"'
             }
-            catch {
-                try {
-                    Get-RecorderConfig
-                }
-                catch {
-                    $null
-                }
-            }
-            if ($null -eq $configurationInfo) {
-                Write-Error "Could not find a Management Server or Recording Server installation"
+            $milestoneSvc = Get-CimInstance @cimSplat | Select-Object -First 1
+            if ($null -eq $milestoneSvc) {
+                Write-Error 'Automatic Server Configurator discovery failed: Could not find a Milestone XProtect service. Please provide the path to ServerConfigurator.exe using the Path parameter.'
                 return
             }
-            $fileInfo = [io.fileinfo]::new($configurationInfo.InstallationPath)
-            $exePath = Join-Path $fileInfo.Directory.Parent.FullName "Server Configurator\serverconfigurator.exe"
+            $milestoneSvcPath = $milestoneSvc.PathName.Trim(("'", '"'))
+            $fileInfo = [io.fileinfo]::new($milestoneSvcPath)
+            $exePath = Join-Path $fileInfo.Directory.Parent.FullName 'Server Configurator\serverconfigurator.exe'
             if (-not (Test-Path $exePath)) {
-                Write-Error "Expected to find Server Configurator at '$exePath' but failed."
+                Write-Error "Automatic Server Configurator discovery failed: Expected to find Server Configurator at '$exePath' but failed. Please provide the path to ServerConfigurator.exe using the Path parameter."
                 return
             }
         }
 
-
         # Ensure version is 20.3 (2020 R3) or newer
         $fileInfo = [io.fileinfo]::new($exePath)
-        if ($fileInfo.VersionInfo.FileVersion -lt [version]"20.3") {
+        if ($fileInfo.VersionInfo.FileVersion -lt [version]'20.3') {
             Write-Error "Invoke-ServerConfigurator requires Milestone version 2020 R3 or newer as this is when command-line options were introduced. Found Server Configurator version $($fileInfo.VersionInfo.FileVersion)"
             return
         }
 
         $exitCode = @{
-            0 = 'Success'
+            0  = 'Success'
             -1 = 'Unknown error'
             -2 = 'Invalid arguments'
             -3 = 'Invalid argument value'
