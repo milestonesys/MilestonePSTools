@@ -62,7 +62,7 @@ namespace MilestonePSTools
             {
                 var dllFileInfo = new FileInfo(dll);
                 if (!MipSdkAssemblies.Managed.Contains(dllFileInfo.Name)) continue;
-                var current = Assembly.LoadFile(dll);
+                var current = Assembly.LoadFrom(dll);
                 LoadedAssemblies[current.FullName.Split(new[] { ',' })[0]] = current;
             }
         }

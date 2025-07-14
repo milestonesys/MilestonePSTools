@@ -21,7 +21,6 @@ namespace MilestonePSTools
     public static IEnumerable<string> Managed { get; } = new[]
     {
       "Autofac.dll",
-      "AVIExporterClientMW.dll",
       "Azure.Core.dll",
       "Azure.Identity.dll",
       "C5.dll",
@@ -116,37 +115,6 @@ namespace MilestonePSTools
       "VideoOS.UI.Common.WPF.VideoPlayer.dll",
       "VideoOS.Utilities.dll",
       "VideoOS.Utilities.Telemetry.dll",
-    };
-
-    public static IEnumerable<string> Unmanaged { get; } = new[]
-    {
-      "avcodec-61.dll",
-      "avdevice-61.dll",
-      "avfilter-10.dll",
-      "avformat-61.dll",
-      "avutil-59.dll",
-      "concrt140.dll",
-      "CoreToolkits.dll",
-      "cudart64_12.dll",
-      "IMV1.dll",
-      "libmfxaudiosw64.dll",
-      "libmfxsw64.dll",
-      "msvcp140.dll",
-      "msvcp140_1.dll",
-      "msvcp140_2.dll",
-      "msvcp140_atomic_wait.dll",
-      "msvcp140_codecvt_ids.dll",
-      "nppc64_12.dll",
-      "nppig64_12.dll",
-      "swresample-5.dll",
-      "swscale-8.dll",
-      "ToolkitFactoryProvider.dll",
-      "vccorlib140.dll",
-      "vcruntime140.dll",
-      "vcruntime140_1.dll",
-      "vcruntime140_threads.dll",
-      "xerces-c-vc143_3_3_0.dll",
-      "xqilla-vc143_234_330.dll",
     };
   }
 }
