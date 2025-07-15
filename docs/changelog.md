@@ -7,6 +7,22 @@ hide:
 
 ## [vNext] unreleased
 
+### 🔄 Changed
+
+- Updated MIP SDK package references from `25.2.1` to `25.2.2`
+- Removed direct package reference to `Autofac`, `Microsoft.ApplicationInsights`, and some other packages. They are
+  still transient dependencies though, and we have fallen back to older versions, except where those versions were
+  deprecated/vulnerable. This fixes a compatibility issue in VSCode with the PowerShell extension terminal, and has
+  no impact on module functionality.
+- The `Invoke-ServerConfigurator` command now discovers the path to the executable by finding an installed
+  Milestone service, and using the executable path to determine the likely installation directory.
+
+### 🐛 Fixed
+
+- Added `FailoverSettingValues` to the list of ignored properties when using `Export-VmsHardware` to create an
+  Excel export. This caused a non-terminating error when later importing the Excel file using `Import-VmsHardware`.
+- Fixed a non-terminating error with `Remove-VmsArchiveStorage` when using the `ByStorage` parameter set.
+
 ## [25.2.6] 2025-06-18
 
 ### ➕ Added
