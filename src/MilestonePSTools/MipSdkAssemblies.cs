@@ -63,6 +63,7 @@ namespace MilestonePSTools
             "Newtonsoft.Json.dll",
             "Owin.dll",
             "System.Buffers.dll",
+            "System.ClientModel.dll",
             "System.Diagnostics.DiagnosticSource.dll",
             "System.IdentityModel.Tokens.Jwt.dll",
             "System.IO.FileSystem.AccessControl.dll",
