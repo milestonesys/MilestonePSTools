@@ -249,10 +249,10 @@
       <Version>25.2.1</Version>
     </PackageReference>
     <PackageReference Include="MilestoneSystems.VideoOS.Platform">
-      <Version>25.2.1</Version>
+      <Version>25.2.2</Version>
     </PackageReference>
     <PackageReference Include="MilestoneSystems.VideoOS.Platform.SDK">
-      <Version>25.2.1</Version>
+      <Version>25.2.2</Version>
     </PackageReference>
     <PackageReference Include="MilestoneSystems.VideoOS.Platform.Transact">
       <Version>25.2.1</Version>
@@ -261,9 +261,6 @@
       <Version>3.7.115</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="System.Text.Json">
-      <Version>9.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
