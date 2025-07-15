@@ -39,6 +39,12 @@ namespace MilestonePSTools
         /// </summary>
         public void OnImport()
         {
+            if (LoadedAssemblies != null)
+            {
+                // The module may be imported again in another runspace within the same process.
+                // No need to reinitialize the VideoOS environments or reload the assemblies.
+                return;
+            }
             AddMipSdkDllDirectory();
             AppDomain.CurrentDomain.AssemblyResolve += RedirectToLoadedAssemblies;
 
