@@ -78,11 +78,12 @@ function New-VmsAlarmDefinition {
         [string[]]
         $TimeoutAction,
 
-        [Parameter(ParameterSetName="SmartMap")]
+        # Deprecated: SmartMap is the default.
+        [Parameter()]
         [switch]
         $SmartMap,
 
-        [Parameter(ParameterSetName="RelatedMap")]
+        [Parameter()]
         [string]
         $RelatedMap,
 
@@ -95,7 +96,7 @@ function New-VmsAlarmDefinition {
         [string[]]
         $EventsToTrigger
     )
-
+    
     begin {
         Assert-VmsRequirementsMet
         $sources = [system.collections.generic.list[string]]::new()
@@ -191,9 +192,8 @@ function New-VmsAlarmDefinition {
             }
             $def.MapType = 1
             $def.RelatedMap = $def.RelatedMapValues[$RelatedMap]
-        }
-
-        if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('SmartMap')) {
+        } else {
+            # Default to SmartMap
             $def.MapType = 2
             $def.RelatedMap = ''
         }

@@ -76,11 +76,11 @@ function Set-VmsAlarmDefinition {
         [string[]]
         $TimeoutAction,
 
-        [Parameter(ParameterSetName="SmartMap")]
+        [Parameter()]
         [switch]
         $SmartMap,
 
-        [Parameter(ParameterSetName="RelatedMap")]
+        [Parameter()]
         [string]
         $RelatedMap,
 
@@ -161,18 +161,22 @@ function Set-VmsAlarmDefinition {
                 $def.Category = $def.CategoryValues[$Category]
             }
 
-            if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('RelatedMap')) {
+            if ($SmartMap.IsPresent) {
+                if ($PSBoundParameters.ContainsKey('RelatedMap')) {
+                    Write-Error 'Invalid combination of parameters. Please use either SmartMap, or RelatedMap.'
+                    return
+                }
+                $def.MapType = 2
+                $def.RelatedMap = ''
+            }
+
+            if ($PSBoundParameters.ContainsKey('RelatedMap')) {
                 if (!$def.RelatedMapValues.ContainsKey($RelatedMap)) {
                     Write-Error "No related map found with the name '$RelatedMap'. Check the map name and try again."
                     return
                 }
                 $def.MapType = 1
                 $def.RelatedMap = $def.RelatedMapValues[$RelatedMap]
-            }
-
-            if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('SmartMap')) {
-                $def.MapType = 2
-                $def.RelatedMap = ''
             }
 
             if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('Timeout')) {
