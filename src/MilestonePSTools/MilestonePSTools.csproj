@@ -143,6 +143,7 @@
     <Compile Include="Utility\KindArgumentCompleter.cs" />
     <Compile Include="Utility\KindNameTransformAttribute.cs" />
     <Compile Include="Utility\MipItemNameArgumentCompleter.cs" />
+    <Compile Include="Utility\MipItemToPathTransformationAttribute.cs" />
     <Compile Include="Utility\AviCodecArgumentCompleter.cs" />
     <Compile Include="Lpr\NewLprMatchListCommand.cs" />
     <Compile Include="Lpr\GetLprEventCommand.cs" />

@@ -42,15 +42,17 @@ function New-VmsAlarmDefinition {
 
         [Parameter()]
         [string]
-        $TimeProfile,
+        $TimeProfile = 'Always',
 
         # UDEs and Inputs
         [Parameter()]
+        [MipItemToPathTransformation('InputEvent', 'UserDefinedEvent')]
         [string[]]
         $EnabledBy,
         
         # UDEs and Inputs
         [Parameter()]
+        [MipItemToPathTransformation('InputEvent', 'UserDefinedEvent')]
         [string[]]
         $DisabledBy,
 
@@ -96,7 +98,7 @@ function New-VmsAlarmDefinition {
         [string[]]
         $EventsToTrigger
     )
-    
+
     begin {
         Assert-VmsRequirementsMet
         $sources = [system.collections.generic.list[string]]::new()
@@ -145,14 +147,22 @@ function New-VmsAlarmDefinition {
             return
         }
 
-        # TODO: Use switch on parametersetname to determine enablerule
-        if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('TimeProfile')) {
+        if ($EnabledBy.Count) {
+            if ($DisabledBy.Count -eq 0) {
+                Write-Error "When configuring an alarm definition to be active when an event is triggered using EnabledBy, you must also provide a value for DisabledBy."
+                return
+            }
+            $def.EnableEventList = $EnabledBy -join ','
+            $def.DisableEventList = $DisabledBy -join ','
+            $def.EnableRule = 2
+        } else {
             $timeProfiles = @{
                 'Always' = 'TimeProfile[00000000-0000-0000-0000-000000000000]'
             }
             (Get-VmsManagementServer).TimeProfileFolder.TimeProfiles | ForEach-Object {
                 if ($null -eq $_) { return }
                 $timeProfiles[$_.Name] = $_.Path
+                $timeProfiles[$_.Path] = $_.Path
             }
 
             if (!$timeProfiles.ContainsKey($TimeProfile)) {
@@ -160,13 +170,11 @@ function New-VmsAlarmDefinition {
                 return
             }
             $def.TimeProfile = $timeProfiles[$TimeProfile]
-            $def.EnableRule = 1
-        }
-
-        if ($PSCmdlet.ParameterSetName -eq 'EventTriggered') {
-            $def.EnableEventList = $EnabledBy -join ','
-            $def.DisableEventList = $DisabledBy -join ','
-            $def.EnableRule = 2
+            if ($def.TimeProfile -eq $timeProfiles.Always) {
+                $def.EnableRule = 0
+            } else {
+                $def.EnableRule = 1
+            }
         }
 
         if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('Priority')) {

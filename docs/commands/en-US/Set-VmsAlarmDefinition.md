@@ -12,22 +12,12 @@ Sets one or more properties of an existing alarm definition.
 
 ## SYNTAX
 
-### SmartMap
 ```
 Set-VmsAlarmDefinition [-AlarmDefinition] <AlarmDefinition[]> [-Name <String>] [-Source <String[]>]
  [-RelatedCameras <String[]>] [-TimeProfile <String>] [-EnabledBy <String[]>] [-DisabledBy <String[]>]
  [-Instructions <String>] [-Priority <String>] [-Category <String>] [-AssignableToAdmins] [-Timeout <TimeSpan>]
- [-TimeoutAction <String[]>] [-SmartMap] [-Owner <String>] [-EventsToTrigger <String[]>] [-PassThru] [-WhatIf]
- [-Confirm] [<CommonParameters>]
-```
-
-### RelatedMap
-```
-Set-VmsAlarmDefinition [-AlarmDefinition] <AlarmDefinition[]> [-Name <String>] [-Source <String[]>]
- [-RelatedCameras <String[]>] [-TimeProfile <String>] [-EnabledBy <String[]>] [-DisabledBy <String[]>]
- [-Instructions <String>] [-Priority <String>] [-Category <String>] [-AssignableToAdmins] [-Timeout <TimeSpan>]
- [-TimeoutAction <String[]>] [-RelatedMap <String>] [-Owner <String>] [-EventsToTrigger <String[]>] [-PassThru]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-TimeoutAction <String[]>] [-SmartMap] [-RelatedMap <String>] [-Owner <String>] [-EventsToTrigger <String[]>]
+ [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -98,8 +88,11 @@ Accept wildcard characters: False
 ```
 
 ### -DisabledBy
-Specifies which event(s) can disable the alarm definition, preventing alarms from being created when the source event is
-triggered.
+Specifies which event(s) can disable the alarm definition, disabling alarms from being created from the alarm
+definition after the source event(s) are triggered. Only device inputs (InputEvent) and user-defined events are allowed
+for enabling/disabling an alarm definition. You may supply an object returned by `Get-VmsInput`, or
+`Get-UserDefinedEvent`, or you can provide the configuration api path for an input or user-defined event which use
+the format "InputEvent[1aefd587-1d66-4213-b424-161d3992de45]", or "UserDefinedEvent[602242bc-2a01-4f4f-a965-118467166792]".
 
 ```yaml
 Type: String[]
@@ -114,7 +107,11 @@ Accept wildcard characters: False
 ```
 
 ### -EnabledBy
-Specifies which event(s) can enable the alarm definition, allowing alarms to be created when the source event is triggered.
+Specifies which event(s) can enable the alarm definition, allowing alarms to be created from the alarm definition
+only after the source event(s) are triggered. Only device inputs (InputEvent) and user-defined events are allowed
+for enabling/disabling an alarm definition. You may supply an object returned by `Get-VmsInput`, or
+`Get-UserDefinedEvent`, or you can provide the configuration api path for an input or user-defined event which use
+the format "InputEvent[1aefd587-1d66-4213-b424-161d3992de45]", or "UserDefinedEvent[602242bc-2a01-4f4f-a965-118467166792]".
 
 ```yaml
 Type: String[]
@@ -236,11 +233,12 @@ Accept wildcard characters: False
 
 ### -RelatedMap
 Specifies the name of a map to relate to alarms created from this alarm definition. Note that this field works with "Maps"
-and not "Smart Maps". You can get a list of map names the event server will accept by running `(Get-VmsManagementServer).AlarmDefinitionFolder.AddAlarmDefinition().RelatedMapValues.Keys`.
+and not "Smart Maps". You can get a list of map names the event server will accept by running
+`(Get-VmsManagementServer).AlarmDefinitionFolder.AddAlarmDefinition().RelatedMapValues.Keys`.
 
 ```yaml
 Type: String
-Parameter Sets: RelatedMap
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -251,11 +249,13 @@ Accept wildcard characters: False
 ```
 
 ### -SmartMap
-Specifies that alarms created from this alarm definition should show a "Smart Map" which displays objects using their GPS coordinates.
+Deprecated: Specifies that alarms created from this alarm definition should show a "Smart Map" which displays
+objects using their GPS coordinates. This is the default behavior so this parameter is not needed. If you want to
+relate alarms to a "legacy" map, provide the name of the map using the RelatedMap parameter.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: SmartMap
+Parameter Sets: (All)
 Aliases:
 
 Required: False

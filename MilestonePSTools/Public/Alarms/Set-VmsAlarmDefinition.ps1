@@ -44,11 +44,13 @@ function Set-VmsAlarmDefinition {
 
         # UDEs and Inputs
         [Parameter()]
+        [MipItemToPathTransformation('InputEvent', 'UserDefinedEvent')]
         [string[]]
         $EnabledBy,
         
         # UDEs and Inputs
         [Parameter()]
+        [MipItemToPathTransformation('InputEvent', 'UserDefinedEvent')]
         [string[]]
         $DisabledBy,
 
@@ -121,8 +123,15 @@ function Set-VmsAlarmDefinition {
                 $def.Owner = $Owner
             }
             
-            # TODO: Use switch on parametersetname to determine enablerule
-            if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('TimeProfile')) {
+            if ($EnabledBy.Count) {
+                if ($DisabledBy.Count -eq 0) {
+                    Write-Error "When configuring an alarm definition to be active when an event is triggered using EnabledBy, you must also provide a value for DisabledBy."
+                    return
+                }
+                $def.EnableEventList = $EnabledBy -join ','
+                $def.DisableEventList = $DisabledBy -join ','
+                $def.EnableRule = 2
+            } elseif (![string]::IsNullOrEmpty($TimeProfile)) {
                 $timeProfiles = @{
                     'Always' = 'TimeProfile[00000000-0000-0000-0000-000000000000]'
                 }
@@ -136,13 +145,11 @@ function Set-VmsAlarmDefinition {
                     return
                 }
                 $def.TimeProfile = $timeProfiles[$TimeProfile]
-                $def.EnableRule = 1
-            }
-
-            if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('EventTriggered')) {
-                $def.EnableEventList = $EnabledBy -join ','
-                $def.DisableEventList = $DisabledBy -join ','
-                $def.EnableRule = 2
+                if ($def.TimeProfile -eq $timeProfiles.Always) {
+                    $def.EnableRule = 0
+                } else {
+                    $def.EnableRule = 1
+                }
             }
 
             if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('Priority')) {

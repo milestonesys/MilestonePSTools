@@ -22,6 +22,9 @@ hide:
 - Added `FailoverSettingValues` to the list of ignored properties when using `Export-VmsHardware` to create an
   Excel export. This caused a non-terminating error when later importing the Excel file using `Import-VmsHardware`.
 - Fixed a non-terminating error with `Remove-VmsArchiveStorage` when using the `ByStorage` parameter set.
+- Fixed [Issue #199](https://github.com/MilestoneSystemsInc/PowerShellSamples/issues/199) related to the
+  `New-VmsAlarmDefinition` and `Set-VmsAlarmDefinition` commands where the `EnabledBy` and `DisabledBy` parameters
+  would not work, and the `SmartMap` or `RelatedMap` parameter had to be present even when not changing the setting.
 
 ## [25.2.6] 2025-06-18
 
