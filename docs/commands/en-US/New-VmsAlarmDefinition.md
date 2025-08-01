@@ -13,21 +13,12 @@ Creates a new alarm definition.
 
 ## SYNTAX
 
-### SmartMap
 ```
-New-VmsAlarmDefinition -Name <String> -EventTypeGroup <String> -EventType <String> -Source <String[]>
- [-RelatedCameras <Camera[]>] [-TimeProfile <String>] [-EnabledBy <String[]>] [-DisabledBy <String[]>]
- [-Instructions <String>] [-Priority <String>] [-Category <String>] [-AssignableToAdmins] [-Timeout <TimeSpan>]
- [-TimeoutAction <String[]>] [-SmartMap] [-Owner <String>] [-EventsToTrigger <String[]>] [<CommonParameters>]
-```
-
-### RelatedMap
-```
-New-VmsAlarmDefinition -Name <String> -EventTypeGroup <String> -EventType <String> -Source <String[]>
- [-RelatedCameras <Camera[]>] [-TimeProfile <String>] [-EnabledBy <String[]>] [-DisabledBy <String[]>]
- [-Instructions <String>] [-Priority <String>] [-Category <String>] [-AssignableToAdmins] [-Timeout <TimeSpan>]
- [-TimeoutAction <String[]>] [-RelatedMap <String>] [-Owner <String>] [-EventsToTrigger <String[]>]
- [<CommonParameters>]
+New-VmsAlarmDefinition [-Name] <String> [-EventTypeGroup] <String> [-EventType] <String> [-Source] <String[]>
+ [[-RelatedCameras] <Camera[]>] [[-TimeProfile] <String>] [[-EnabledBy] <String[]>] [[-DisabledBy] <String[]>]
+ [[-Instructions] <String>] [[-Priority] <String>] [[-Category] <String>] [-AssignableToAdmins]
+ [[-Timeout] <TimeSpan>] [[-TimeoutAction] <String[]>] [-SmartMap] [[-RelatedMap] <String>] [[-Owner] <String>]
+ [[-EventsToTrigger] <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -127,15 +118,18 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -DisabledBy
-Specifies which event(s) can disable the alarm definition, preventing alarms from being created when the source event is
-triggered.
+Specifies which event(s) can disable the alarm definition, disabling alarms from being created from the alarm
+definition after the source event(s) are triggered. Only device inputs (InputEvent) and user-defined events are allowed
+for enabling/disabling an alarm definition. You may supply an object returned by `Get-VmsInput`, or
+`Get-UserDefinedEvent`, or you can provide the configuration api path for an input or user-defined event which use
+the format "InputEvent[1aefd587-1d66-4213-b424-161d3992de45]", or "UserDefinedEvent[602242bc-2a01-4f4f-a965-118467166792]".
 
 ```yaml
 Type: String[]
@@ -143,14 +137,18 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -EnabledBy
-Specifies which event(s) can enable the alarm definition, allowing alarms to be created when the source event is triggered.
+Specifies which event(s) can enable the alarm definition, allowing alarms to be created from the alarm definition
+only after the source event(s) are triggered. Only device inputs (InputEvent) and user-defined events are allowed
+for enabling/disabling an alarm definition. You may supply an object returned by `Get-VmsInput`, or
+`Get-UserDefinedEvent`, or you can provide the configuration api path for an input or user-defined event which use
+the format "InputEvent[1aefd587-1d66-4213-b424-161d3992de45]", or "UserDefinedEvent[602242bc-2a01-4f4f-a965-118467166792]".
 
 ```yaml
 Type: String[]
@@ -158,7 +156,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -173,7 +171,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -189,7 +187,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -205,7 +203,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -220,7 +218,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -235,7 +233,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -251,7 +249,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -266,7 +264,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -281,7 +279,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -293,11 +291,11 @@ and not "Smart Maps". You can get a list of map names the event server will acce
 
 ```yaml
 Type: String
-Parameter Sets: RelatedMap
+Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 13
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -308,7 +306,7 @@ Specifies that alarms created from this alarm definition should show a "Smart Ma
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: SmartMap
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -330,7 +328,7 @@ Parameter Sets: (All)
 Aliases: Path
 
 Required: True
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -346,7 +344,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -361,7 +359,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -376,7 +374,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
