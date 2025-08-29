@@ -52,6 +52,7 @@ function Start-VmsHardwareScan {
         $DriverNumber = @(),
 
         [Parameter(ParameterSetName = 'Manual')]
+        [Alias('DriverGroup')]
         [string[]]
         $DriverFamily,
 
