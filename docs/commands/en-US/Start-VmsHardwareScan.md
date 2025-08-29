@@ -147,7 +147,7 @@ All applicable device driver ID's will be discovered automatically.
 ```yaml
 Type: String[]
 Parameter Sets: Manual
-Aliases:
+Aliases: DriverGroup
 
 Required: False
 Position: Named

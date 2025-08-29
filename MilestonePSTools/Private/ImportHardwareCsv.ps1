@@ -200,7 +200,7 @@ function ImportHardwareCsv {
                                 Credential            = [collections.generic.list[pscredential]]::new()
                             }
                             if (-not [string]::IsNullOrWhiteSpace($hardwareGroup.Group[0].DriverGroup)) {
-                                $scanSplat.DriverGroup = $hardwareGroup.Group[0].DriverGroup -split ';' | Where-Object {
+                                $scanSplat.DriverFamily = $hardwareGroup.Group[0].DriverGroup -split ';' | Where-Object {
                                     -not [string]::IsNullOrWhiteSpace($_)
                                 } | ForEach-Object { $_.Trim() }
                             }
