@@ -1,121 +1,161 @@
 {
-  "LastUpdated": "2025-07-07T15:33:08.0628017Z",
-  "Downloads": 457321,
-  "TotalSessions": 257469,
-  "TotalUsers": 1127,
-  "TotalSites": 1328,
-  "TotalCameras": 534677,
-  "TotalCountries": 49,
+  "LastUpdated": "2025-12-08T18:53:57.8064923Z",
+  "Downloads": 486993,
+  "TotalSessions": 3543429,
+  "TotalUsers": 1141,
+  "TotalSites": 1989,
+  "TotalCameras": 703740,
+  "TotalCountries": 50,
   "CommandUsage": [
     {
-      "Command": "Add-VmsArchiveStorage",
-      "InvocationCount": 148,
-      "UserCount": 139
+      "Command": "Add-Bookmark",
+      "InvocationCount": 243,
+      "UserCount": 2
     },
     {
-      "Command": "Add-VmsDeviceGroupMember",
-      "InvocationCount": 31,
-      "UserCount": 16
-    },
-    {
-      "Command": "Add-VmsHardware",
-      "InvocationCount": 24,
-      "UserCount": 10
-    },
-    {
-      "Command": "Add-VmsLprMatchListEntry",
-      "InvocationCount": 1,
-      "UserCount": 1
-    },
-    {
-      "Command": "Add-VmsRoleMember",
-      "InvocationCount": 149,
-      "UserCount": 143
-    },
-    {
-      "Command": "Add-VmsStorage",
-      "InvocationCount": 157,
-      "UserCount": 145
-    },
-    {
-      "Command": "Clear-VmsCache",
-      "InvocationCount": 23,
-      "UserCount": 15
-    },
-    {
-      "Command": "Connect-ManagementServer",
-      "InvocationCount": 11271,
-      "UserCount": 421
-    },
-    {
-      "Command": "Connect-Vms",
-      "InvocationCount": 20447,
-      "UserCount": 300
-    },
-    {
-      "Command": "ConvertFrom-Snapshot",
-      "InvocationCount": 20,
+      "Command": "Add-GenericEvent",
+      "InvocationCount": 10,
       "UserCount": 4
     },
     {
-      "Command": "Disconnect-ManagementServer",
-      "InvocationCount": 11070,
-      "UserCount": 245
+      "Command": "Add-RegisteredService",
+      "InvocationCount": 18,
+      "UserCount": 13
     },
     {
-      "Command": "Disconnect-Vms",
-      "InvocationCount": 7997,
-      "UserCount": 14
+      "Command": "Add-UserDefinedEvent",
+      "InvocationCount": 2,
+      "UserCount": 1
     },
     {
-      "Command": "Export-VmsClientProfile",
+      "Command": "Add-VmsArchiveStorage",
       "InvocationCount": 3,
       "UserCount": 3
     },
     {
-      "Command": "Export-VmsHardware",
-      "InvocationCount": 150,
-      "UserCount": 66
+      "Command": "Add-VmsDeviceGroupMember",
+      "InvocationCount": 78,
+      "UserCount": 40
     },
     {
-      "Command": "Export-VmsRole",
-      "InvocationCount": 6,
-      "UserCount": 2
+      "Command": "Add-VmsHardware",
+      "InvocationCount": 40,
+      "UserCount": 10
     },
     {
-      "Command": "Export-VmsRule",
-      "InvocationCount": 1,
+      "Command": "Add-VmsRoleMember",
+      "InvocationCount": 32,
+      "UserCount": 30
+    },
+    {
+      "Command": "Add-VmsStorage",
+      "InvocationCount": 3,
+      "UserCount": 3
+    },
+    {
+      "Command": "Clear-VmsCache",
+      "InvocationCount": 105,
+      "UserCount": 36
+    },
+    {
+      "Command": "Connect-ManagementServer",
+      "InvocationCount": 3279923,
+      "UserCount": 598
+    },
+    {
+      "Command": "Connect-Vms",
+      "InvocationCount": 4267,
+      "UserCount": 465
+    },
+    {
+      "Command": "ConvertFrom-GisPoint",
+      "InvocationCount": 293,
+      "UserCount": 4
+    },
+    {
+      "Command": "ConvertFrom-Snapshot",
+      "InvocationCount": 24,
+      "UserCount": 10
+    },
+    {
+      "Command": "Copy-VmsViewGroup",
+      "InvocationCount": 2,
       "UserCount": 1
     },
     {
-      "Command": "Export-VmsViewGroup",
-      "InvocationCount": 10,
+      "Command": "Disconnect-ManagementServer",
+      "InvocationCount": 3279578,
+      "UserCount": 511
+    },
+    {
+      "Command": "Disconnect-Vms",
+      "InvocationCount": 418,
+      "UserCount": 49
+    },
+    {
+      "Command": "Export-VmsClientProfile",
+      "InvocationCount": 18,
+      "UserCount": 3
+    },
+    {
+      "Command": "Export-VmsHardware",
+      "InvocationCount": 190,
+      "UserCount": 83
+    },
+    {
+      "Command": "Export-VmsRole",
+      "InvocationCount": 30,
       "UserCount": 7
     },
     {
-      "Command": "Get-AlarmLine",
+      "Command": "Export-VmsRule",
       "InvocationCount": 5,
       "UserCount": 4
     },
     {
-      "Command": "Get-BankTable",
-      "InvocationCount": 2,
-      "UserCount": 2
+      "Command": "Export-VmsViewGroup",
+      "InvocationCount": 5,
+      "UserCount": 4
+    },
+    {
+      "Command": "Get-AlarmLine",
+      "InvocationCount": 143,
+      "UserCount": 25
+    },
+    {
+      "Command": "Get-AlarmStatistics",
+      "InvocationCount": 3,
+      "UserCount": 3
+    },
+    {
+      "Command": "Get-Bookmark",
+      "InvocationCount": 16,
+      "UserCount": 1
     },
     {
       "Command": "Get-CameraRecordingStats",
-      "InvocationCount": 2,
-      "UserCount": 2
+      "InvocationCount": 4,
+      "UserCount": 3
     },
     {
       "Command": "Get-ConfigurationItem",
-      "InvocationCount": 151,
-      "UserCount": 29
+      "InvocationCount": 78,
+      "UserCount": 14
+    },
+    {
+      "Command": "Get-ConfigurationItemProperty",
+      "InvocationCount": 6,
+      "UserCount": 4
+    },
+    {
+      "Command": "Get-CurrentDeviceStatus",
+      "InvocationCount": 32,
+      "UserCount": 10
     },
     {
       "Command": "Get-DeviceAcl",
-      "InvocationCount": 2,
-      "UserCount": 2
+      "InvocationCount": 25,
+      "UserCount": 10
     },
     {
       "Command": "Get-EventLine",
@@ -124,23 +164,23 @@
     },
     {
       "Command": "Get-EvidenceLock",
-      "InvocationCount": 2,
-      "UserCount": 2
+      "InvocationCount": 4,
+      "UserCount": 3
     },
     {
       "Command": "Get-GenericEvent",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 11,
+      "UserCount": 5
     },
     {
       "Command": "Get-GenericEventDataSource",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 4,
+      "UserCount": 3
     },
     {
       "Command": "Get-HardwareSetting",
-      "InvocationCount": 339,
-      "UserCount": 25
+      "InvocationCount": 2215,
+      "UserCount": 52
     },
     {
       "Command": "Get-IAlarmClient",
@@ -148,29 +188,24 @@
       "UserCount": 1
     },
     {
-      "Command": "Get-IConfigurationService",
-      "InvocationCount": 3,
-      "UserCount": 1
-    },
-    {
       "Command": "Get-IServerCommandService",
-      "InvocationCount": 16709,
-      "UserCount": 111
+      "InvocationCount": 32844,
+      "UserCount": 335
     },
     {
       "Command": "Get-ItemState",
-      "InvocationCount": 935,
-      "UserCount": 104
+      "InvocationCount": 339,
+      "UserCount": 24
     },
     {
       "Command": "Get-Kind",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 2,
+      "UserCount": 2
     },
     {
       "Command": "Get-LoginSettings",
-      "InvocationCount": 4,
-      "UserCount": 1
+      "InvocationCount": 6,
+      "UserCount": 5
     },
     {
       "Command": "Get-ManagementServerConfig",
@@ -183,234 +218,239 @@
       "UserCount": 1
     },
     {
+      "Command": "Get-OverallSecurity",
+      "InvocationCount": 1,
+      "UserCount": 1
+    },
+    {
       "Command": "Get-PlatformItem",
-      "InvocationCount": 7,
-      "UserCount": 3
-    },
-    {
-      "Command": "Get-PlaybackInfo",
-      "InvocationCount": 106,
-      "UserCount": 39
-    },
-    {
-      "Command": "Get-RecorderConfig",
-      "InvocationCount": 3,
-      "UserCount": 3
-    },
-    {
-      "Command": "Get-RecorderStatusService2",
-      "InvocationCount": 8,
+      "InvocationCount": 6,
       "UserCount": 6
     },
     {
-      "Command": "Get-RegisteredService",
+      "Command": "Get-PlaybackInfo",
+      "InvocationCount": 23990,
+      "UserCount": 186
+    },
+    {
+      "Command": "Get-RecorderConfig",
       "InvocationCount": 2,
       "UserCount": 2
     },
     {
+      "Command": "Get-RecorderStatusService2",
+      "InvocationCount": 7528,
+      "UserCount": 10
+    },
+    {
+      "Command": "Get-RegisteredService",
+      "InvocationCount": 7698,
+      "UserCount": 21
+    },
+    {
       "Command": "Get-SequenceData",
-      "InvocationCount": 60,
-      "UserCount": 32
+      "InvocationCount": 34537,
+      "UserCount": 215
     },
     {
       "Command": "Get-Snapshot",
-      "InvocationCount": 67,
-      "UserCount": 19
-    },
-    {
-      "Command": "Get-Stream",
-      "InvocationCount": 1,
-      "UserCount": 1
-    },
-    {
-      "Command": "Get-StreamProperties",
-      "InvocationCount": 11,
-      "UserCount": 1
+      "InvocationCount": 18496,
+      "UserCount": 44
     },
     {
       "Command": "Get-UserDefinedEvent",
-      "InvocationCount": 10,
-      "UserCount": 5
+      "InvocationCount": 1693,
+      "UserCount": 4
     },
     {
       "Command": "Get-VideoDeviceStatistics",
-      "InvocationCount": 1,
-      "UserCount": 1
-    },
-    {
-      "Command": "Get-VmsAlarmDefinition",
-      "InvocationCount": 3,
-      "UserCount": 3
-    },
-    {
-      "Command": "Get-VmsArchiveStorage",
-      "InvocationCount": 6553,
-      "UserCount": 13
-    },
-    {
-      "Command": "Get-VmsBasicUser",
-      "InvocationCount": 547,
-      "UserCount": 13
-    },
-    {
-      "Command": "Get-VmsCamera",
-      "InvocationCount": 648,
-      "UserCount": 127
-    },
-    {
-      "Command": "Get-VmsCameraReport",
-      "InvocationCount": 18733,
-      "UserCount": 116
-    },
-    {
-      "Command": "Get-VmsCameraStream",
-      "InvocationCount": 25,
-      "UserCount": 12
-    },
-    {
-      "Command": "Get-VmsClientProfile",
-      "InvocationCount": 148,
-      "UserCount": 140
-    },
-    {
-      "Command": "Get-VmsClientProfileAttributes",
-      "InvocationCount": 146,
-      "UserCount": 138
-    },
-    {
-      "Command": "Get-VmsConnectionProfile",
-      "InvocationCount": 4,
-      "UserCount": 4
-    },
-    {
-      "Command": "Get-VmsDevice",
-      "InvocationCount": 11,
-      "UserCount": 7
-    },
-    {
-      "Command": "Get-VmsDeviceGeneralSetting",
-      "InvocationCount": 7,
-      "UserCount": 4
-    },
-    {
-      "Command": "Get-VmsDeviceGroup",
-      "InvocationCount": 31,
-      "UserCount": 18
-    },
-    {
-      "Command": "Get-VmsDeviceGroupMember",
       "InvocationCount": 5,
       "UserCount": 4
     },
     {
+      "Command": "Get-VmsAlarmDefinition",
+      "InvocationCount": 9,
+      "UserCount": 6
+    },
+    {
+      "Command": "Get-VmsArchiveStorage",
+      "InvocationCount": 42948,
+      "UserCount": 27
+    },
+    {
+      "Command": "Get-VmsBasicUser",
+      "InvocationCount": 3524,
+      "UserCount": 36
+    },
+    {
+      "Command": "Get-VmsCamera",
+      "InvocationCount": 26843,
+      "UserCount": 204
+    },
+    {
+      "Command": "Get-VmsCameraMotion",
+      "InvocationCount": 5,
+      "UserCount": 3
+    },
+    {
+      "Command": "Get-VmsCameraReport",
+      "InvocationCount": 34001,
+      "UserCount": 339
+    },
+    {
+      "Command": "Get-VmsCameraStream",
+      "InvocationCount": 294,
+      "UserCount": 24
+    },
+    {
+      "Command": "Get-VmsClientProfile",
+      "InvocationCount": 28,
+      "UserCount": 7
+    },
+    {
+      "Command": "Get-VmsClientProfileAttributes",
+      "InvocationCount": 2,
+      "UserCount": 2
+    },
+    {
+      "Command": "Get-VmsConnectionProfile",
+      "InvocationCount": 6,
+      "UserCount": 3
+    },
+    {
+      "Command": "Get-VmsConnectionString",
+      "InvocationCount": 2,
+      "UserCount": 2
+    },
+    {
+      "Command": "Get-VmsDevice",
+      "InvocationCount": 36,
+      "UserCount": 26
+    },
+    {
+      "Command": "Get-VmsDeviceEvent",
+      "InvocationCount": 6,
+      "UserCount": 5
+    },
+    {
+      "Command": "Get-VmsDeviceGeneralSetting",
+      "InvocationCount": 6,
+      "UserCount": 6
+    },
+    {
+      "Command": "Get-VmsDeviceGroup",
+      "InvocationCount": 140,
+      "UserCount": 61
+    },
+    {
+      "Command": "Get-VmsDeviceGroupMember",
+      "InvocationCount": 53,
+      "UserCount": 14
+    },
+    {
       "Command": "Get-VmsDeviceStatus",
-      "InvocationCount": 639,
-      "UserCount": 9
+      "InvocationCount": 3158440,
+      "UserCount": 74
     },
     {
       "Command": "Get-VmsDeviceStreamSetting",
-      "InvocationCount": 2,
-      "UserCount": 2
-    },
-    {
-      "Command": "Get-VmsFailoverGroup",
-      "InvocationCount": 2,
-      "UserCount": 1
-    },
-    {
-      "Command": "Get-VmsHardware",
-      "InvocationCount": 540,
-      "UserCount": 164
-    },
-    {
-      "Command": "Get-VmsHardwareDriver",
-      "InvocationCount": 33,
-      "UserCount": 19
-    },
-    {
-      "Command": "Get-VmsHardwarePassword",
-      "InvocationCount": 299,
-      "UserCount": 30
-    },
-    {
-      "Command": "Get-VmsIServiceRegistrationService",
-      "InvocationCount": 2,
-      "UserCount": 2
-    },
-    {
-      "Command": "Get-VmsInput",
-      "InvocationCount": 3,
-      "UserCount": 2
-    },
-    {
-      "Command": "Get-VmsLicenseDetails",
-      "InvocationCount": 1639,
-      "UserCount": 12
-    },
-    {
-      "Command": "Get-VmsLicenseInfo",
       "InvocationCount": 3,
       "UserCount": 3
     },
     {
-      "Command": "Get-VmsLicenseOverview",
-      "InvocationCount": 1639,
-      "UserCount": 12
+      "Command": "Get-VmsFailoverRecorder",
+      "InvocationCount": 1,
+      "UserCount": 1
     },
     {
-      "Command": "Get-VmsLicensedProducts",
+      "Command": "Get-VmsHardware",
+      "InvocationCount": 49501,
+      "UserCount": 296
+    },
+    {
+      "Command": "Get-VmsHardwareDriver",
+      "InvocationCount": 59,
+      "UserCount": 21
+    },
+    {
+      "Command": "Get-VmsHardwarePassword",
+      "InvocationCount": 1903,
+      "UserCount": 52
+    },
+    {
+      "Command": "Get-VmsInput",
       "InvocationCount": 2,
       "UserCount": 2
     },
     {
+      "Command": "Get-VmsLicenseDetails",
+      "InvocationCount": 10830,
+      "UserCount": 21
+    },
+    {
+      "Command": "Get-VmsLicenseInfo",
+      "InvocationCount": 2762,
+      "UserCount": 21
+    },
+    {
+      "Command": "Get-VmsLicenseOverview",
+      "InvocationCount": 10837,
+      "UserCount": 24
+    },
+    {
+      "Command": "Get-VmsLicensedProducts",
+      "InvocationCount": 29,
+      "UserCount": 3
+    },
+    {
       "Command": "Get-VmsLog",
-      "InvocationCount": 747,
-      "UserCount": 101
+      "InvocationCount": 470,
+      "UserCount": 24
+    },
+    {
+      "Command": "Get-VmsLoginProvider",
+      "InvocationCount": 2,
+      "UserCount": 2
     },
     {
       "Command": "Get-VmsLprEvent",
-      "InvocationCount": 1,
-      "UserCount": 1
-    },
-    {
-      "Command": "Get-VmsLprMatchList",
-      "InvocationCount": 2,
-      "UserCount": 1
-    },
-    {
-      "Command": "Get-VmsLprMatchListEntry",
-      "InvocationCount": 2,
+      "InvocationCount": 5,
       "UserCount": 1
     },
     {
       "Command": "Get-VmsManagementServer",
-      "InvocationCount": 342,
-      "UserCount": 181
+      "InvocationCount": 2304347,
+      "UserCount": 98
     },
     {
       "Command": "Get-VmsMetadata",
-      "InvocationCount": 11,
-      "UserCount": 6
+      "InvocationCount": 8,
+      "UserCount": 7
     },
     {
       "Command": "Get-VmsMicrophone",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 2,
+      "UserCount": 2
     },
     {
       "Command": "Get-VmsModuleConfig",
+      "InvocationCount": 6,
+      "UserCount": 5
+    },
+    {
+      "Command": "Get-VmsOutput",
       "InvocationCount": 1,
       "UserCount": 1
     },
     {
       "Command": "Get-VmsParentItem",
-      "InvocationCount": 39,
-      "UserCount": 3
+      "InvocationCount": 305,
+      "UserCount": 8
     },
     {
       "Command": "Get-VmsRecordingServer",
-      "InvocationCount": 6905,
-      "UserCount": 251
+      "InvocationCount": 50907,
+      "UserCount": 177
     },
     {
       "Command": "Get-VmsRestrictedMedia",
@@ -419,88 +459,103 @@
     },
     {
       "Command": "Get-VmsRole",
-      "InvocationCount": 169,
-      "UserCount": 154
+      "InvocationCount": 128,
+      "UserCount": 59
     },
     {
       "Command": "Get-VmsRoleMember",
-      "InvocationCount": 144,
-      "UserCount": 136
+      "InvocationCount": 38,
+      "UserCount": 11
     },
     {
       "Command": "Get-VmsRoleOverallSecurity",
-      "InvocationCount": 142,
-      "UserCount": 133
+      "InvocationCount": 20,
+      "UserCount": 19
     },
     {
       "Command": "Get-VmsRule",
-      "InvocationCount": 4,
-      "UserCount": 2
+      "InvocationCount": 20,
+      "UserCount": 11
     },
     {
       "Command": "Get-VmsSite",
-      "InvocationCount": 24,
-      "UserCount": 16
+      "InvocationCount": 999,
+      "UserCount": 45
     },
     {
       "Command": "Get-VmsSiteInfo",
+      "InvocationCount": 2,
+      "UserCount": 2
+    },
+    {
+      "Command": "Get-VmsSpeaker",
       "InvocationCount": 1,
       "UserCount": 1
     },
     {
       "Command": "Get-VmsStorage",
-      "InvocationCount": 6707,
-      "UserCount": 157
+      "InvocationCount": 42975,
+      "UserCount": 46
     },
     {
       "Command": "Get-VmsStorageRetention",
+      "InvocationCount": 7,
+      "UserCount": 6
+    },
+    {
+      "Command": "Get-VmsSystemLicense",
       "InvocationCount": 1,
       "UserCount": 1
     },
     {
       "Command": "Get-VmsToken",
-      "InvocationCount": 16713,
-      "UserCount": 115
+      "InvocationCount": 41547,
+      "UserCount": 359
     },
     {
-      "Command": "Get-VmsVideoOSItem",
-      "InvocationCount": 9,
-      "UserCount": 3
+      "Command": "Get-VmsTrustedIssuer",
+      "InvocationCount": 2,
+      "UserCount": 2
+    },
+    {
+      "Command": "Get-VmsView",
+      "InvocationCount": 3,
+      "UserCount": 2
     },
     {
       "Command": "Get-VmsViewGroup",
-      "InvocationCount": 312,
-      "UserCount": 143
+      "InvocationCount": 40,
+      "UserCount": 32
     },
     {
       "Command": "Get-VmsViewGroupAcl",
-      "InvocationCount": 7,
-      "UserCount": 7
+      "InvocationCount": 18,
+      "UserCount": 17
     },
     {
-      "Command": "Get-WhoIsOnline",
-      "InvocationCount": 5,
-      "UserCount": 5
-    },
-    {
-      "Command": "Import-VmsClientProfile",
-      "InvocationCount": 6,
-      "UserCount": 6
-    },
-    {
-      "Command": "Import-VmsHardware",
-      "InvocationCount": 47,
-      "UserCount": 25
-    },
-    {
-      "Command": "Import-VmsLprMatchList",
-      "InvocationCount": 2,
+      "Command": "Get-VmsWebhook",
+      "InvocationCount": 1,
       "UserCount": 1
     },
     {
-      "Command": "Import-VmsRole",
-      "InvocationCount": 4,
+      "Command": "Get-WhoIsOnline",
+      "InvocationCount": 16,
+      "UserCount": 11
+    },
+    {
+      "Command": "Import-VmsClientProfile",
+      "InvocationCount": 7,
       "UserCount": 4
+    },
+    {
+      "Command": "Import-VmsHardware",
+      "InvocationCount": 58,
+      "UserCount": 31
+    },
+    {
+      "Command": "Import-VmsRole",
+      "InvocationCount": 11,
+      "UserCount": 6
     },
     {
       "Command": "Import-VmsRule",
@@ -509,123 +564,133 @@
     },
     {
       "Command": "Import-VmsViewGroup",
-      "InvocationCount": 7,
-      "UserCount": 5
-    },
-    {
-      "Command": "Install-StableFPS",
-      "InvocationCount": 16,
-      "UserCount": 11
-    },
-    {
-      "Command": "Invoke-Method",
-      "InvocationCount": 1,
-      "UserCount": 1
-    },
-    {
-      "Command": "Invoke-ServerConfigurator",
-      "InvocationCount": 1,
-      "UserCount": 1
-    },
-    {
-      "Command": "Move-VmsHardware",
-      "InvocationCount": 1,
-      "UserCount": 1
-    },
-    {
-      "Command": "New-Alarm",
-      "InvocationCount": 6,
-      "UserCount": 3
-    },
-    {
-      "Command": "New-AlarmCondition",
-      "InvocationCount": 3,
+      "InvocationCount": 4,
       "UserCount": 2
     },
     {
+      "Command": "Install-StableFPS",
+      "InvocationCount": 8,
+      "UserCount": 4
+    },
+    {
+      "Command": "Invoke-Method",
+      "InvocationCount": 35,
+      "UserCount": 6
+    },
+    {
+      "Command": "Invoke-ServerConfigurator",
+      "InvocationCount": 6,
+      "UserCount": 6
+    },
+    {
+      "Command": "Invoke-VmsLicenseActivation",
+      "InvocationCount": 133,
+      "UserCount": 112
+    },
+    {
+      "Command": "Move-VmsHardware",
+      "InvocationCount": 4,
+      "UserCount": 4
+    },
+    {
+      "Command": "New-AlarmCondition",
+      "InvocationCount": 115,
+      "UserCount": 21
+    },
+    {
       "Command": "New-AlarmOrder",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 90,
+      "UserCount": 18
+    },
+    {
+      "Command": "New-VmsAlarmDefinition",
+      "InvocationCount": 4,
+      "UserCount": 2
     },
     {
       "Command": "New-VmsBasicUser",
-      "InvocationCount": 10,
-      "UserCount": 10
+      "InvocationCount": 20,
+      "UserCount": 19
     },
     {
       "Command": "New-VmsDeviceGroup",
-      "InvocationCount": 32,
-      "UserCount": 23
-    },
-    {
-      "Command": "New-VmsLprMatchList",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 95,
+      "UserCount": 52
     },
     {
       "Command": "New-VmsRole",
-      "InvocationCount": 145,
-      "UserCount": 139
+      "InvocationCount": 26,
+      "UserCount": 25
     },
     {
       "Command": "New-VmsRule",
-      "InvocationCount": 3,
+      "InvocationCount": 9,
+      "UserCount": 5
+    },
+    {
+      "Command": "New-VmsTrustedIssuer",
+      "InvocationCount": 1,
       "UserCount": 1
     },
     {
       "Command": "New-VmsView",
-      "InvocationCount": 161,
-      "UserCount": 3
+      "InvocationCount": 10,
+      "UserCount": 5
     },
     {
       "Command": "New-VmsViewGroup",
-      "InvocationCount": 290,
-      "UserCount": 128
+      "InvocationCount": 14,
+      "UserCount": 9
     },
     {
-      "Command": "Remove-VmsArchiveStorage",
+      "Command": "Remove-EvidenceLock",
+      "InvocationCount": 1,
+      "UserCount": 1
+    },
+    {
+      "Command": "Remove-GenericEvent",
+      "InvocationCount": 3,
+      "UserCount": 2
+    },
+    {
+      "Command": "Remove-RegisteredService",
+      "InvocationCount": 1,
+      "UserCount": 1
+    },
+    {
+      "Command": "Remove-VmsBasicUser",
       "InvocationCount": 1,
       "UserCount": 1
     },
     {
       "Command": "Remove-VmsDeviceGroup",
-      "InvocationCount": 10,
-      "UserCount": 8
+      "InvocationCount": 29,
+      "UserCount": 25
     },
     {
       "Command": "Remove-VmsHardware",
-      "InvocationCount": 4,
-      "UserCount": 1
-    },
-    {
-      "Command": "Remove-VmsLprMatchListEntry",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 5,
+      "UserCount": 4
     },
     {
       "Command": "Remove-VmsRole",
-      "InvocationCount": 2,
-      "UserCount": 2
-    },
-    {
-      "Command": "Remove-VmsRule",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 4,
+      "UserCount": 4
     },
     {
       "Command": "Remove-VmsStorage",
-      "InvocationCount": 155,
-      "UserCount": 145
+      "InvocationCount": 5,
+      "UserCount": 4
     },
     {
       "Command": "Remove-VmsViewGroup",
-      "InvocationCount": 162,
-      "UserCount": 4
+      "InvocationCount": 12,
+      "UserCount": 7
     },
     {
       "Command": "Resize-Image",
-      "InvocationCount": 20,
-      "UserCount": 4
+      "InvocationCount": 24,
+      "UserCount": 10
     },
     {
       "Command": "Resolve-VmsDeviceGroupPath",
@@ -634,13 +699,18 @@
     },
     {
       "Command": "Save-VmsConnectionProfile",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 4,
+      "UserCount": 3
     },
     {
       "Command": "Select-Camera",
-      "InvocationCount": 19,
-      "UserCount": 10
+      "InvocationCount": 13,
+      "UserCount": 9
+    },
+    {
+      "Command": "Select-VideoOSItem",
+      "InvocationCount": 1,
+      "UserCount": 1
     },
     {
       "Command": "Select-VmsSite",
@@ -648,29 +718,34 @@
       "UserCount": 2
     },
     {
-      "Command": "Send-Alarm",
+      "Command": "Send-GenericEvent",
       "InvocationCount": 5,
+      "UserCount": 5
+    },
+    {
+      "Command": "Send-UserDefinedEvent",
+      "InvocationCount": 1690,
       "UserCount": 2
     },
     {
-      "Command": "Send-GenericEvent",
-      "InvocationCount": 7,
-      "UserCount": 4
+      "Command": "Set-ConfigurationItem",
+      "InvocationCount": 1,
+      "UserCount": 1
     },
     {
-      "Command": "Send-MipMessage",
-      "InvocationCount": 2,
+      "Command": "Set-ConfigurationItemProperty",
+      "InvocationCount": 1,
       "UserCount": 1
     },
     {
       "Command": "Set-DeviceAcl",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "InvocationCount": 22,
+      "UserCount": 7
     },
     {
-      "Command": "Set-MetadataSetting",
-      "InvocationCount": 1,
-      "UserCount": 1
+      "Command": "Set-HardwareSetting",
+      "InvocationCount": 3,
+      "UserCount": 3
     },
     {
       "Command": "Set-VmsBasicUser",
@@ -679,113 +754,133 @@
     },
     {
       "Command": "Set-VmsCamera",
-      "InvocationCount": 17,
-      "UserCount": 7
+      "InvocationCount": 69,
+      "UserCount": 16
     },
     {
       "Command": "Set-VmsCameraMotion",
-      "InvocationCount": 5,
+      "InvocationCount": 3,
       "UserCount": 2
     },
     {
       "Command": "Set-VmsCameraStream",
-      "InvocationCount": 7,
-      "UserCount": 6
+      "InvocationCount": 51,
+      "UserCount": 13
     },
     {
       "Command": "Set-VmsClientProfileAttributes",
-      "InvocationCount": 144,
-      "UserCount": 136
+      "InvocationCount": 2,
+      "UserCount": 2
     },
     {
-      "Command": "Set-VmsDeviceGeneralSetting",
-      "InvocationCount": 9,
+      "Command": "Set-VmsDevice",
+      "InvocationCount": 5,
       "UserCount": 4
     },
     {
+      "Command": "Set-VmsDeviceEvent",
+      "InvocationCount": 3,
+      "UserCount": 2
+    },
+    {
       "Command": "Set-VmsDeviceStorage",
-      "InvocationCount": 2,
+      "InvocationCount": 1,
       "UserCount": 1
     },
     {
       "Command": "Set-VmsDeviceStreamSetting",
-      "InvocationCount": 10,
-      "UserCount": 2
-    },
-    {
-      "Command": "Set-VmsHardware",
-      "InvocationCount": 13,
-      "UserCount": 7
-    },
-    {
-      "Command": "Set-VmsHardwareDriver",
-      "InvocationCount": 21,
-      "UserCount": 14
-    },
-    {
-      "Command": "Set-VmsInput",
       "InvocationCount": 1,
       "UserCount": 1
     },
     {
+      "Command": "Set-VmsHardware",
+      "InvocationCount": 12,
+      "UserCount": 8
+    },
+    {
+      "Command": "Set-VmsHardwareDriver",
+      "InvocationCount": 45,
+      "UserCount": 24
+    },
+    {
       "Command": "Set-VmsMetadata",
-      "InvocationCount": 9,
-      "UserCount": 4
+      "InvocationCount": 5,
+      "UserCount": 3
+    },
+    {
+      "Command": "Set-VmsMicrophone",
+      "InvocationCount": 1,
+      "UserCount": 1
     },
     {
       "Command": "Set-VmsModuleConfig",
-      "InvocationCount": 14,
-      "UserCount": 14
+      "InvocationCount": 12,
+      "UserCount": 12
     },
     {
       "Command": "Set-VmsRecordingServer",
-      "InvocationCount": 6,
-      "UserCount": 5
+      "InvocationCount": 1,
+      "UserCount": 1
     },
     {
       "Command": "Set-VmsRole",
       "InvocationCount": 17,
-      "UserCount": 15
-    },
-    {
-      "Command": "Set-VmsRoleOverallSecurity",
-      "InvocationCount": 135,
-      "UserCount": 128
-    },
-    {
-      "Command": "Set-VmsViewGroupAcl",
-      "InvocationCount": 7,
-      "UserCount": 7
-    },
-    {
-      "Command": "Set-XProtectCertificate",
-      "InvocationCount": 21,
       "UserCount": 16
     },
     {
-      "Command": "Start-Export",
-      "InvocationCount": 87,
-      "UserCount": 9
+      "Command": "Set-VmsRoleOverallSecurity",
+      "InvocationCount": 21,
+      "UserCount": 20
     },
     {
-      "Command": "Test-Playback",
+      "Command": "Set-VmsRule",
+      "InvocationCount": 5,
+      "UserCount": 4
+    },
+    {
+      "Command": "Set-VmsView",
       "InvocationCount": 1,
       "UserCount": 1
     },
     {
-      "Command": "Test-VmsConnection",
-      "InvocationCount": 9,
-      "UserCount": 5
+      "Command": "Set-VmsViewGroupAcl",
+      "InvocationCount": 17,
+      "UserCount": 16
     },
     {
-      "Command": "Trace-Events",
-      "InvocationCount": 5,
+      "Command": "Set-XProtectCertificate",
+      "InvocationCount": 35,
+      "UserCount": 24
+    },
+    {
+      "Command": "Start-Export",
+      "InvocationCount": 1459,
+      "UserCount": 37
+    },
+    {
+      "Command": "Start-VmsHardwareScan",
+      "InvocationCount": 2,
+      "UserCount": 2
+    },
+    {
+      "Command": "Test-Playback",
+      "InvocationCount": 21,
       "UserCount": 1
+    },
+    {
+      "Command": "Test-VmsConnection",
+      "InvocationCount": 308,
+      "UserCount": 13
     },
     {
       "Command": "Update-AlarmLine",
+      "InvocationCount": 85,
+      "UserCount": 11
+    },
+    {
+      "Command": "Wait-VmsTask",
       "InvocationCount": 2,
-      "UserCount": 1
+      "UserCount": 2
     }
   ]
 }
