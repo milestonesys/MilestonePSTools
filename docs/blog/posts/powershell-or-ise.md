@@ -42,9 +42,13 @@ Microsoft's VSCode is a fantastic environment for working on many different kind
 
 ```powershell
 $InformationPreference = 'Continue'
+$ProgressPreference = 'SilentlyContinue'
 $requestParams = @{
-    Uri = "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64"
+    Uri     = "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64"
     OutFile = Join-Path $env:TEMP VSCodeUserSetup.exe
+}
+if ($PSVersionTable.PSVersion -lt '6.0') {
+    $requestParams.UseBasicParsing = $true
 }
 Write-Information "Downloading VSCode from $($requestParams.Uri)"
 Invoke-WebRequest @requestParams

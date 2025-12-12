@@ -41,7 +41,7 @@ jobs:
               $commands[$_] = $null
           }
           # Scrape download count from PSGallery
-          $html = Invoke-WebRequest https://www.powershellgallery.com/packages/milestonePSTools
+          $html = Invoke-WebRequest https://www.powershellgallery.com/packages/milestonePSTools -UseBasicParsing
           $downloadMatch = $html.RawContent | Select-String '<li class="package-details-info-main">\s+(?<downloads>[\d,]+)'
           $downloads = [int]$downloadMatch.Matches[0].Groups['downloads'].Value
           # Query AppInsights and generate JSON

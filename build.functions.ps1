@@ -1256,7 +1256,7 @@ _usage based on optional telemetry_
 
     try {
         $insights = Get-VmsAppInsights -ErrorAction Stop
-        $html = Invoke-WebRequest https://www.powershellgallery.com/packages/milestonePSTools -ErrorAction Stop | ConvertFrom-Html
+        $html = Invoke-WebRequest https://www.powershellgallery.com/packages/milestonePSTools -UseBasicParsing -ErrorAction Stop | ConvertFrom-Html
         $cameras = ($insights.Sites | Measure-Object -Sum CameraCount).Sum
         $sessions = $insights.AppEvents.BySessionId.Count
         $countries = ($insights.AppEvents.All | Group-Object ClientCountryOrRegion).Count

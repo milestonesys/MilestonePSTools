@@ -3,7 +3,7 @@ if ($null -eq (Get-VSSetupInstance | Where-Object InstallationVersion -ge '17.0'
         $ProgressPreference = 'SilentlyContinue'
         Push-Location $HOME\Downloads
         [Environment]::CurrentDirectory = $PWD.Path
-        Invoke-WebRequest -Uri 'https://aka.ms/vs/17/release.ltsc.17.4/vs_buildtools.exe' -OutFile '.\vs_buildtools.exe'
+        Invoke-WebRequest -Uri 'https://aka.ms/vs/17/release.ltsc.17.4/vs_buildtools.exe' -UseBasicParsing -OutFile '.\vs_buildtools.exe'
         Start-Process vs_buildtools.exe -ArgumentList "--quiet", "--wait", "--norestart", "--nocache", "--add Microsoft.VisualStudio.Workload.ManagedDesktop", "--add Microsoft.Net.Component.4.7.2.SDK" -Wait
         if ($null -eq (Get-VSSetupInstance | Where-Object InstallationVersion -ge '17.0')) {
             throw "Failed to install and discover Visual Studio build tools version 17+"
