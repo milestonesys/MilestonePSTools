@@ -15,13 +15,13 @@ connected management server.
 
 ### All (Default)
 ```
-Get-VmsHardware [-All] [-CaseSensitive] [<CommonParameters>]
+Get-VmsHardware [-All] [[-EnableFilter] <EnableFilter>] [-CaseSensitive] [<CommonParameters>]
 ```
 
 ### Filtered
 ```
 Get-VmsHardware [-RecordingServer <RecordingServer>] [-Id <Guid>] [-RecorderId <Guid>] [[-Name] <String>]
- [-CaseSensitive] [<CommonParameters>]
+ [[-EnableFilter] <EnableFilter>] [-CaseSensitive] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,22 +29,19 @@ The `GetVmsHardware` cmdlet returns all hardware on all recording servers on
 the currently connected management server, or all hardware on a specific
 recording server.
 
+By default, this cmdlet only returns enabled hardware. To return hardware that
+is disabled, or to return all hardware, use the EnableFilter parameter to set
+your preference.
+
 REQUIREMENTS  
 
 - Requires VMS connection and will attempt to connect automatically
 
 ## EXAMPLES
 
-### Get all hardware
+### Get enabled hardware
 ```powershell
 Get-VmsHardware
-```
-
-Returns all hardware on all recording servers.
-
-### Get only enabled hardware
-```powershell
-Get-VmsHardware | Where-Object Enabled
 ```
 
 Returns all enabled hardware on all recording servers.
@@ -55,7 +52,14 @@ $recorder = Get-VmsRecordingServer | Select-Object -First 1
 $recorder | Get-VmsHardware
 ```
 
-Returns all hardware on one recording server.
+Returns all enabled hardware on one recording server.
+
+### Get all hardware, including disabled
+```powershell
+Get-VmsHardware -EnableFilter All
+```
+
+Returns all hardware on all recording servers, including disabled devices.
 
 ### Get all hardware with Address and MAC
 
@@ -133,6 +137,22 @@ Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: True
+```
+
+### -EnableFilter
+Specifies whether to include enabled devices, disabled devices, or both.
+
+```yaml
+Type: EnableFilter
+Parameter Sets: All, Filtered
+Aliases:
+Accepted values: All, Enabled, Disabled
+
+Required: False
+Position: Named
+Default value: Enabled
+Accept pipeline input: False
+Accept wildcard characters: False
 ```
 
 ### -RecorderId
