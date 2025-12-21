@@ -17,6 +17,7 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 using VideoOS.Platform.ConfigurationItems;
+using VideoOS.Platform.Proxy.ConfigApi;
 
 namespace MilestonePSTools.HardwareCommands
 {
@@ -46,26 +47,57 @@ namespace MilestonePSTools.HardwareCommands
         [SupportsWildcards]
         public string Name { get; set; }
 
+        [Parameter(ParameterSetName = "All")]
+        [Parameter(ParameterSetName = "Filtered")]
+        public EnableFilter EnableFilter { get; set; } = EnableFilter.Enabled;
+
         [Parameter(Position = 50)]
         public SwitchParameter CaseSensitive { get; set; }
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+            if (!MyInvocation.InvocationName.StartsWith("Get-Vms", StringComparison.CurrentCultureIgnoreCase))
+            {
+                WriteWarning($"The default behavior of {MyInvocation.MyCommand.Name} is to return only enabled hardware, but while using the alias '{MyInvocation.InvocationName}', the behavior matches the previous version of the command by returning disabled hardware too.");
+                EnableFilter = EnableFilter.All;
+            }
+        }
 
         protected override void ProcessRecord()
         {
             var recorderFolder = Connection.ManagementServer.RecordingServerFolder;
+            bool IsEnabledMatch(Hardware hardware)
+            {
+                return EnableFilter switch
+                {
+                    EnableFilter.All => true,
+                    EnableFilter.Enabled => hardware.Enabled,
+                    EnableFilter.Disabled => !hardware.Enabled,
+                    _ => true
+                };
+            }
             switch (ParameterSetName)
             {
                 case "Filtered":
                     var nameFilter = new WildcardPattern(Name ?? "*", CaseSensitive ? WildcardOptions.None : WildcardOptions.IgnoreCase);
                     if (Id != Guid.Empty)
                     {
-                        WriteObject(new Hardware(Connection.CurrentSite.FQID.ServerId, $"Hardware[{Id}]"));
+                        var hw = new Hardware(Connection.CurrentSite.FQID.ServerId, $"Hardware[{Id}]");
+                        if (IsEnabledMatch(hw))
+                        {
+                            WriteObject(hw);
+                        }
                     }
                     else if (RecordingServer != null || RecorderId != Guid.Empty)
                     {
                         var rec = RecordingServer ?? new RecordingServer(Connection.CurrentSite.FQID.ServerId, $"RecordingServer[{RecorderId}]");
                         foreach (var hw in rec.HardwareFolder.Hardwares.Where(h => nameFilter.IsMatch(h.Name)))
                         {
-                            WriteObject(hw);
+                            if (IsEnabledMatch(hw))
+                            {
+                                WriteObject(hw);
+                            }
                         }
                     }
                     else
@@ -73,7 +105,10 @@ namespace MilestonePSTools.HardwareCommands
                         foreach (var rs in recorderFolder.RecordingServers)
                         foreach (var hw in rs.HardwareFolder.Hardwares.Where(h => nameFilter.IsMatch(h.Name)))
                         {
-                            WriteObject(hw);
+                            if (IsEnabledMatch(hw))
+                            {
+                                WriteObject(hw);
+                            }
                         }
                     }
 
@@ -82,11 +117,13 @@ namespace MilestonePSTools.HardwareCommands
                     foreach (var rs in recorderFolder.RecordingServers)
                     foreach (var hw in rs.HardwareFolder.Hardwares)
                     {
-                        WriteObject(hw);
+                        if (IsEnabledMatch(hw))
+                        {
+                            WriteObject(hw);
+                        }
                     }
                     break;
             }
         }
     }
 }
-
