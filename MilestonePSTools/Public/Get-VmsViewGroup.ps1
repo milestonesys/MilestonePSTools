@@ -61,23 +61,52 @@ function Get-VmsViewGroup {
             }
 
             $count = 0
-            foreach ($vg in $vgFolder.ViewGroups) {
-                foreach ($n in $Name) {
-                    if ($vg.DisplayName -notlike $n) {
-                        continue
-                    }
-                    $count++
-                    if (-not $Recurse -or ($Recurse -and $Name -eq '*')) {
-                        Write-Output $vg
-                    }
-                    if ($Recurse) {
-                        $vg | Get-VmsViewGroup -Recurse
-                    }
-                    continue
+            $hasWildcard = $false
+            foreach ($n in $Name) {
+                if ([System.Management.Automation.WildcardPattern]::ContainsWildcardCharacters($n)) {
+                    $hasWildcard = $true
+                    break
                 }
             }
 
-            if ($count -eq 0 -and -not [System.Management.Automation.WildcardPattern]::ContainsWildcardCharacters($Name)) {
+            if ($Recurse) {
+                $queue = [System.Collections.Generic.Queue[VideoOS.Platform.ConfigurationItems.ViewGroup]]::new()
+                foreach ($vg in $vgFolder.ViewGroups) {
+                    $queue.Enqueue($vg)
+                }
+
+                while ($queue.Count -gt 0) {
+                    $vg = $queue.Dequeue()
+                    foreach ($n in $Name) {
+                        if ($vg.DisplayName -notlike $n) {
+                            continue
+                        }
+                        $count++
+                        Write-Output $vg
+                        break
+                    }
+
+                    $childFolder = $vg.ViewGroupFolder
+                    if ($null -ne $childFolder) {
+                        foreach ($child in $childFolder.ViewGroups) {
+                            $queue.Enqueue($child)
+                        }
+                    }
+                }
+            } else {
+                foreach ($vg in $vgFolder.ViewGroups) {
+                    foreach ($n in $Name) {
+                        if ($vg.DisplayName -notlike $n) {
+                            continue
+                        }
+                        $count++
+                        Write-Output $vg
+                        break
+                    }
+                }
+            }
+
+            if ($count -eq 0 -and -not $hasWildcard) {
                 Write-Error "ViewGroup ""$Name"" not found."
             }
         }
