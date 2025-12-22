@@ -892,7 +892,7 @@ function Export-VmsHardwareExcel {
     user's Documents directory.
 
     .EXAMPLE
-    Export-VmsHardwareExcel -Path ~\Documents\hardware.xlsx -IncludedDevices Cameras, Microphones -Verbose
+    Export-VmsHardwareExcel -Path ~\Documents\hardware.xlsx -IncludedDevices Camera, Microphone -Verbose
 
     Exports configuration for all enabled hardware, cameras, and microphones to
     the current user's Documents directory.
@@ -1011,7 +1011,7 @@ function Export-VmsHardwareExcel {
         Write-Verbose 'Loading device groups'
         $deviceGroups = @{}
         $IncludedDevices | ForEach-Object {
-            $type = $_ -replace 's$', ''
+            $type = $_
             foreach ($group in Get-VmsDeviceGroup -Type $type -Recurse) {
                 $members = $group | Get-VmsDeviceGroupMember -EnableFilter $EnableFilter
                 if ($members.Count -eq 0) { continue }
