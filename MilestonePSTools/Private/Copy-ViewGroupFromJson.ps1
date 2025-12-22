@@ -120,10 +120,10 @@ function Copy-ViewGroupFromJson {
                 }
 
                 # Save changes to new view
-                $invokeResult = $newView | Invoke-Method -MethodId 'AddView'
-                $props = ConvertPropertiesToHashtable -Properties $invokeResult.Properties
-                if ($props.State.Value -ne 'Success') {
-                    Write-Error $props.ErrorText
+                try {
+                    $newView.Save()
+                } catch {
+                    Write-Error $_
                 }
             }
 
@@ -150,4 +150,3 @@ function ConvertPropertiesToHashtable {
     }
     Write-Output $props
 }
-
