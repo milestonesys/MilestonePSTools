@@ -141,13 +141,37 @@ function Set-VmsCameraStream {
                     }
                 }
 
+                $getStreamUsageDisplayName = {
+                    param($streamUsage)
+
+                    if ($null -ne $streamUsage -and -not [string]::IsNullOrWhiteSpace($streamUsage.Name)) {
+                        return $streamUsage.Name
+                    }
+
+                    if ($null -ne $streamUsage -and $null -ne $streamNameToRef) {
+                        $streamName = $streamNameToRef.GetEnumerator() |
+                            Where-Object Value -eq $streamUsage.StreamReferenceId |
+                            Select-Object -First 1 -ExpandProperty Key
+                        if (-not [string]::IsNullOrWhiteSpace($streamName)) {
+                            return $streamName
+                        }
+                    }
+
+                    if ($null -ne $streamUsage) {
+                        return $streamUsage.StreamReferenceId
+                    }
+
+                    return $s.Name
+                }
+                $streamDisplayName = & $getStreamUsageDisplayName $streamUsageChildItem
+
                 if ($RecordingTrack -eq 'Secondary' -and $streamUsageChildItem.RecordToValues.Count -eq 0) {
                     Write-Error "Adaptive playback is not available. RecordingTrack parameter must be Primary or None."
                     continue
                 }
 
                 if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('DisplayName') -and $DisplayName -ne $streamUsageChildItem.Name) {
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Setting DisplayName on $($streamUsageChildItem.Name)")) {
+                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Setting DisplayName on $streamDisplayName")) {
                         $streamUsageChildItem.Name = $DisplayName
                     }
                     $dirtyStreamUsages = $true
@@ -166,19 +190,20 @@ function Set-VmsCameraStream {
                         $secondaryStreamUsage = $streamUsages.StreamUsageChildItems | Where-Object RecordTo -eq $recordingTrackId.Secondary
                         switch ($RecordingTrack) {
                             'Primary' {
-                                if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Record $($streamUsageChildItem.Name) to the primary recording track")) {
+                                if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Record $streamDisplayName to the primary recording track")) {
                                     $streamUsageChildItem.RecordTo = $recordingTrackId.Primary
 
-                                    Write-Verbose "Disabling recording on current primary stream '$($primaryStreamUsage.Name)'."
+                                    $primaryStreamUsageName = & $getStreamUsageDisplayName $primaryStreamUsage
+                                    Write-Verbose "Disabling recording on current primary stream '$primaryStreamUsageName'."
                                     $primaryStreamUsage.RecordTo = $recordingTrackId.None
 
                                     if ($primaryStreamUsage.LiveMode -eq 'Never') {
-                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $($primaryStreamUsage.Name)"
+                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $primaryStreamUsageName"
                                         $primaryStreamUsage.LiveMode = 'WhenNeeded'
                                     }
 
                                     if ($streamUsageChildItem.LiveMode -eq 'Never') {
-                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $($streamUsageChildItem.Name)"
+                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $streamDisplayName"
                                         $streamUsageChildItem.LiveMode = 'WhenNeeded'
                                     }
 
@@ -186,19 +211,20 @@ function Set-VmsCameraStream {
                                 }
                             }
                             'Secondary' {
-                                if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Record $($streamUsageChildItem.Name) to the secondary recording track")) {
+                                if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Record $streamDisplayName to the secondary recording track")) {
                                     $streamUsageChildItem.RecordTo = $recordingTrackId.Secondary
                                     if ($streamUsageChildItem.LiveMode -eq 'Never') {
-                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $($streamUsageChildItem.Name)"
+                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $streamDisplayName"
                                         $streamUsageChildItem.LiveMode = 'WhenNeeded'
                                     }
 
                                     if ($secondaryStreamUsage) {
-                                        Write-Verbose "Disabling recording on current secondary stream '$($secondaryStreamUsage.Name)'."
+                                        $secondaryStreamUsageName = & $getStreamUsageDisplayName $secondaryStreamUsage
+                                        Write-Verbose "Disabling recording on current secondary stream '$secondaryStreamUsageName'."
                                         $secondaryStreamUsage.RecordTo = $recordingTrackId.None
 
                                         if ($secondaryStreamUsage.LiveMode -eq 'Never') {
-                                            Write-Verbose "Changing LiveMode from Never to WhenNeeded on $($secondaryStreamUsage.Name)"
+                                            Write-Verbose "Changing LiveMode from Never to WhenNeeded on $secondaryStreamUsageName"
                                             $secondaryStreamUsage.LiveMode = 'WhenNeeded'
                                         }
                                     }
@@ -207,10 +233,10 @@ function Set-VmsCameraStream {
                                 }
                             }
                             'None' {
-                                if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disable recording of stream $($streamUsageChildItem.Name)")) {
+                                if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disable recording of stream $streamDisplayName")) {
                                     $streamUsageChildItem.RecordTo = $recordingTrackId.None
                                     if ($streamUsageChildItem.LiveMode -eq 'Never') {
-                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $($streamUsageChildItem.Name)"
+                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $streamDisplayName"
                                         $streamUsageChildItem.LiveMode = 'WhenNeeded'
                                     }
 
@@ -228,15 +254,16 @@ function Set-VmsCameraStream {
                     } else {
                         # 2023 R1 or earlier
                         $recordedStream = $streamUsages.StreamUsageChildItems | Where-Object Record
-                        if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disabling recording on $($recordedStream.Name)")) {
+                        $recordedStreamName = & $getStreamUsageDisplayName $recordedStream
+                        if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disabling recording on $recordedStreamName")) {
                             $recordedStream.Record = $false
-                            if ($recordedStream.LiveMode -eq 'Never' -and $PSCmdlet.ShouldProcess($s.Camera.Name, "Changing LiveMode from Never to WhenNeeded on $($recordedStream.Name)")) {
+                            if ($recordedStream.LiveMode -eq 'Never' -and $PSCmdlet.ShouldProcess($s.Camera.Name, "Changing LiveMode from Never to WhenNeeded on $recordedStreamName")) {
                                 # This avoids a validation exception error.
                                 $recordedStream.LiveMode = 'WhenNeeded'
                             }
                         }
 
-                        if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enabling recording on $($streamUsageChildItem.Name)")) {
+                        if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enabling recording on $streamDisplayName")) {
                             $streamUsageChildItem.Record = $true
                             $dirtyStreamUsages = $true
                         }
@@ -244,7 +271,7 @@ function Set-VmsCameraStream {
                 }
 
                 if ($PlaybackDefault -and $PlaybackDefault -ne $streamUsageChildItem.DefaultPlayback) {
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Set the default playback stream to $($streamUsageChildItem.Name)")) {
+                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Set the default playback stream to $streamDisplayName")) {
                         $streamUsages.StreamUsageChildItems | ForEach-Object {
                             $_.DefaultPlayback = $false
                         }
@@ -254,7 +281,7 @@ function Set-VmsCameraStream {
                 }
 
                 if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('UseEdge') -and $UseEdge -ne $streamUsageChildItem.UseEdge) {
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enable use of edge storage on $($streamUsageChildItem.Name)")) {
+                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enable use of edge storage on $streamDisplayName")) {
                         $streamUsageChildItem.UseEdge = $UseEdge
                         $dirtyStreamUsages = $true
                     }
@@ -262,11 +289,12 @@ function Set-VmsCameraStream {
 
                 if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('LiveDefault') -and $LiveDefault -and $LiveDefault -ne $streamUsageChildItem.LiveDefault) {
                     $liveStream = $streamUsages.StreamUsageChildItems | Where-Object LiveDefault
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disabling LiveDefault on $($liveStream.Name)")) {
+                    $liveStreamName = & $getStreamUsageDisplayName $liveStream
+                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disabling LiveDefault on $liveStreamName")) {
                         $liveStream.LiveDefault = $false
                     }
 
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enabling LiveDefault on $($streamUsageChildItem.Name)")) {
+                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enabling LiveDefault on $streamDisplayName")) {
                         $streamUsageChildItem.LiveDefault = $true
                         $dirtyStreamUsages = $true
                     }
@@ -275,7 +303,7 @@ function Set-VmsCameraStream {
                 if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('LiveMode') -and $LiveMode -ne $streamUsageChildItem.LiveMode -and -not [string]::IsNullOrWhiteSpace($LiveMode)) {
                     if ($LiveMode -eq 'Never' -and (-not $streamUsageChildItem.Record -or $streamUsageChildItem.LiveDefault)) {
                         Write-Warning 'The LiveMode property can only be set to "Never" the recorded stream, and only when that stream is not used as the LiveDefault stream.'
-                    } elseif ($PSCmdlet.ShouldProcess($s.Camera.Name, "Setting LiveMode on $($streamUsageChildItem.Name)")) {
+                    } elseif ($PSCmdlet.ShouldProcess($s.Camera.Name, "Setting LiveMode on $streamDisplayName")) {
                         $streamUsageChildItem.LiveMode = $LiveMode
                         $dirtyStreamUsages = $true
                     }
