@@ -987,6 +987,7 @@ function Export-VmsHardwareExcel {
             PercentComplete  = 0
             CurrentOperation = 'Preparing'
         }
+        $progressStopwatch = [diagnostics.stopwatch]::StartNew()
         Write-Progress @progress
 
         if ($IncludedDevices) {
@@ -1040,6 +1041,12 @@ function Export-VmsHardwareExcel {
         $Hardware | ForEach-Object {
             $hw = $_
             $progress.PercentComplete = [math]::Round(($processedHardwareCount++) / $totalHardwareCount * 100)
+            if ($processedHardwareCount -gt 0 -and $totalHardwareCount -gt 0) {
+                $timePerHardware = $progressStopwatch.ElapsedMilliseconds / $processedHardwareCount
+                $remainingHardware = $totalHardwareCount - $processedHardwareCount
+                $remainingTime = [timespan]::FromMilliseconds($remainingHardware * $timePerHardware)
+                $progress.SecondsRemaining = [int]$remainingTime.TotalSeconds
+            }
             $progress.CurrentOperation = '{0} "{1}"' -f [VideoOS.Platform.Proxy.ConfigApi.ConfigurationItemPath]::new($_.Path).ItemType, $_.Name
             Write-Progress @progress
             if (($EnableFilter -eq 'Enabled' -and -not $hw.Enabled) -or ($EnableFilter -eq 'Disabled' -and $hw.Enabled)) {
@@ -1701,6 +1708,7 @@ function Import-VmsHardwareExcel {
             PercentComplete  = 0
             CurrentOperation = 'Preparing'
         }
+        $importStopwatch = [diagnostics.stopwatch]::StartNew()
         Write-Progress @progressParams
 
         $recorders = @{}
@@ -1718,6 +1726,12 @@ function Import-VmsHardwareExcel {
 
         foreach ($row in $data.Hardware | Sort-Object RecordingServer) {
             $progressParams.PercentComplete = [math]::Round(($processedRows++) / $totalRows * 100)
+            if ($processedRows -gt 0 -and $totalRows -gt 0) {
+                $timePerRow = $importStopwatch.ElapsedMilliseconds / $processedRows
+                $remainingRows = $totalRows - $processedRows
+                $remainingTime = [timespan]::FromMilliseconds($remainingRows * $timePerRow)
+                $progressParams.SecondsRemaining = [int]$remainingTime.TotalSeconds
+            }
             $progressParams.CurrentOperation = '{0} ({1})' -f $row.Name, $row.Address
             Write-Progress @progressParams
             try {
@@ -2095,10 +2109,17 @@ function Import-VmsHardwareExcel {
             Id              = 43
             PercentComplete = 0
         }
+        $relatedStopwatch = [diagnostics.stopwatch]::StartNew()
         Write-Progress @progressParams
 
         foreach ($row in $data.Hardware | Sort-Object RecordingServer) {
             $progressParams.PercentComplete = [math]::Round(($processedRows++) / $totalRows * 100)
+            if ($processedRows -gt 0 -and $totalRows -gt 0) {
+                $timePerRow = $relatedStopwatch.ElapsedMilliseconds / $processedRows
+                $remainingRows = $totalRows - $processedRows
+                $remainingTime = [timespan]::FromMilliseconds($remainingRows * $timePerRow)
+                $progressParams.SecondsRemaining = [int]$remainingTime.TotalSeconds
+            }
             $progressParams.CurrentOperation = '{0} ({1})' -f $row.Name, $row.Address
             Write-Progress @progressParams
 
