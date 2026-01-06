@@ -334,6 +334,7 @@ function Set-VmsCameraStream {
                         }
 
                         if ($PSCmdlet.ShouldProcess($target, "Changing $key from $currentValue to $($Settings.$key)")) {
+                            Write-Verbose "Changing setting '$key' from '$currentValue' to '$($Settings.$key)' on $target."
                             $streamChildItem.Properties.SetValue($key, $Settings.$key)
                             $dirty = $true
                         }
