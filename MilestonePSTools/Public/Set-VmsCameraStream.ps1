@@ -68,11 +68,9 @@ function Set-VmsCameraStream {
         if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('Recorded') -and $Recorded) {
             Write-Warning "The 'Recorded' switch parameter is deprecated with MilestonePSTools version 2023 R2 and later due to the added support for adaptive playback. For compatibility reasons, the '-Recorded' switch has the same meaning as '-RecordingTrack Primary -PlaybackDefault' unless one or both of these parameters were also specified."
             if (-not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey('RecordingTrack')) {
-                Write-Verbose "Setting RecordingTrack parameter to 'Primary'"
                 $PSCmdlet.MyInvocation.BoundParameters['RecordingTrack'] = $RecordingTrack = 'Primary'
             }
             if (-not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey('PlaybackDefault')) {
-                Write-Verbose "Setting PlaybackDefault parameter to `$true"
                 $PSCmdlet.MyInvocation.BoundParameters['PlaybackDefault'] = $PlaybackDefault = [switch]::new($true)
             }
             $null = $PSCmdlet.MyInvocation.BoundParameters.Remove('Recorded')
@@ -192,6 +190,7 @@ function Set-VmsCameraStream {
                             'Primary' {
                                 if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Record $streamDisplayName to the primary recording track")) {
                                     $streamUsageChildItem.RecordTo = $recordingTrackId.Primary
+                                    Write-Verbose "Setting RecordingTrack to 'Primary' on $($streamUsageChildItem.Name)."
 
                                     $primaryStreamUsageName = & $getStreamUsageDisplayName $primaryStreamUsage
                                     Write-Verbose "Disabling recording on current primary stream '$primaryStreamUsageName'."
@@ -213,6 +212,7 @@ function Set-VmsCameraStream {
                             'Secondary' {
                                 if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Record $streamDisplayName to the secondary recording track")) {
                                     $streamUsageChildItem.RecordTo = $recordingTrackId.Secondary
+                                    Write-Verbose "Setting RecordingTrack to 'Secondary' on $($streamUsageChildItem.Name)."
                                     if ($streamUsageChildItem.LiveMode -eq 'Never') {
                                         Write-Verbose "Changing LiveMode from Never to WhenNeeded on $streamDisplayName"
                                         $streamUsageChildItem.LiveMode = 'WhenNeeded'
@@ -235,6 +235,7 @@ function Set-VmsCameraStream {
                             'None' {
                                 if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disable recording of stream $streamDisplayName")) {
                                     $streamUsageChildItem.RecordTo = $recordingTrackId.None
+                                    Write-Verbose "Setting RecordingTrack to 'None' on $($streamUsageChildItem.Name)."
                                     if ($streamUsageChildItem.LiveMode -eq 'Never') {
                                         Write-Verbose "Changing LiveMode from Never to WhenNeeded on $streamDisplayName"
                                         $streamUsageChildItem.LiveMode = 'WhenNeeded'
@@ -265,6 +266,7 @@ function Set-VmsCameraStream {
 
                         if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enabling recording on $streamDisplayName")) {
                             $streamUsageChildItem.Record = $true
+                            Write-Verbose "Setting RecordingTrack to 'Primary' on $($streamUsageChildItem.Name)."
                             $dirtyStreamUsages = $true
                         }
                     }
@@ -276,6 +278,7 @@ function Set-VmsCameraStream {
                             $_.DefaultPlayback = $false
                         }
                         $streamUsageChildItem.DefaultPlayback = $PlaybackDefault
+                        Write-Verbose "Setting PlaybackDefault on $($streamUsageChildItem.Name)."
                         $dirtyStreamUsages = $true
                     }
                 }
