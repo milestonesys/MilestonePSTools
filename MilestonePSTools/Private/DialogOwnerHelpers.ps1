@@ -16,12 +16,15 @@ function Invoke-WithDialogOwner {
     [CmdletBinding()]
     param(
         [IntPtr] $Handle = [IntPtr]::Zero,
+        [switch] $TopMostFallback,
         [Parameter(Mandatory)][ScriptBlock] $ScriptBlock
     )
 
     Add-Type -AssemblyName System.Windows.Forms | Out-Null
 
     $owner = $null
+    $topMostOwnerForm = $null
+    $dialogOwner = $null
     try {
         if ($Handle -eq [IntPtr]::Zero -and $global:UiOwnerHandle) {
             $Handle = [IntPtr]$global:UiOwnerHandle
@@ -30,13 +33,28 @@ function Invoke-WithDialogOwner {
         if ($Handle -ne [IntPtr]::Zero) {
             $owner = New-Object System.Windows.Forms.NativeWindow
             $owner.AssignHandle($Handle)
+        } elseif ($TopMostFallback) {
+            $topMostOwnerForm = New-Object System.Windows.Forms.Form
+            $topMostOwnerForm.TopMost = $true
+            $topMostOwnerForm.ShowInTaskbar = $false
+            $topMostOwnerForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
+            $topMostOwnerForm.Size = [System.Drawing.Size]::new(1, 1)
         }
 
-        return & $ScriptBlock $owner
+        if ($owner) {
+            $dialogOwner = $owner
+        } elseif ($topMostOwnerForm) {
+            $dialogOwner = $topMostOwnerForm
+        }
+
+        return & $ScriptBlock $dialogOwner
     }
     finally {
         if ($owner) {
             $owner.ReleaseHandle()
+        }
+        if ($topMostOwnerForm) {
+            $topMostOwnerForm.Dispose()
         }
     }
 }
@@ -46,6 +64,7 @@ function Invoke-WithWpfDialogOwner {
     param(
         [Parameter(Mandatory)][System.Windows.Window] $Window,
         [IntPtr] $Handle = [IntPtr]::Zero,
+        [switch] $TopMostFallback,
         [Parameter(Mandatory)][ScriptBlock] $ScriptBlock
     )
 
@@ -59,6 +78,8 @@ function Invoke-WithWpfDialogOwner {
     if ($dialogOwnerHandle -ne [IntPtr]::Zero) {
         $interop = [System.Windows.Interop.WindowInteropHelper]::new($Window)
         $interop.Owner = $dialogOwnerHandle
+    } elseif ($TopMostFallback) {
+        $Window.Topmost = $true
     }
 
     return & $ScriptBlock $Window
