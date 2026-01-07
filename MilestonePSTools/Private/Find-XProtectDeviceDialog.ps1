@@ -241,7 +241,7 @@ function Find-XProtectDeviceDialog {
                 $var_lblPropertyValueBlank.Visibility = "Hidden"
             })
 
-        Invoke-WithWpfDialogOwner -Window $window -Handle $OwnerHandle -ScriptBlock {
+        Invoke-WithWpfDialogOwner -Window $window -Handle $OwnerHandle -TopMostFallback -ScriptBlock {
             param($dialogWindow)
             $null = $dialogWindow.ShowDialog()
         }
