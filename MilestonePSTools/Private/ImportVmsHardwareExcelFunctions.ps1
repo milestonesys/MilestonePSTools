@@ -53,20 +53,9 @@ function Show-FileDialog {
         }
 
         try {
-            $owner = $null
-            $dialogResult = Invoke-WithDialogOwner -Handle $OwnerHandle -ScriptBlock {
+            $dialogResult = Invoke-WithDialogOwner -Handle $OwnerHandle -TopMostFallback -ScriptBlock {
                 param($ownerHandle)
-                if ($ownerHandle) {
-                    return $dialog.ShowDialog($ownerHandle)
-                }
-                $owner = [form]@{
-                    TopMost = $true
-                }
-                try {
-                    return $dialog.ShowDialog($owner)
-                } finally {
-                    $owner.Dispose()
-                }
+                return $dialog.ShowDialog($ownerHandle)
             }
 
             if ($dialogResult -eq 'OK') {

@@ -72,12 +72,11 @@ function Select-VideoOSItem {
         $form.ServerTabVisable = -not $HideServerTab
         $form.Icon = [System.Drawing.Icon]::FromHandle([VideoOS.Platform.UI.Util]::ImageList.Images[[VideoOS.Platform.UI.Util]::SDK_GeneralIx].GetHicon())
         $form.Text = $Title
-        $form.TopMost = $true
         $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
         $form.BringToFront()
         $form.Activate()
 
-        $dialogResult = Invoke-WithDialogOwner -Handle $OwnerHandle -ScriptBlock {
+        $dialogResult = Invoke-WithDialogOwner -Handle $OwnerHandle -TopMostFallback -ScriptBlock {
             param($owner)
             $form.ShowDialog($owner)
         }
