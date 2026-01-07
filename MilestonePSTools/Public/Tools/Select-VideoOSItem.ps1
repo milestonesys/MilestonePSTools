@@ -49,7 +49,10 @@ function Select-VideoOSItem {
         $HideGroupsTab,
         [Parameter()]
         [switch]
-        $HideServerTab
+        $HideServerTab,
+        [Parameter()]
+        [IntPtr]
+        $OwnerHandle = [IntPtr]::Zero
     )
 
     begin {
@@ -74,7 +77,12 @@ function Select-VideoOSItem {
         $form.BringToFront()
         $form.Activate()
 
-        if ($form.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
+        $dialogResult = Invoke-WithDialogOwner -Handle $OwnerHandle -ScriptBlock {
+            param($owner)
+            $form.ShowDialog($owner)
+        }
+
+        if ($dialogResult -eq [System.Windows.Forms.DialogResult]::OK) {
             if ($FlattenOutput) {
                 Write-Output $form.ItemsSelectedFlattened
             }
@@ -84,4 +92,3 @@ function Select-VideoOSItem {
         }
     }
 }
-

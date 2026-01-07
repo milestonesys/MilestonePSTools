@@ -24,7 +24,11 @@ function Show-FileDialog {
 
         [Parameter(Mandatory, ParameterSetName = 'SaveFile')]
         [switch]
-        $SaveFile
+        $SaveFile,
+
+        [Parameter()]
+        [IntPtr]
+        $OwnerHandle = [IntPtr]::Zero
     )
 
     process {
@@ -49,10 +53,23 @@ function Show-FileDialog {
         }
 
         try {
-            $form = [form]@{
-                TopMost = $true
+            $owner = $null
+            $dialogResult = Invoke-WithDialogOwner -Handle $OwnerHandle -ScriptBlock {
+                param($ownerHandle)
+                if ($ownerHandle) {
+                    return $dialog.ShowDialog($ownerHandle)
+                }
+                $owner = [form]@{
+                    TopMost = $true
+                }
+                try {
+                    return $dialog.ShowDialog($owner)
+                } finally {
+                    $owner.Dispose()
+                }
             }
-            if ($dialog.ShowDialog($form) -eq 'OK') {
+
+            if ($dialogResult -eq 'OK') {
                 $dialog.FileName
             } else {
                 throw "$($PSCmdlet.ParameterSetName) aborted."
@@ -60,9 +77,6 @@ function Show-FileDialog {
         } finally {
             if ($dialog) {
                 $dialog.Dispose()
-            }
-            if ($form) {
-                $form.Dispose()
             }
         }
     }
@@ -885,6 +899,10 @@ function Export-VmsHardwareExcel {
     .PARAMETER Force
     Overwrite an existing file if the file specified in `Path` already exists.
 
+    .PARAMETER OwnerHandle
+    Optional UI owner handle to make the save-file dialog modal to an existing
+    GUI window.
+
     .EXAMPLE
     Export-VmsHardwareExcel -Path ~\Documents\hardware.xlsx -Verbose
 
@@ -927,12 +945,16 @@ function Export-VmsHardwareExcel {
 
         [Parameter()]
         [switch]
-        $Force
+        $Force,
+
+        [Parameter()]
+        [IntPtr]
+        $OwnerHandle = [IntPtr]::Zero
     )
 
     begin {
         if ([string]::IsNullOrWhiteSpace($Path)) {
-            $Path = Show-FileDialog -SaveFile
+            $Path = Show-FileDialog -SaveFile -OwnerHandle $OwnerHandle
         }
         if (Test-Path $Path) {
             throw ([io.ioexception]::new("File $Path already exists."))
@@ -1586,6 +1608,10 @@ function Import-VmsHardwareExcel {
     modified by default. If you wish to update the settings for existing
     hardware during an import, this switch can be used.
 
+    .PARAMETER OwnerHandle
+    Optional UI owner handle to make the open-file dialog modal to an existing
+    GUI window.
+
     .EXAMPLE
     Import-VmsHardwareExcel -Path ~\Desktop\hardware.xlsx -Verbose
 
@@ -1618,7 +1644,11 @@ function Import-VmsHardwareExcel {
 
         [Parameter()]
         [switch]
-        $UpdateExisting
+        $UpdateExisting,
+
+        [Parameter()]
+        [IntPtr]
+        $OwnerHandle = [IntPtr]::Zero
     )
 
     begin {
@@ -1626,7 +1656,7 @@ function Import-VmsHardwareExcel {
             Connect-Vms -ShowDialog -AcceptEula -ErrorAction Stop
         }
         if ([string]::IsNullOrWhiteSpace($Path)) {
-            $Path = Show-FileDialog -OpenFile
+            $Path = Show-FileDialog -OpenFile -OwnerHandle $OwnerHandle
         }
         try {
             $excelPackage = Open-ExcelPackage -Path $Path
