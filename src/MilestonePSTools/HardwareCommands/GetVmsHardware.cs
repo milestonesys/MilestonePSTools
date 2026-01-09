@@ -16,6 +16,7 @@ using MilestonePSTools.Utility;
 using System;
 using System.Linq;
 using System.Management.Automation;
+using VideoOS.ConfigurationApi.ClientService;
 using VideoOS.Platform.ConfigurationItems;
 using VideoOS.Platform.Proxy.ConfigApi;
 
@@ -35,7 +36,7 @@ namespace MilestonePSTools.HardwareCommands
         [MipItemTransformation(typeof(RecordingServer))]
         public RecordingServer RecordingServer { get; set; }
 
-        [Parameter(ParameterSetName = "Filtered")]
+        [Parameter(ParameterSetName = "ById")]
         [Alias("HardwareId")]
         public Guid Id { get; set; }
 
@@ -67,7 +68,46 @@ namespace MilestonePSTools.HardwareCommands
         protected override void ProcessRecord()
         {
             var recorderFolder = Connection.ManagementServer.RecordingServerFolder;
-            bool IsEnabledMatch(Hardware hardware)
+            
+            switch (ParameterSetName)
+            {
+                case "ById":
+                    WriteObject(new Hardware(Connection.CurrentSite.FQID.ServerId, $"Hardware[{Id}]"));
+                    break;
+                case "Filtered":
+                    var nameFilter = new WildcardPattern(Name ?? "*", CaseSensitive ? WildcardOptions.None : WildcardOptions.IgnoreCase);
+                    if (RecordingServer != null || RecorderId != Guid.Empty)
+                    {
+                        // Filtered by recording server
+                        var rec = RecordingServer ?? new RecordingServer(Connection.CurrentSite.FQID.ServerId, $"RecordingServer[{RecorderId}]");
+                        foreach (var hw in rec.HardwareFolder.Hardwares.Where(h => nameFilter.IsMatch(h.Name)))
+                        {
+                            WriteObjectIfEnableFilterMatches(hw);
+                        }
+                    }
+                    else
+                    {
+                        // Filtered by name
+                        foreach (var rs in recorderFolder.RecordingServers)
+                        foreach (var hw in rs.HardwareFolder.Hardwares.Where(h => nameFilter.IsMatch(h.Name)))
+                        {
+                            WriteObjectIfEnableFilterMatches(hw);
+                        }
+                    }
+                    break;
+                default:
+                    foreach (var rs in recorderFolder.RecordingServers)
+                    foreach (var hw in rs.HardwareFolder.Hardwares)
+                    {
+                        WriteObjectIfEnableFilterMatches(hw);
+                    }
+                    break;
+            }
+        }
+
+        private void WriteObjectIfEnableFilterMatches(Hardware hw)
+        {
+            bool TestEnableFilter(Hardware hardware)
             {
                 return EnableFilter switch
                 {
@@ -77,53 +117,14 @@ namespace MilestonePSTools.HardwareCommands
                     _ => true
                 };
             }
-            switch (ParameterSetName)
-            {
-                case "Filtered":
-                    var nameFilter = new WildcardPattern(Name ?? "*", CaseSensitive ? WildcardOptions.None : WildcardOptions.IgnoreCase);
-                    if (Id != Guid.Empty)
-                    {
-                        var hw = new Hardware(Connection.CurrentSite.FQID.ServerId, $"Hardware[{Id}]");
-                        if (IsEnabledMatch(hw))
-                        {
-                            WriteObject(hw);
-                        }
-                    }
-                    else if (RecordingServer != null || RecorderId != Guid.Empty)
-                    {
-                        var rec = RecordingServer ?? new RecordingServer(Connection.CurrentSite.FQID.ServerId, $"RecordingServer[{RecorderId}]");
-                        foreach (var hw in rec.HardwareFolder.Hardwares.Where(h => nameFilter.IsMatch(h.Name)))
-                        {
-                            if (IsEnabledMatch(hw))
-                            {
-                                WriteObject(hw);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (var rs in recorderFolder.RecordingServers)
-                        foreach (var hw in rs.HardwareFolder.Hardwares.Where(h => nameFilter.IsMatch(h.Name)))
-                        {
-                            if (IsEnabledMatch(hw))
-                            {
-                                WriteObject(hw);
-                            }
-                        }
-                    }
 
-                    break;
-                default:
-                    foreach (var rs in recorderFolder.RecordingServers)
-                    foreach (var hw in rs.HardwareFolder.Hardwares)
-                    {
-                        if (IsEnabledMatch(hw))
-                        {
-                            WriteObject(hw);
-                        }
-                    }
-                    break;
+            if (TestEnableFilter(hw))
+            {
+                WriteObject(hw);
+                return;
             }
+
+            WriteVerbose($"{(hw.Enabled ? "Enabled" : "Disabled")} hardware ignored because EnableFilter is set to '{EnableFilter}'");
         }
     }
 }

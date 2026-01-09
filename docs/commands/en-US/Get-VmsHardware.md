@@ -15,13 +15,18 @@ connected management server.
 
 ### All (Default)
 ```
-Get-VmsHardware [-All] [[-EnableFilter] <EnableFilter>] [-CaseSensitive] [<CommonParameters>]
+Get-VmsHardware [-All] [-EnableFilter <EnableFilter>] [-CaseSensitive] [<CommonParameters>]
 ```
 
 ### Filtered
 ```
-Get-VmsHardware [-RecordingServer <RecordingServer>] [-Id <Guid>] [-RecorderId <Guid>] [[-Name] <String>]
- [[-EnableFilter] <EnableFilter>] [-CaseSensitive] [<CommonParameters>]
+Get-VmsHardware [-RecordingServer <RecordingServer>] [-RecorderId <Guid>] [[-Name] <String>]
+ [-EnableFilter <EnableFilter>] [-CaseSensitive] [<CommonParameters>]
+```
+
+### ById
+```
+Get-VmsHardware [-Id <Guid>] [-CaseSensitive] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -109,12 +114,29 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnableFilter
+Specifies whether to include enabled devices, disabled devices, or both. The default behavior is to only include enabled
+devices.
+
+```yaml
+Type: EnableFilter
+Parameter Sets: All, Filtered
+Aliases:
+Accepted values: All, Enabled, Disabled
+
+Required: False
+Position: Named
+Default value: Enabled
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Id
 Specifies the hardware ID of an existing hardware device.
 
 ```yaml
 Type: Guid
-Parameter Sets: Filtered
+Parameter Sets: ById
 Aliases: HardwareId
 
 Required: False
@@ -137,22 +159,6 @@ Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: True
-```
-
-### -EnableFilter
-Specifies whether to include enabled devices, disabled devices, or both.
-
-```yaml
-Type: EnableFilter
-Parameter Sets: All, Filtered
-Aliases:
-Accepted values: All, Enabled, Disabled
-
-Required: False
-Position: Named
-Default value: Enabled
-Accept pipeline input: False
-Accept wildcard characters: False
 ```
 
 ### -RecorderId
