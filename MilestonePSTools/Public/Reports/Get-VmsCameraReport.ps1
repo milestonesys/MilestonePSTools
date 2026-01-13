@@ -82,8 +82,7 @@ function Get-VmsCameraReport {
             }
             $roleMemberships = (Get-LoginSettings | Where-Object Guid -EQ (Get-VmsSite).FQID.ObjectId).GroupMembership
             $isAdmin = (Get-VmsRole -RoleType Adminstrative).Id -in $roleMemberships
-            $dllFileInfo = [io.fileinfo](Get-Module MilestonePSTools)[0].Path
-            $manifestPath = Join-Path $dllFileInfo.Directory.Parent.FullName 'MilestonePSTools.psd1'
+            $manifestPath = Join-Path $PSCmdlet.MyInvocation.MyCommand.Module.ModuleBase 'MilestonePSTools.psd1'
             $jobRunner = [LocalJobRunner]::new($manifestPath)
             $jobRunner.JobPollingInterval = [timespan]::FromMilliseconds(500)
         } catch {
@@ -490,4 +489,3 @@ function Get-VmsCameraReport {
         }
     }
 }
-
