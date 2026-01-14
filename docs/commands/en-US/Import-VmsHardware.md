@@ -30,8 +30,10 @@ Import-VmsHardware -LiteralPath <String[]> [-RecordingServer <RecordingServer>] 
 The `Import-VmsHardware` cmdlet imports cameras and other hardware from either a CSV file or an Excel file and adds them
 to an XProtect recording server or optionally _updates_ hardware that has already been added to the VMS. When importing
 from a CSV file, each row will describe a camera, or another device type like a microphone, speaker, metadata, input, or
-output. For the most basic imports, the only required column in the CSV is the "Address" as the credentials and
-destination recording server can be provided using the corresponding parameters.
+output. New devices must be online and reachable by the recording server or they cannot be added.
+
+For the most basic imports, the only required column in the CSV is the "Address" as the credentials and destination
+recording server can be provided using the corresponding parameters.
 
 The most detailed CSV import will look something like the following table:
 
