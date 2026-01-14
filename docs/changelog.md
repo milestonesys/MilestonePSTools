@@ -7,6 +7,22 @@ hide:
 
 ## [vNext] unreleased
 
+## [25.2.21] 2026-01-14
+
+### 🔄 Changed
+
+- **`Get-VmsHardware`** now has an `-EnableFilter` parameter with a default value of `Enabled`. It will now default to returning only enabled hardware just like the camera, microphone, speaker, metadata, input, and output cmdlets return only enabled devices by default. (Thanks @Silex!)
+
+### 🐛 Fixed
+
+- **`Get-VmsCameraReport`** and **`Get-IServerCommandService`** could, on some systems, fail with the error "The term 'Get-IServerCommandService' is not recognized as the name of a cmdlet" due to an assumption about the module manifest path that was not always correct. (Thanks @Silex!)
+
+## [25.2.18] 2025-08-01
+
+### 🐛 Fixed
+
+- **`Start-VmsHardwareScan`** the `DriverFamily` parameter now has a `DriverGroup` alias and `Import-VmsHardware` correctly invokes `Start-VmsHardwareScan` when importing hardware without a value for `DriverNumber`.
+
 ## [25.2.16] 2025-08-01
 
 ### 🔄 Changed
