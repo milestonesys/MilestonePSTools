@@ -2,7 +2,7 @@
 
 MilestonePSTools is actively maintained and supported by Milestone Systems. We value your feedback and are committed
 to resolving any issues you encounter with our PowerShell module. Questions, suggestions, and bug reports should be
-submitted to us using our public GitHub [issue tracker](https://github.com/MilestoneSystemsInc/PowerShellSamples/issues).
+submitted to us using our public GitHub [issue tracker](https://github.com/milestonesys/MilestonePSTools/issues).
 
 !!! note
     Our team addresses reported issues as time permits. We do not provide a guaranteed response time for reported issues
@@ -25,18 +25,18 @@ they no longer support.
 ### :material-chat-question: General questions
 
 Whether you are new to PowerShell, XProtect, both, or neither, you are bound to have a question for us at some point. We
-want to hear it! Please create an "issue" at [MilestoneSystemsInc/PowerShellSamples/issues](https://github.com/MilestoneSystemsInc/PowerShellSamples/issues)
+want to hear it! Please create an "issue" at [milestonesys/MilestonePSTools/issues](https://github.com/milestonesys/MilestonePSTools/issues)
 and we will respond.
 
 ### :sparkles: Feature requests
 
-If you have an idea for an improvement or new feature for MilestonePSTools, let us know! Please create an "issue" at [MilestoneSystemsInc/PowerShellSamples/issues](https://github.com/MilestoneSystemsInc/PowerShellSamples/issues)
+If you have an idea for an improvement or new feature for MilestonePSTools, let us know! Please create an "issue" at [milestonesys/MilestonePSTools/issues](https://github.com/milestonesys/MilestonePSTools/issues)
 so we can start a dialog. Whether or not we choose to implement your feature, your feedback is _incredibly important_
 and highly motivating
 
 ### :octicons-comment-discussion-24: Discussions
 
-We will occasionally post a topic for discussion in the [discussions](https://github.com/MilestoneSystemsInc/PowerShellSamples/discussions)
+We will occasionally post a topic for discussion in the [discussions](https://github.com/milestonesys/MilestonePSTools/discussions)
 section on GitHub. These are great for broad discussions that don't necessarily fall under the category of "bugs" or
 "feature requests". If you're looking for a more casual chat, you can also reach us on the
 [Milestone Developer Community Discord](https://discord.milestonepstools.com/).
@@ -56,7 +56,7 @@ for making a quality bug report.
 
 1. **Search Existing Issues**
     - Before opening a new issue, check if someone else has already reported the same problem:
-        1. Go to [our GitHub repository](https://github.com/MilestoneSystemsInc/PowerShellSamples/issues).
+        1. Go to [our GitHub repository](https://github.com/milestonesys/MilestonePSTools/issues).
         2. Click on the “Issues” tab and use the search tool.
 
 2. **Create a Minimal Example**

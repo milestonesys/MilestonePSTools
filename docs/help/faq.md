@@ -87,4 +87,4 @@ the risk of breaking any automation setup by customers using the module.
 Perhaps we'll apply the prefix to all commands, and add aliases for the old
 command names? If you have suggestions for how to address this with minimal
 impact to current users, please feel free to contribute to a discussion
-[on GitHub](https://github.com/MilestoneSystemsInc/PowerShellSamples)!
+[on GitHub](https://github.com/milestonesys/MilestonePSTools)!

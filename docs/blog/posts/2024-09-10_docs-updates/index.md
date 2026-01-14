@@ -5,7 +5,7 @@ authors:
 categories:
   - Docs
 links:
-  - Issues: https://www.github.com/milestonesystemsinc/powershellsamples
+  - Issues: https://www.github.com/milestonesys/MilestonePSTools
   - Xterm.js: https://xtermjs.org/
 ---
 
@@ -46,5 +46,5 @@ helpful for those who are new to PowerShell or those without a test VMS to evalu
 ![Screenshot of the Try it out section with some powershell commands](truncate-storage-method.png)
 
 I hope you enjoy, and please continue to send us your feedback and report issues on GitHub at
-[milestonesystemsinc/powershellsamples](https://www.github.com/milestonesystemsinc/powershellsamples).
+[milestonesys/MilestonePSTools](https://www.github.com/milestonesys/MilestonePSTools).
 
