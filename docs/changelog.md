@@ -17,7 +17,7 @@ hide:
 
 - **`Get-VmsCameraReport`** and **`Get-IServerCommandService`** could, on some systems, fail with the error "The term 'Get-IServerCommandService' is not recognized as the name of a cmdlet" due to an assumption about the module manifest path that was not always correct. (Thanks @Silex!)
 
-## [25.2.18] 2025-08-01
+## [25.2.18] 2025-08-29
 
 ### 🐛 Fixed
 
