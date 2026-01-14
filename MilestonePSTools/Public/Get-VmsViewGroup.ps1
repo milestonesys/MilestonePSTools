@@ -45,70 +45,47 @@ function Get-VmsViewGroup {
     process {
         if ($PSCmdlet.ParameterSetName -eq 'ById') {
             try {
-                $vg = [VideoOS.Platform.ConfigurationItems.ViewGroup]::new((Get-VmsSite).FQID.ServerId, "ViewGroup[$Id]")
-                Write-Output $vg
+                [VideoOS.Platform.ConfigurationItems.ViewGroup]::new((Get-VmsSite).FQID.ServerId, "ViewGroup[$Id]")
             } catch [System.Management.Automation.MethodInvocationException] {
                 if ($_.FullyQualifiedErrorId -eq 'PathNotFoundMIPException') {
                     Write-Error "No ViewGroup found with ID matching $Id"
                     return
                 }
+                Write-Error -ErrorRecord $_
             }
+            return
+        }
+
+        if ($null -ne $Parent) {
+            $vgFolder = $Parent.ViewGroupFolder
         } else {
-            if ($null -ne $Parent) {
-                $vgFolder = $Parent.ViewGroupFolder
-            } else {
-                $vgFolder = (Get-VmsManagementServer).ViewGroupFolder
-            }
+            $vgFolder = (Get-VmsManagementServer).ViewGroupFolder
+        }
 
-            $count = 0
-            $hasWildcard = $false
-            foreach ($n in $Name) {
-                if ([System.Management.Automation.WildcardPattern]::ContainsWildcardCharacters($n)) {
-                    $hasWildcard = $true
-                    break
-                }
-            }
+        $count = 0
+        $hasWildcard = $null -ne ($Name | Where-Object { [wildcardpattern]::ContainsWildcardCharacters($_) })
 
-            if ($Recurse) {
-                $queue = [System.Collections.Generic.Queue[VideoOS.Platform.ConfigurationItems.ViewGroup]]::new()
-                foreach ($vg in $vgFolder.ViewGroups) {
-                    $queue.Enqueue($vg)
-                }
-
-                while ($queue.Count -gt 0) {
-                    $vg = $queue.Dequeue()
-                    foreach ($n in $Name) {
-                        if ($vg.DisplayName -notlike $n) {
-                            continue
-                        }
-                        $count++
-                        Write-Output $vg
-                        break
-                    }
-
-                    $childFolder = $vg.ViewGroupFolder
-                    if ($null -ne $childFolder) {
-                        foreach ($child in $childFolder.ViewGroups) {
-                            $queue.Enqueue($child)
-                        }
+        $queue = [System.Collections.Generic.Queue[VideoOS.Platform.ConfigurationItems.ViewGroup]]::new()
+        foreach ($vg in $vgFolder.ViewGroups) {
+            $queue.Enqueue($vg)
+        }
+        while ($queue.Count -gt 0) {
+            $vg = $queue.Dequeue()
+            foreach ($vgName in $Name) {
+                if ($Recurse) {
+                    foreach ($child in $vg.ViewGroupFolder.ViewGroups) {
+                        $queue.Enqueue($child)
                     }
                 }
-            } else {
-                foreach ($vg in $vgFolder.ViewGroups) {
-                    foreach ($n in $Name) {
-                        if ($vg.DisplayName -notlike $n) {
-                            continue
-                        }
-                        $count++
-                        Write-Output $vg
-                        break
-                    }
+                if ($vg.DisplayName -like $vgName) {
+                    $vg
+                    $count++
                 }
             }
+        }
 
-            if ($count -eq 0 -and -not $hasWildcard) {
-                Write-Error "ViewGroup ""$Name"" not found."
-            }
+        if ($count -eq 0 -and -not $hasWildcard) {
+            Write-Error "ViewGroup ""$Name"" not found."
         }
     }
 }
