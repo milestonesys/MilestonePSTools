@@ -21,7 +21,8 @@ if ($null -eq (Get-Command choco -ErrorAction Ignore)) {
     refreshenv
 }
 
-& choco install $PSScriptRoot\choco-packages.config -y --no-progress
+& choco install "$PSScriptRoot\choco-packages$(if ($env:CI) { '-ci' }).config" -y --no-progress
+$env:PATH = "C:\Program Files\dotnet;" + $env:PATH
 
 if ((dotnet nuget list source) -eq 'No sources found.') {
     dotnet nuget add source -n 'nuget.org' 'https://api.nuget.org/v3/index.json'
