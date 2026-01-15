@@ -129,7 +129,7 @@ function ValidateHardwareCsvRows {
                     'Password' {}
                     'RecordingServer' {
                         if (-not [string]::IsNullOrWhiteSpace($record.RecordingServer) -and -not $recorders.ContainsKey($record.RecordingServer)) {
-                            Write-Error -Message "Invalid RecordingServer value `"$($row.Channel)`" in row $($i + 1)." -Category InvalidData -ErrorId "InvalidValue" -TargetObject $row
+                            Write-Error -Message "Invalid RecordingServer value `"$($row.RecordingServer)`" in row $($i + 1)." -Category InvalidData -ErrorId "InvalidValue" -TargetObject $row
                         }
                     }
                     'DriverNumber' {
@@ -140,7 +140,8 @@ function ValidateHardwareCsvRows {
                         if (-not [int]::TryParse($record.DriverNumber, [ref]$driverNumber)) {
                             Write-Error -Message "Invalid DriverNumber value `"$($row.DriverNumber)`" in row $($i + 1)." -Category InvalidData -ErrorId "InvalidValue" -TargetObject $row
                         }
-                        if (-not [string]::IsNullOrWhiteSpace($record.RecordingServer) -and -not [string]::IsNullOrWhiteSpace($row.DriverNumber) -and -not $driversByRecorder.ContainsKey("$($record.RecordingServer).$($record.DriverNumber)")) {
+                        # Only validate DriverNumber if RecordingServer exists - otherwise the recording server validation will have already thrown an error
+                        if (-not [string]::IsNullOrWhiteSpace($record.RecordingServer) -and $recorders.ContainsKey($record.RecordingServer) -and -not [string]::IsNullOrWhiteSpace($row.DriverNumber) -and -not $driversByRecorder.ContainsKey("$($record.RecordingServer).$($record.DriverNumber)")) {
                             Write-Error -Message "DriverNumber `"$($row.DriverNumber)`" in row $($i + 1) not found on RecordingServer `"$($record.RecordingServer)`". You may need to install a newer device pack version or custom device driver." -Category InvalidData -ErrorId "InvalidValue" -TargetObject $row
                         }
                         $record.DriverNumber = $driverNumber
