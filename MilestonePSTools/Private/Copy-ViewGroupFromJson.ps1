@@ -99,14 +99,14 @@ function Copy-ViewGroupFromJson {
             foreach ($srcView in ($srcGroup.Children | Where-Object ItemType -eq ViewFolder).Children) {
                 # Create new view based on srcView layout
                 $invokeInfo = $newViewFolder | Invoke-Method -MethodId 'AddView'
-                foreach ($key in ($invokeInfo.Properties | Where-Object IsSettable).Key) {
+                foreach ($key in ($invokeInfo.Properties | Where-Object { $_.IsSettable -and $_.Key -ne 'Id'}).Key) {
                     $value = ($srcView.Properties | Where-Object Key -eq $key).Value
                     ($invokeInfo.Properties | Where-Object Key -eq $key).Value = $value
                 }
                 $newView = $invokeInfo | Invoke-Method -MethodId 'AddView'
 
                 # Rename view and update any other settable values
-                foreach ($key in ($newView.Properties | Where-Object IsSettable).Key) {
+                foreach ($key in ($newView.Properties | Where-Object { $_.IsSettable -and $_.Key -ne 'Id'}).Key) {
                     $value = ($srcView.Properties | Where-Object Key -eq $key).Value
                     ($newView.Properties | Where-Object Key -eq $key).Value = $value
                 }
@@ -115,6 +115,9 @@ function Copy-ViewGroupFromJson {
                 for ($i = 0; $i -lt $newView.Children.Count; $i++) {
                     foreach ($key in ($newView.Children[$i].Properties | Where-Object IsSettable).Key) {
                         $value = ($srcView.Children[$i].Properties | Where-Object Key -eq $key).Value
+                        if ($key -eq 'ViewItemDefinitionXml') {
+                            $value = $value -replace '^<viewitem id=".{36}"', ('<viewitem id="{0}"' -f (New-Guid).ToString().ToLower())
+                        }
                         ($newView.Children[$i].Properties | Where-Object Key -eq $key).Value = $value
                     }
                 }
