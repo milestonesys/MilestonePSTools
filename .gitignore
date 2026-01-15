@@ -10,5 +10,9 @@ tests/out/testResults.xml
 .vs/
 .checksums
 
+# Docs build artifacts
+docs/commands/command-history.json
+docs/commands/commands.mdtable
+
 # Auto-generated
 compatibility.mdtable
