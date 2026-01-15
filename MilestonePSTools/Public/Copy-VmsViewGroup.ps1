@@ -65,6 +65,7 @@ function Copy-VmsViewGroup {
                 $params.ParentViewGroup = $DestinationViewGroup
             }
             $newViewGroup = Copy-ViewGroupFromJson @params
+            $destFolder.ClearChildrenCache()
             if ($PassThru) {
                 Write-Output $newViewGroup
             }
