@@ -13,7 +13,6 @@ if ($null -eq (Get-Command choco -ErrorAction Ignore)) {
         }
     }
     $ProgressPreference = 'SilentlyContinue'
-    Set-ExecutionPolicy Bypass -Scope Process -Force
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
     Invoke-Expression ([System.Net.WebClient]::new().DownloadString('https://community.chocolatey.org/install.ps1'))
     $env:ChocolateyInstall = Get-ItemPropertyValue 'hklm:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\' -Name ChocolateyInstall -ErrorAction Stop
