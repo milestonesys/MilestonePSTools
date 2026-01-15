@@ -36,10 +36,10 @@ function Remove-VmsViewGroup {
         foreach ($vg in $ViewGroup) {
             if ($PSCmdlet.ShouldProcess($vg.DisplayName, "Remove ViewGroup")) {
                 try {
-                    $viewGroupFolder = [VideoOS.Platform.ConfigurationItems.ViewGroupFolder]::new($vg.ServerId, $vg.ParentPath)
-                    $result = $viewGroupFolder.RemoveViewGroup($Recurse, $vg.Path)
+                    $parentFolder = [VideoOS.Platform.ConfigurationItems.ViewGroupFolder]::new($vg.ServerId, $vg.ParentPath)
+                    $result = $parentFolder.RemoveViewGroup($Recurse, $vg.Path)
                     if ($result.State -eq 'Success') {
-                        $viewGroupFolder.ClearChildrenCache()
+                        (Get-VmsManagementServer).ViewGroupFolder.ClearChildrenCache()
                     } else {
                         Write-Error $result.ErrorText
                     }
