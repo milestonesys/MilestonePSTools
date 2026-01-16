@@ -64,7 +64,7 @@ namespace MilestonePSTools.Lpr
             }
             if (MyInvocation.BoundParameters.ContainsKey(nameof(CameraId)))
             {
-                conditions.Add(new Condition { Target = Target.CameraId, Operator = Operator.Equals, Value = CameraId });
+                conditions.Add(new Condition { Target = Target.ObjectId, Operator = Operator.Equals, Value = CameraId });
             }
             
             using (var reader = new EventLineReader(Connection.CurrentSite.FQID.ServerId))
