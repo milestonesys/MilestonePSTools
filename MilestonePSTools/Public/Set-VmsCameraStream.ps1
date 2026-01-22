@@ -357,36 +357,25 @@ function Set-VmsCameraStream {
     }
 
     end {
-        $updatesByStreamConfig = @{}
+        $updatedStreamConfigs = [system.collections.generic.list[object]]::new()
         foreach ($update in $updatedItems) {
-            if (-not $updatesByStreamConfig.ContainsKey($update.StreamConfig)) {
-                $updatesByStreamConfig[$update.StreamConfig] = [system.collections.generic.list[object]]::new()
-            }
-            $updatesByStreamConfig[$update.StreamConfig].Add($update)
-        }
-
-        foreach ($streamConfig in $updatesByStreamConfig.Keys) {
-            $needsUpdate = $false
-            foreach ($update in $updatesByStreamConfig[$streamConfig]) {
-                try {
-                    $item = $itemCache[$update.Item.Path]
-                    if ($null -ne $item) {
-                        $item.Save()
-                        $needsUpdate = $true
-                    }
-                } catch [VideoOS.Platform.Proxy.ConfigApi.ValidateResultException] {
-                    $update.Parent.ClearChildrenCache()
-                    $_ | HandleValidateResultException -TargetObject $item
-                } finally {
-                    if ($null -ne $item) {
-                        $itemCache.Remove($item.Path)
-                        $item = $null
-                    }
+            try {
+                $item = $itemCache[$update.Item.Path]
+                if ($null -ne $item) {
+                    $item.Save()
                 }
-            }
-
-            if ($needsUpdate) {
-                $streamConfig.Update()
+                if ($update.StreamConfig -notin $updatedStreamConfigs) {
+                    $update.StreamConfig.Update()
+                    $updatedStreamConfigs.Add($update.StreamConfig)
+                }
+            } catch [VideoOS.Platform.Proxy.ConfigApi.ValidateResultException] {
+                $update.Parent.ClearChildrenCache()
+                $_ | HandleValidateResultException -TargetObject $item
+            } finally {
+                if ($null -ne $item) {
+                    $itemCache.Remove($item.Path)
+                    $item = $null
+                }
             }
         }
     }
