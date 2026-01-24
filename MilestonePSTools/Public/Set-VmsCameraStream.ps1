@@ -1,20 +1,6 @@
-# Copyright 2025 Milestone Systems A/S
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 function Set-VmsCameraStream {
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
-    [RequiresVmsConnection()]
+    [MilestonePSTools.RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ParameterSetName = 'RemoveStream')]
         [switch]
@@ -22,7 +8,7 @@ function Set-VmsCameraStream {
 
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'AddOrUpdateStream')]
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'RemoveStream')]
-        [VmsCameraStreamConfig[]]
+        [MilestonePSTools.VmsCameraStreamConfig[]]
         $Stream,
 
         [Parameter(ParameterSetName = 'AddOrUpdateStream')]
@@ -48,8 +34,8 @@ function Set-VmsCameraStream {
         $RecordingTrack,
 
         [Parameter(ParameterSetName = 'AddOrUpdateStream')]
-        [ValidateVmsVersion('23.2')]
-        [ValidateVmsFeature('MultistreamRecording')]
+        [MilestonePSTools.ValidateVmsVersion('23.2')]
+        [MilestonePSTools.ValidateVmsFeature('MultistreamRecording')]
         [switch]
         $PlaybackDefault,
 
@@ -64,318 +50,88 @@ function Set-VmsCameraStream {
 
     begin {
         Assert-VmsRequirementsMet
-
-        if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('Recorded') -and $Recorded) {
-            Write-Warning "The 'Recorded' switch parameter is deprecated with MilestonePSTools version 2023 R2 and later due to the added support for adaptive playback. For compatibility reasons, the '-Recorded' switch has the same meaning as '-RecordingTrack Primary -PlaybackDefault' unless one or both of these parameters were also specified."
-            if (-not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey('RecordingTrack')) {
-                $PSCmdlet.MyInvocation.BoundParameters['RecordingTrack'] = $RecordingTrack = 'Primary'
-            }
-            if (-not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey('PlaybackDefault')) {
-                $PSCmdlet.MyInvocation.BoundParameters['PlaybackDefault'] = $PlaybackDefault = [switch]::new($true)
-            }
-            $null = $PSCmdlet.MyInvocation.BoundParameters.Remove('Recorded')
-            Remove-Variable -Name 'Recorded'
-        }
-        $updatedItems = [system.collections.generic.list[pscustomobject]]::new()
-        $itemCache = @{}
-    }
-
-    process {
-        foreach ($s in $Stream) {
-            $target = "$($s.Name) on $($s.Camera.Name)"
-            $deviceDriverSettings = $s.Camera.DeviceDriverSettingsFolder.DeviceDriverSettings[0]
-            if ($itemCache.ContainsKey($deviceDriverSettings.Path)) {
-                $deviceDriverSettings = $itemCache[$deviceDriverSettings.Path]
-            } else {
-                $itemCache[$deviceDriverSettings.Path] = $deviceDriverSettings
-            }
-            $streamUsages = $s.Camera.StreamFolder.Streams | Select-Object -First 1
-            if ($null -ne $streamUsages -and $itemCache.ContainsKey($streamUsages.Path)) {
-                $streamUsages = $itemCache[$streamUsages.Path]
-            } elseif ($null -ne $streamUsages) {
-                $itemCache[$streamUsages.Path] = $streamUsages
-            }
-
-            $streamRefToName = @{}
-            if ($streamUsages.StreamUsageChildItems.Count -gt 0) {
-                $streamNameToRef = $streamUsages.StreamUsageChildItems[0].StreamReferenceIdValues
-                foreach ($key in $streamNameToRef.Keys) {
-                    $streamRefToName[$streamNameToRef.$key] = $key
-                }
-                $streamUsageChildItem = $streamUsages.StreamUsageChildItems | Where-Object StreamReferenceId -eq $streamNameToRef[$s.Name]
-            }
-
-            if ($PSCmdlet.ParameterSetName -eq 'RemoveStream' -and $null -ne $streamUsageChildItem -and $PSCmdlet.ShouldProcess($s.Camera.Name, "Disabling stream '$($s.Name)'")) {
-                if ($streamUsages.StreamUsageChildItems.Count -eq 1) {
-                    Write-Error "Stream $($s.Name) cannot be removed because it is the only enabled stream."
-                } else {
-                    $result = $streamUsages.RemoveStream($streamUsageChildItem.StreamReferenceId)
-                    if ($result.State -eq 'Success') {
-                        $s.Update()
-                        $streamUsages = $s.Camera.StreamFolder.Streams[0]
-                        $itemCache[$streamUsages.Path] = $streamUsages
-                    } else {
-                        Write-Error $result.ErrorText
-                    }
-                }
-            } elseif ($PSCmdlet.ParameterSetName -eq 'AddOrUpdateStream') {
-                $dirtyStreamUsages = $false
-                $parametersRequiringStreamUsage = @('DisplayName', 'LiveDefault', 'LiveMode', 'PlaybackDefault', 'Recorded', 'RecordingTrack', 'UseEdge')
-                if ($null -eq $streamUsageChildItem -and ($PSCmdlet.MyInvocation.BoundParameters.Keys | Where-Object { $_ -in $parametersRequiringStreamUsage } ) -and $PSCmdlet.ShouldProcess($s.Camera.Name, 'Adding a new stream usage')) {
-                    try {
-                        $result = $streamUsages.AddStream()
-                        if ($result.State -ne 'Success') {
-                            throw $result.ErrorText
-                        }
-                        $s.Update()
-                        $streamUsages = $s.Camera.StreamFolder.Streams[0]
-                        $itemCache[$streamUsages.Path] = $streamUsages
-                        $streamUsageChildItem = $streamUsages.StreamUsageChildItems | Where-Object StreamReferenceId -eq $result.GetProperty('StreamReferenceId')
-                        $streamUsageChildItem.StreamReferenceId = $streamNameToRef[$s.Name]
-                        $streamUsageChildItem.Name = $s.Name
-                        $dirtyStreamUsages = $true
-                    } catch {
-                        Write-Error $_
-                    }
-                }
-
-                $getStreamUsageDisplayName = {
-                    param($streamUsage)
-
-                    if ($null -ne $streamUsage -and -not [string]::IsNullOrWhiteSpace($streamUsage.Name)) {
-                        return $streamUsage.Name
-                    }
-
-                    if ($null -ne $streamUsage -and $null -ne $streamNameToRef) {
-                        $streamName = $streamNameToRef.GetEnumerator() |
-                            Where-Object Value -eq $streamUsage.StreamReferenceId |
-                            Select-Object -First 1 -ExpandProperty Key
-                        if (-not [string]::IsNullOrWhiteSpace($streamName)) {
-                            return $streamName
-                        }
-                    }
-
-                    if ($null -ne $streamUsage) {
-                        return $streamUsage.StreamReferenceId
-                    }
-
-                    return $s.Name
-                }
-                $streamDisplayName = & $getStreamUsageDisplayName $streamUsageChildItem
-
-                if ($RecordingTrack -eq 'Secondary' -and $streamUsageChildItem.RecordToValues.Count -eq 0) {
-                    Write-Error "Adaptive playback is not available. RecordingTrack parameter must be Primary or None."
-                    continue
-                }
-
-                if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('DisplayName') -and $DisplayName -ne $streamUsageChildItem.Name) {
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Setting DisplayName on $streamDisplayName")) {
-                        $streamUsageChildItem.Name = $DisplayName
-                    }
-                    $dirtyStreamUsages = $true
-                }
-
-                $recordingTrackId = @{
-                    Primary   = '16ce3aa1-5f93-458a-abe5-5c95d9ed1372'
-                    Secondary = '84fff8b9-8cd1-46b2-a451-c4a87d4cbbb0'
-                    None      = ''
-                }
-                $compatibilityRecord = if ($RecordingTrack -eq 'Primary') { $true } else { $false }
-                if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('RecordingTrack') -and (($streamUsageChildItem.RecordToValues.Count -gt 0 -and $recordingTrackId[$RecordingTrack] -ne $streamUsageChildItem.RecordTo) -or ($streamUsageChildItem.RecordToValues.Count -eq 0 -and $compatibilityRecord -ne $streamUsageChildItem.Record))) {
-                    if ($streamUsageChildItem.RecordToValues.Count -gt 0) {
-                        # 2023 R2 or later
-                        $primaryStreamUsage = $streamUsages.StreamUsageChildItems | Where-Object RecordTo -eq $recordingTrackId.Primary
-                        $secondaryStreamUsage = $streamUsages.StreamUsageChildItems | Where-Object RecordTo -eq $recordingTrackId.Secondary
-                        switch ($RecordingTrack) {
-                            'Primary' {
-                                if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Record $streamDisplayName to the primary recording track")) {
-                                    $streamUsageChildItem.RecordTo = $recordingTrackId.Primary
-                                    Write-Verbose "Setting RecordingTrack to 'Primary' on $($streamUsageChildItem.Name)."
-
-                                    $primaryStreamUsageName = & $getStreamUsageDisplayName $primaryStreamUsage
-                                    Write-Verbose "Disabling recording on current primary stream '$primaryStreamUsageName'."
-                                    $primaryStreamUsage.RecordTo = $recordingTrackId.None
-
-                                    if ($primaryStreamUsage.LiveMode -eq 'Never') {
-                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $primaryStreamUsageName"
-                                        $primaryStreamUsage.LiveMode = 'WhenNeeded'
-                                    }
-
-                                    if ($streamUsageChildItem.LiveMode -eq 'Never') {
-                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $streamDisplayName"
-                                        $streamUsageChildItem.LiveMode = 'WhenNeeded'
-                                    }
-
-                                    $dirtyStreamUsages = $true
-                                }
-                            }
-                            'Secondary' {
-                                if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Record $streamDisplayName to the secondary recording track")) {
-                                    $streamUsageChildItem.RecordTo = $recordingTrackId.Secondary
-                                    Write-Verbose "Setting RecordingTrack to 'Secondary' on $($streamUsageChildItem.Name)."
-                                    if ($streamUsageChildItem.LiveMode -eq 'Never') {
-                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $streamDisplayName"
-                                        $streamUsageChildItem.LiveMode = 'WhenNeeded'
-                                    }
-
-                                    if ($secondaryStreamUsage) {
-                                        $secondaryStreamUsageName = & $getStreamUsageDisplayName $secondaryStreamUsage
-                                        Write-Verbose "Disabling recording on current secondary stream '$secondaryStreamUsageName'."
-                                        $secondaryStreamUsage.RecordTo = $recordingTrackId.None
-
-                                        if ($secondaryStreamUsage.LiveMode -eq 'Never') {
-                                            Write-Verbose "Changing LiveMode from Never to WhenNeeded on $secondaryStreamUsageName"
-                                            $secondaryStreamUsage.LiveMode = 'WhenNeeded'
-                                        }
-                                    }
-
-                                    $dirtyStreamUsages = $true
-                                }
-                            }
-                            'None' {
-                                if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disable recording of stream $streamDisplayName")) {
-                                    $streamUsageChildItem.RecordTo = $recordingTrackId.None
-                                    Write-Verbose "Setting RecordingTrack to 'None' on $($streamUsageChildItem.Name)."
-                                    if ($streamUsageChildItem.LiveMode -eq 'Never') {
-                                        Write-Verbose "Changing LiveMode from Never to WhenNeeded on $streamDisplayName"
-                                        $streamUsageChildItem.LiveMode = 'WhenNeeded'
-                                    }
-
-                                    $streamUsages.StreamUsageChildItems | Where-Object {
-                                        $_.StreamReferenceId -ne $streamUsageChildItem.StreamReferenceId -and -not [string]::IsNullOrWhiteSpace($_.RecordTo)
-                                    } | Select-Object -First 1 | ForEach-Object {
-                                        Write-Verbose "Setting the default playback stream to $($_.Name)"
-                                        $_.DefaultPlayback = $true
-                                    }
-
-                                    $dirtyStreamUsages = $true
-                                }
-                            }
-                        }
-                    } else {
-                        # 2023 R1 or earlier
-                        $recordedStream = $streamUsages.StreamUsageChildItems | Where-Object Record
-                        $recordedStreamName = & $getStreamUsageDisplayName $recordedStream
-                        if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disabling recording on $recordedStreamName")) {
-                            $recordedStream.Record = $false
-                            if ($recordedStream.LiveMode -eq 'Never' -and $PSCmdlet.ShouldProcess($s.Camera.Name, "Changing LiveMode from Never to WhenNeeded on $recordedStreamName")) {
-                                # This avoids a validation exception error.
-                                $recordedStream.LiveMode = 'WhenNeeded'
-                            }
-                        }
-
-                        if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enabling recording on $streamDisplayName")) {
-                            $streamUsageChildItem.Record = $true
-                            Write-Verbose "Setting RecordingTrack to 'Primary' on $($streamUsageChildItem.Name)."
-                            $dirtyStreamUsages = $true
-                        }
-                    }
-                }
-
-                if ($PlaybackDefault -and $PlaybackDefault -ne $streamUsageChildItem.DefaultPlayback) {
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Set the default playback stream to $streamDisplayName")) {
-                        $streamUsages.StreamUsageChildItems | ForEach-Object {
-                            $_.DefaultPlayback = $false
-                        }
-                        $streamUsageChildItem.DefaultPlayback = $PlaybackDefault
-                        Write-Verbose "Setting PlaybackDefault on $($streamUsageChildItem.Name)."
-                        $dirtyStreamUsages = $true
-                    }
-                }
-
-                if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('UseEdge') -and $UseEdge -ne $streamUsageChildItem.UseEdge) {
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enable use of edge storage on $streamDisplayName")) {
-                        $streamUsageChildItem.UseEdge = $UseEdge
-                        $dirtyStreamUsages = $true
-                    }
-                }
-
-                if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('LiveDefault') -and $LiveDefault -and $LiveDefault -ne $streamUsageChildItem.LiveDefault) {
-                    $liveStream = $streamUsages.StreamUsageChildItems | Where-Object LiveDefault
-                    $liveStreamName = & $getStreamUsageDisplayName $liveStream
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Disabling LiveDefault on $liveStreamName")) {
-                        $liveStream.LiveDefault = $false
-                    }
-
-                    if ($PSCmdlet.ShouldProcess($s.Camera.Name, "Enabling LiveDefault on $streamDisplayName")) {
-                        $streamUsageChildItem.LiveDefault = $true
-                        $dirtyStreamUsages = $true
-                    }
-                }
-
-                if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('LiveMode') -and $LiveMode -ne $streamUsageChildItem.LiveMode -and -not [string]::IsNullOrWhiteSpace($LiveMode)) {
-                    if ($LiveMode -eq 'Never' -and (-not $streamUsageChildItem.Record -or $streamUsageChildItem.LiveDefault)) {
-                        Write-Warning 'The LiveMode property can only be set to "Never" the recorded stream, and only when that stream is not used as the LiveDefault stream.'
-                    } elseif ($PSCmdlet.ShouldProcess($s.Camera.Name, "Setting LiveMode on $streamDisplayName")) {
-                        $streamUsageChildItem.LiveMode = $LiveMode
-                        $dirtyStreamUsages = $true
-                    }
-                }
-
-                if ($dirtyStreamUsages -and $PSCmdlet.ShouldProcess($s.Camera.Name, "Saving StreamUsages")) {
-                    $updatedItems.Add(
-                        [pscustomobject]@{
-                            Item         = $streamUsages
-                            Parent       = $s.Camera
-                            StreamConfig = $s
-                        }
-                    )
-                }
-
-                $streamChildItem = $deviceDriverSettings.StreamChildItems.Where( { $_.DisplayName -eq $s.Name })
-                if ($Settings.Keys.Count -gt 0) {
-                    $dirty = $false
-                    foreach ($key in $Settings.Keys) {
-                        if ($key -notin $s.Settings.Keys) {
-                            Write-Warning "A setting with the key '$key' was not found for stream $($streamChildItem.DisplayName) on $($s.Camera.Name)."
-                            continue
-                        }
-
-                        $currentValue = $streamChildItem.Properties.GetValue($key)
-                        if ($currentValue -eq $Settings.$key) {
-                            continue
-                        }
-
-                        if ($PSCmdlet.ShouldProcess($target, "Changing $key from $currentValue to $($Settings.$key)")) {
-                            Write-Verbose "Changing setting '$key' from '$currentValue' to '$($Settings.$key)' on $target."
-                            $streamChildItem.Properties.SetValue($key, $Settings.$key)
-                            $dirty = $true
-                        }
-                    }
-                    if ($dirty -and $PSCmdlet.ShouldProcess($target, "Save changes")) {
-                        $updatedItems.Add(
-                            [pscustomobject]@{
-                                Item         = $deviceDriverSettings
-                                Parent       = $s.Camera
-                                StreamConfig = $s
-                            }
-                        )
-                    }
-                }
-            }
-        }
     }
 
     end {
-        $updatedStreamConfigs = [system.collections.generic.list[object]]::new()
-        foreach ($update in $updatedItems) {
-            try {
-                $item = $itemCache[$update.Item.Path]
-                if ($null -ne $item) {
-                    $item.Save()
+        $recordingTrackId = @{
+            Primary   = '16ce3aa1-5f93-458a-abe5-5c95d9ed1372'
+            Secondary = '84fff8b9-8cd1-46b2-a451-c4a87d4cbbb0'
+            None      = ''
+        }
+        foreach ($currentStream in $input) {
+            # Use only for $PSCmdlet.ShouldProcess
+            $targetName = "$($currentStream.Name) on $($currentStream.Camera.Name)"
+
+            # Disable stream
+            if ($Disabled) {
+                if ($PSCmdlet.ShouldProcess($targetName, 'Remove')) {
+                    $currentStream.Enabled = $false
                 }
-                if ($update.StreamConfig -notin $updatedStreamConfigs) {
-                    $update.StreamConfig.Update()
-                    $updatedStreamConfigs.Add($update.StreamConfig)
+                continue
+            }
+
+            # Add stream
+            $parametersRequiringStreamUsage = @('DisplayName', 'LiveDefault', 'LiveMode', 'PlaybackDefault', 'Recorded', 'RecordingTrack', 'UseEdge')
+            $streamUsageRequired = $null -ne ($PSCmdlet.MyInvocation.BoundParameters.Keys | Where-Object { $_ -in $parametersRequiringStreamUsage })
+            if (!$currentStream.Enabled -and $streamUsageRequired) {
+                if ($PSCmdlet.ShouldProcess($targetName, 'Adding a new stream usage')) {
+                    $currentStream.Enabled = $true
                 }
-            } catch [VideoOS.Platform.Proxy.ConfigApi.ValidateResultException] {
-                $update.Parent.ClearChildrenCache()
-                $_ | HandleValidateResultException -TargetObject $item
-            } finally {
-                if ($null -ne $item) {
-                    $itemCache.Remove($item.Path)
-                    $item = $null
+            }
+
+            foreach ($usagePropertyName in $parametersRequiringStreamUsage) {
+                $paramValue = $PSCmdlet.MyInvocation.BoundParameters[$usagePropertyName]
+                if (!$PSCmdlet.MyInvocation.BoundParameters.ContainsKey($usagePropertyName)) {
+                    continue
                 }
+                if ($paramValue -ceq $currentStream.$usagePropertyName) {
+                    continue
+                }
+                if ($PSCmdlet.ShouldProcess($targetName, "Set $usagePropertyName to $paramValue")) {
+                    $currentStream.$usagePropertyName = $paramValue
+                }
+            }
+
+            foreach ($key in $Settings.Keys) {
+                if (!$currentStream.Settings.ContainsKey($key)) {
+                    Write-Warning "A setting with the key '$key' was not found on $targetName"
+                    continue
+                } elseif ($currentStream.Settings[$key] -ceq $Settings[$key]) {
+                    continue
+                }
+                if ($PSCmdlet.ShouldProcess($targetName, "Change $key from $($currentStream.Settings[$key]) to $($Settings[$key])")) {
+                    $null = $currentStream.SetValue($key, $Settings[$key])
+                }
+            }
+
+
+            if ($RecordingTrack -eq 'Secondary' -and $currentStream.RecordToValues.Count -eq 0) {
+                Write-Warning 'Adaptive playback is not available. RecordingTrack parameter must be Primary or None.'
+            }
+
+            
+            
+            # Add stream or update stream usage properties
+            # Can call Save() on Camera.StreamFolder.Streams object after changing one of the StreamUsageChildItems
+            # Remove stream
+            # Modify stream settings
+
+            if ($currentStream.Dirty) {
+                try {
+                    $currentStream.Save()
+                } catch [VideoOS.Platform.Proxy.ConfigApi.ValidateResultException] {
+                    # Call Update to refresh all properties with values from server
+                    $currentStream.Update()
+                    $errorText = $_.Exception.ValidateResult.ErrorResults.ErrorText
+                    $errorId = $_.Exception.ValidateResult.ErrorResults.ErrorTextId
+                    #Write-Error -Message $errorText -ErrorId $errorId -Exception $_.Exception -TargetObject $currentStream
+                    $_ | HandleValidateResultException -TargetObject $currentStream
+                }
+                
+            }
+
+            if ($PassThru) {
+                $currentStream
             }
         }
     }
