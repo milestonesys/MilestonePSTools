@@ -14,7 +14,7 @@
 
 function Get-VmsCameraStream {
     [CmdletBinding(DefaultParameterSetName = 'ByName')]
-    [OutputType([VmsCameraStreamConfig])]
+    [OutputType([MilestonePSTools.VmsCameraStreamConfig])]
     [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ValueFromPipeline)]

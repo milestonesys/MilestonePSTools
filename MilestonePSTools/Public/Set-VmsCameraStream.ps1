@@ -1,6 +1,7 @@
 function Set-VmsCameraStream {
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
-    [MilestonePSTools.RequiresVmsConnection()]
+    [OutputType([MilestonePSTools.VmsCameraStreamConfig])]
+    [RequiresVmsConnection()]
     param (
         [Parameter(Mandatory, ParameterSetName = 'RemoveStream')]
         [switch]
