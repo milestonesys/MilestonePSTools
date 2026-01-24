@@ -194,65 +194,6 @@ class LocalJobRunner : IDisposable {
     }
 }
 
-class VmsCameraStreamConfig {
-    [string] $Name
-    [string] $DisplayName
-    [bool] $Enabled
-    [bool] $LiveDefault
-    [string] $LiveMode
-    [bool] $PlaybackDefault
-    [bool] $Recorded
-    [string] $RecordingTrack
-    [bool] $UseEdge
-    [guid] $StreamReferenceId
-    [hashtable] $Settings
-    [hashtable] $ValueTypeInfo
-    hidden [VideoOS.Platform.ConfigurationItems.Camera] $Camera
-    hidden [bool] $UseRawValues
-    hidden [System.Collections.Generic.Dictionary[string, string]] $RecordToValues
-
-    [void] Update() {
-        $this.Camera.DeviceDriverSettingsFolder.ClearChildrenCache()
-        $this.Camera.StreamFolder.ClearChildrenCache()
-        $deviceDriverSettings = $this.Camera.DeviceDriverSettingsFolder.DeviceDriverSettings[0]
-        $streamUsages = $this.Camera.StreamFolder.Streams[0]
-
-        $stream = $deviceDriverSettings.StreamChildItems | Where-Object DisplayName -EQ $this.Name
-        $streamUsage = $streamUsages.StreamUsageChildItems | Where-Object {
-            $_.StreamReferenceId -eq $_.StreamReferenceIdValues[$stream.DisplayName]
-        }
-        if ($streamUsage) {
-            $this.RecordToValues = $streamUsage.RecordToValues
-        }
-        $this.DisplayName = $streamUsage.Name
-        $this.Enabled = $null -ne $streamUsage
-
-        $this.LiveDefault = $streamUsage.LiveDefault
-        $this.LiveMode = $streamUsage.LiveMode
-
-        # StreamUsageChildItem.Record is true only for the primary recording track. Or for the recorded track on 2023 R1 and older.
-        # It will be false for the secondary recording track on 2023 R2 and later.
-        $this.Recorded = $streamUsage.Record -or ($streamUsage.RecordToValues.Count -gt 0 -and -not [string]::IsNullOrWhiteSpace($streamUsage.RecordTo))
-        $this.RecordingTrack = $streamUsage.RecordTo
-        $this.PlaybackDefault = if ($streamUsage.RecordToValues.Count -gt 0) { $streamUsage.DefaultPlayback } else { $streamUsage.Record -eq $true }
-        $this.UseEdge = $streamUsage.UseEdge
-        $this.StreamReferenceId = if ($streamUsages.StreamUsageChildItems.Count -gt 0) { $streamUsages.StreamUsageChildItems[0].StreamReferenceIdValues[$this.Name] } else { [guid]::Empty }
-        $parsedSettings = $stream | ConvertFrom-ConfigChildItem -RawValues:($this.UseRawValues)
-        $this.Settings = $parsedSettings.Properties.Clone()
-        $this.ValueTypeInfo = $parsedSettings.ValueTypeInfo.Clone()
-    }
-
-    [string] GetRecordingTrackName() {
-        if ($this.RecordToValues.Count) {
-            return ($this.RecordToValues.GetEnumerator() | Where-Object Value -EQ $this.RecordingTrack).Key
-        } elseif ($this.Recorded) {
-            return 'Primary recording'
-        } else {
-            return 'No recording'
-        }
-    }
-}
-
 class VmsStreamDeviceStatus : VideoOS.Platform.SDK.Proxy.Status2.MediaStreamDeviceStatusBase {
     [string] $DeviceName
     [string] $DeviceType
