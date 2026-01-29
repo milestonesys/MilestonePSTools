@@ -116,7 +116,7 @@ function Set-VmsCameraStream {
                 if ($i % 2 -eq 0) {
                     continue
                 }
-                if ($ExtraParams[$i - 1] -match '^-?(?<key>[a-z]+)$') {
+                if ($ExtraParams[$i - 1] -match '^-?(?<key>[a-z]+):?$') {
                     $Settings[$Matches['key']] = $ExtraParams[$i]
                 } else {
                     Write-Warning "Ignoring ExtraParam '$($ExtraParams[$i - 1])' due to invalid format."
