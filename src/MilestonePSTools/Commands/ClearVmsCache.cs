@@ -28,6 +28,7 @@ namespace MilestonePSTools.Commands
             Connection.CurrentSite = Connection.CurrentSite;
             Connection.Cache.Clear();
             ClearProxyClientCache();
+            VmsCameraStreamConfig.Reset();
             VideoOS.Platform.SDK.Environment.ReloadConfiguration(Connection.CurrentSite.FQID);
         }
     }

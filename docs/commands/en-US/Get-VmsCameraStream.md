@@ -12,7 +12,7 @@ Gets stream configuration information for the specified camera(s).
 
 ## SYNTAX
 
-### ByName (Default)
+### Name (Default)
 ```
 Get-VmsCameraStream -Camera <Camera[]> [-Name <String>] [-RawValues] [<CommonParameters>]
 ```
@@ -379,14 +379,14 @@ camera in Management Client.
 
 ```yaml
 Type: String
-Parameter Sets: ByName
+Parameter Sets: Name
 Aliases:
 
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
+Accept wildcard characters: True
 ```
 
 ### -PlaybackDefault
@@ -421,7 +421,9 @@ Accept wildcard characters: False
 ```
 
 ### -Recorded
-Specifies that only the recorded stream for the given camera should be returned.
+Deprecated as of 2023 R2 with the introdution of secondary recorded streams.
+For compatibility, using the `-Recorded` switch parameter has the same
+effect as using `-RecordingTrack Primary`.
 
 ```yaml
 Type: SwitchParameter
@@ -462,7 +464,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### VmsCameraStreamConfig
+### MilestonePSTools.VmsCameraStreamConfig
 
 ## NOTES
 
