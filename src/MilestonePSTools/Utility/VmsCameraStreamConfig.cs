@@ -17,26 +17,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using VideoOS.Platform.ConfigurationItems;
 
 namespace MilestonePSTools
 {
     public class VmsCameraStreamConfig
     {
-        public enum StreamUpdateType
+        #region Static Members
+        private static readonly Dictionary<string, bool> _dirtyStreamDefinition = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, bool> _dirtyDriverSettings = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, StreamDefinition> _streamDefinitions = new Dictionary<string, StreamDefinition>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, DeviceDriverSettings> _driverSettings = new Dictionary<string, DeviceDriverSettings>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, RecordingTracks> RecordingTrackFromId = new Dictionary<string, RecordingTracks>
         {
-            Full,
-            StreamSettings,
-            StreamUsage
-        }
-
-        internal enum RecordingTracks
-        {
-            None,
-            Primary,
-            Secondary
-        }
-
+            { string.Empty, RecordingTracks.None },
+            { "16ce3aa1-5f93-458a-abe5-5c95d9ed1372", RecordingTracks.Primary },
+            { "84fff8b9-8cd1-46b2-a451-c4a87d4cbbb0", RecordingTracks.Secondary }
+        };
         private static readonly Dictionary<RecordingTracks, string> RecordingTrackToId = new Dictionary<RecordingTracks, string>
         {
             { RecordingTracks.None, string.Empty },
@@ -44,21 +42,18 @@ namespace MilestonePSTools
             { RecordingTracks.Secondary, "84fff8b9-8cd1-46b2-a451-c4a87d4cbbb0" }
         };
 
-        private static readonly Dictionary<string, RecordingTracks> RecordingTrackFromId = new Dictionary<string, RecordingTracks>
+        internal static void Reset()
         {
-            { string.Empty, RecordingTracks.None },
-            { "16ce3aa1-5f93-458a-abe5-5c95d9ed1372", RecordingTracks.Primary },
-            { "84fff8b9-8cd1-46b2-a451-c4a87d4cbbb0", RecordingTracks.Secondary }
-        };
+            _streamDefinitions.Clear();
+            _driverSettings.Clear();
+            _dirtyStreamDefinition.Clear();
+            _dirtyDriverSettings.Clear();
+        }
+        #endregion
 
-        private static readonly Dictionary<string, StreamDefinition> _streamDefinitions = new Dictionary<string, StreamDefinition>(StringComparer.OrdinalIgnoreCase);
-        private static readonly Dictionary<string, bool> _dirtyStreamDefinition = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
-        private static readonly Dictionary<string, DeviceDriverSettings> _driverSettings = new Dictionary<string, DeviceDriverSettings>(StringComparer.OrdinalIgnoreCase);
-        private static readonly Dictionary<string, bool> _dirtyDriverSettings = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
-
-        public static EventHandler<Tuple<string, StreamUpdateType>> StreamModified;
-        public bool Dirty => _dirtyDriverSettings[Camera.Id] || _dirtyStreamDefinition[Camera.Id];
+        #region Properties
         public string Name { get; }
+        
         public string DisplayName
         {
             get => GetStreamUsage()?.Name ?? string.Empty;
@@ -70,6 +65,7 @@ namespace MilestonePSTools
                 _dirtyStreamDefinition[Camera.Id] = true;
             }
         }
+
         public bool Enabled
         {
             get => GetStreamUsage() != null;
@@ -109,6 +105,7 @@ namespace MilestonePSTools
                 _dirtyStreamDefinition[Camera.Id] = true;
             }
         }
+
         public bool LiveDefault
         {
             get => GetStreamUsage()?.LiveDefault ?? false;
@@ -125,6 +122,44 @@ namespace MilestonePSTools
             }
         }
 
+        public string RecordingTrackName => RecordingTrackFromId[GetStreamUsage()?.RecordTo ?? string.Empty].ToString();
+
+        public bool PlaybackDefault
+        {
+            get => GetStreamUsage()?.DefaultPlayback ?? false;
+            set
+            {
+                var streamUsage = GetStreamUsage();
+                if (streamUsage == null) return;
+                if (streamUsage?.DefaultPlayback == value) return;
+                streamUsage.DefaultPlayback = value;
+                if (value)
+                {
+                    FindStreamUsage(u => u.DefaultPlayback).DefaultPlayback = false;
+                }
+                _dirtyStreamDefinition[Camera.Id] = true;
+            }
+        }
+        
+        public bool UseEdge
+        {
+            get => GetStreamUsage()?.UseEdge ?? false;
+            set
+            {
+                var streamUsage = GetStreamUsage();
+                if (streamUsage == null || streamUsage.UseEdge == value) return;
+                streamUsage.UseEdge = value;
+                _dirtyStreamDefinition[Camera.Id] = true;
+            }
+        }
+
+        public bool Dirty => _dirtyDriverSettings[Camera.Id] || _dirtyStreamDefinition[Camera.Id];
+
+        public Hashtable Settings => GetStream().Properties.ToHashtable(UseRawValues);
+
+        public Hashtable ValueTypeInfo => GetStream().Properties.ConvertFromValueTypeInfoCollection();
+
+        [Hidden()]
         public bool Recorded
         {
             get => GetStreamUsage()?.RecordTo.Equals(GetStreamUsage().RecordToValues["Primary recording"]) ?? false;
@@ -137,6 +172,7 @@ namespace MilestonePSTools
             }
         }
 
+        [Hidden()]
         public string RecordingTrack
         {
             get => GetStreamUsage()?.RecordTo ?? string.Empty;
@@ -167,56 +203,20 @@ namespace MilestonePSTools
             }
         }
 
-        public string RecordingTrackName => RecordingTrackFromId[GetStreamUsage()?.RecordTo ?? string.Empty].ToString();
-
-        public bool PlaybackDefault
-        {
-            get => GetStreamUsage()?.DefaultPlayback ?? false;
-            set
-            {
-                var streamUsage = GetStreamUsage();
-                if (streamUsage == null) return;
-                if (streamUsage?.DefaultPlayback == value) return;
-                streamUsage.DefaultPlayback = value;
-                if (value)
-                {
-                    FindStreamUsage(u => u.DefaultPlayback).DefaultPlayback = false;
-                }
-                _dirtyStreamDefinition[Camera.Id] = true;
-            }
-        }
-
-        private StreamUsageChildItem FindStreamUsage(Func<StreamUsageChildItem, bool> predicate)
-        {
-            return GetStreamDefinition().StreamUsageChildItems
-                .Where(u => u.StreamReferenceId.ToLower() != StreamReferenceId.ToString().ToLower())
-                .FirstOrDefault(predicate);
-        }
-
-        public Hashtable Settings => GetStream().Properties.ToHashtable(UseRawValues);
-        
+        [Hidden()]
         public Guid StreamReferenceId => Guid.Parse(GetStream().StreamReferenceId);
-        public bool UseEdge
-        {
-            get => GetStreamUsage()?.UseEdge ?? false;
-            set
-            {
-                var streamUsage = GetStreamUsage();
-                if (streamUsage == null || streamUsage.UseEdge == value) return;
-                streamUsage.UseEdge = value;
-                _dirtyStreamDefinition[Camera.Id] = true;
-            }
-        }
-        public Hashtable ValueTypeInfo => GetStream().Properties.ConvertFromValueTypeInfoCollection();
+
+        [Hidden()]
         public Camera Camera { get; }
 
-        
-
+        [Hidden()]
         public bool UseRawValues { get; set; }
 
-        public Dictionary<string,string> RecordToValues => GetStreamUsage()?.RecordToValues ?? new Dictionary<string, string>();
+        [Hidden()]
+        public Dictionary<string, string> RecordToValues => GetStreamUsage()?.RecordToValues ?? new Dictionary<string, string>();
+        #endregion
 
-        private readonly Guid _instanceId = Guid.NewGuid();
+        #region Constructors
         public VmsCameraStreamConfig(StreamChildItem stream, Camera camera, bool showRawValues)
         {
             Name = stream.DisplayName;
@@ -226,46 +226,17 @@ namespace MilestonePSTools
             GetDeviceDriverSettings();
         }
 
-        private StreamDefinition GetStreamDefinition()
+        public static IEnumerable<VmsCameraStreamConfig> GetStreams(Camera camera, bool showRawValues)
         {
-            if (!_streamDefinitions.ContainsKey(Camera.Id))
+            var deviceDriverSettings = camera.DeviceDriverSettingsFolder.DeviceDriverSettings.First();
+            foreach (var stream in deviceDriverSettings.StreamChildItems)
             {
-                _streamDefinitions.Add(Camera.Id, Camera.StreamFolder.Streams.First());
-                _dirtyStreamDefinition[Camera.Id] = false;
+                yield return new VmsCameraStreamConfig(stream, camera, showRawValues);
             }
-            if (_streamDefinitions[Camera.Id].StreamUsageChildItems.Count == 0)
-            {
-                Camera.StreamFolder.ClearChildrenCache();
-                _streamDefinitions[Camera.Id] = Camera.StreamFolder.Streams.First();
-            }
-            return _streamDefinitions[Camera.Id];
         }
+        #endregion
 
-        private StreamUsageChildItem GetStreamUsage()
-        {
-            return GetStreamDefinition().StreamUsageChildItems
-                    .Where(u => u.StreamReferenceId.Equals(u.StreamReferenceIdValues[Name]))
-                    .FirstOrDefault();
-        }
-
-        private DeviceDriverSettings GetDeviceDriverSettings()
-        {
-            if (!_driverSettings.ContainsKey(Camera.Id))
-            {
-                _driverSettings.Add(Camera.Id, Camera.DeviceDriverSettingsFolder.DeviceDriverSettings.First());
-                _dirtyDriverSettings[Camera.Id] = false;
-            }
-            return _driverSettings[Camera.Id];
-        }
-
-        private StreamChildItem GetStream()
-        {
-            return GetDeviceDriverSettings().StreamChildItems
-                .Where(s => s.DisplayName.Equals(Name, StringComparison.OrdinalIgnoreCase))
-                .FirstOrDefault();
-        }
-        
-
+        #region Public Methods
         public bool SetValue(string name, string value)
         {
             var stream = GetStream();
@@ -316,22 +287,61 @@ namespace MilestonePSTools
             Camera.DeviceDriverSettingsFolder.ClearChildrenCache();
             Camera.StreamFolder.ClearChildrenCache();
         }
+        #endregion
 
-        public static IEnumerable<VmsCameraStreamConfig> GetStreams(Camera camera, bool showRawValues)
+        #region Private Methods
+        private StreamUsageChildItem FindStreamUsage(Func<StreamUsageChildItem, bool> predicate)
         {
-            var deviceDriverSettings = camera.DeviceDriverSettingsFolder.DeviceDriverSettings.First();
-            foreach (var stream in deviceDriverSettings.StreamChildItems)
-            {
-                yield return new VmsCameraStreamConfig(stream, camera, showRawValues);
-            }
+            return GetStreamDefinition().StreamUsageChildItems
+                .Where(u => u.StreamReferenceId.ToLower() != StreamReferenceId.ToString().ToLower())
+                .FirstOrDefault(predicate);
         }
 
-        internal static void Reset()
+        private StreamDefinition GetStreamDefinition()
         {
-            _streamDefinitions.Clear();
-            _driverSettings.Clear();
-            _dirtyStreamDefinition.Clear();
-            _dirtyDriverSettings.Clear();
+            if (!_streamDefinitions.ContainsKey(Camera.Id))
+            {
+                _streamDefinitions.Add(Camera.Id, Camera.StreamFolder.Streams.First());
+                _dirtyStreamDefinition[Camera.Id] = false;
+            }
+            if (_streamDefinitions[Camera.Id].StreamUsageChildItems.Count == 0)
+            {
+                Camera.StreamFolder.ClearChildrenCache();
+                _streamDefinitions[Camera.Id] = Camera.StreamFolder.Streams.First();
+            }
+            return _streamDefinitions[Camera.Id];
+        }
+
+        private StreamUsageChildItem GetStreamUsage()
+        {
+            return GetStreamDefinition().StreamUsageChildItems
+                    .Where(u => u.StreamReferenceId.Equals(u.StreamReferenceIdValues[Name]))
+                    .FirstOrDefault();
+        }
+
+        private DeviceDriverSettings GetDeviceDriverSettings()
+        {
+            if (!_driverSettings.ContainsKey(Camera.Id))
+            {
+                _driverSettings.Add(Camera.Id, Camera.DeviceDriverSettingsFolder.DeviceDriverSettings.First());
+                _dirtyDriverSettings[Camera.Id] = false;
+            }
+            return _driverSettings[Camera.Id];
+        }
+
+        private StreamChildItem GetStream()
+        {
+            return GetDeviceDriverSettings().StreamChildItems
+                .Where(s => s.DisplayName.Equals(Name, StringComparison.OrdinalIgnoreCase))
+                .FirstOrDefault();
+        }
+        #endregion
+
+        internal enum RecordingTracks
+        {
+            None,
+            Primary,
+            Secondary
         }
     }
 }
