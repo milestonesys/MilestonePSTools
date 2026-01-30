@@ -76,6 +76,10 @@ namespace MilestonePSTools.DeviceCommands
                     WriteObject(itemState);
                 }
             }
+            catch (PipelineStoppedException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 WriteError(

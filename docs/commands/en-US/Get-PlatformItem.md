@@ -13,7 +13,7 @@ Gets a VideoOS.Platform.Item object representing a configuration item
 
 ## SYNTAX
 
-### ByFQID
+### ByFQID (Default)
 ```
 Get-PlatformItem [[-Fqid] <FQID>] [<CommonParameters>]
 ```

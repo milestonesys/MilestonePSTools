@@ -12,7 +12,7 @@ Gets `[VideoOS.Platform.Item]` objects of the specified Kind.
 
 ## SYNTAX
 
-### GetItemByFQID
+### GetItemByFQID (Default)
 ```
 Get-VmsVideoOSItem -Fqid <FQID> [<CommonParameters>]
 ```

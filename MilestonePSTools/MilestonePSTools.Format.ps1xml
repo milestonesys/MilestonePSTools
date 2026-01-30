@@ -92,7 +92,7 @@
             <TableColumnItems>
               <TableColumnItem>
                 <ScriptBlock>
-                    ($_ | Get-PlatformItem).Name
+                    (Get-VmsVideoOSItem -Fqid $_.FQID).Name
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>

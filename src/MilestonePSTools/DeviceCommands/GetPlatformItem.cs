@@ -44,7 +44,7 @@ namespace MilestonePSTools.DeviceCommands
     ///     <para/><para/><para/>
     /// </example>
     /// </summary>
-    [Cmdlet(VerbsCommon.Get, "PlatformItem")]
+    [Cmdlet(VerbsCommon.Get, "PlatformItem", DefaultParameterSetName = "ByFQID")]
     [OutputType(typeof(Item))]
     [RequiresVmsConnection()]
     public class GetPlatformItem : ConfigApiCmdlet
@@ -125,7 +125,7 @@ namespace MilestonePSTools.DeviceCommands
                 {
                     WriteError(
                         new ErrorRecord(
-                            new MIPException($"GetItemsBySearch failed: {result.ToString()}"),
+                            new MIPException($"GetItemsBySearch failed: {result}"),
                             "GetItemsBySearch Failed",
                             ErrorCategory.InvalidResult,
                             null));

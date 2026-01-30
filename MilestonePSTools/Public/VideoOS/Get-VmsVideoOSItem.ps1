@@ -13,7 +13,7 @@
 # limitations under the License.
 
 function Get-VmsVideoOSItem {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'GetItemByFQID')]
     [OutputType([VideoOS.Platform.Item])]
     [RequiresVmsConnection()]
     param(
