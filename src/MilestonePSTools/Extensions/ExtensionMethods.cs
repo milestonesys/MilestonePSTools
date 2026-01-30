@@ -13,13 +13,16 @@
 // limitations under the License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Device.Location;
 using System.Linq;
 using System.Management.Automation;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using VideoOS.ConfigurationApi.ClientService;
+using VideoOS.Platform.ConfigurationItems;
 using ValueTypes = VideoOS.ConfigurationAPI.ValueTypes;
 
 namespace MilestonePSTools.Extensions
@@ -94,6 +97,22 @@ namespace MilestonePSTools.Extensions
             return valueTypeInfo?.Value ?? value;
         }
 
+        public static string GetResolvedValue(this ConfigurationApiProperties properties, string name, string value)
+        {
+            name = properties.Keys.FirstOrDefault(k => k.ToLower() == name.ToLower());
+            if (string.IsNullOrEmpty(name)) return value;
+            var valueTypeInfo = properties.GetValueTypeInfoCollection(name)
+                .FirstOrDefault(v => 
+                v.Value.Equals(value, StringComparison.InvariantCultureIgnoreCase)
+                || v.Name.Equals(value, StringComparison.InvariantCultureIgnoreCase));
+            return valueTypeInfo?.Value ?? value;
+        }
+
+        public static string GetResolvedName(this ConfigurationApiProperties properties, string name)
+        {
+            return properties.Keys.FirstOrDefault(k => k.ToLower() == name.ToLower());
+        }
+
         public static IEnumerable<ErrorRecord> GetValidationErrors(this ValidateResult result)
         {
             if (!result.ValidatedOk)
@@ -103,6 +122,38 @@ namespace MilestonePSTools.Extensions
                     yield return new ErrorRecord(new VmsValidateResultException(error), error.ErrorText, ErrorCategory.InvalidResult, result.ResultItem);                        
                 }
             }
+        }
+
+        public static Hashtable ToHashtable(this ConfigurationApiProperties properties, bool useRawValues)
+        {
+            var ignoredNames = new [] { "MinValue", "MaxValue", "StepValue" };
+            var hashtable = new Hashtable(StringComparer.InvariantCultureIgnoreCase);
+            foreach (var key in properties.Keys)
+            {
+                hashtable[key] = properties.GetValue(key);
+                if (!useRawValues)
+                {
+                    var valueTypeInfos = properties.GetValueTypeInfoCollection(key);
+                    hashtable[key] = valueTypeInfos
+                        .Where(vti =>
+                        {
+                            return vti.Value.Equals((string)hashtable[key], StringComparison.InvariantCultureIgnoreCase)
+                            && !ignoredNames.Contains(vti.Name);
+                        })
+                        .FirstOrDefault()?.Name ?? hashtable[key];
+                }
+            }
+            return hashtable;
+        }
+
+        public static Hashtable ConvertFromValueTypeInfoCollection(this ConfigurationApiProperties properties)
+        {
+            var hashtable = new Hashtable(StringComparer.InvariantCultureIgnoreCase);
+            foreach (var key in properties.Keys)
+            {
+                hashtable[key] = properties.GetValueTypeInfoCollection(key);
+            }
+            return hashtable;
         }
     }
 

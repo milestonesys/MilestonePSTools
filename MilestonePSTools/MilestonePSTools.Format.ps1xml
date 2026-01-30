@@ -1037,7 +1037,7 @@
     <View>
       <Name>Video Stream Configuration</Name>
       <ViewSelectedBy>
-        <TypeName>VmsCameraStreamConfig</TypeName>
+        <TypeName>MilestonePSTools.VmsCameraStreamConfig</TypeName>
       </ViewSelectedBy>
       <GroupBy>
         <PropertyName>DriverType</PropertyName>
@@ -1098,7 +1098,7 @@
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
-                  $_.GetRecordingTrackName()
+                  $_.RecordingTrackName
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>

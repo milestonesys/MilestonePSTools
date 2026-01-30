@@ -14,14 +14,15 @@ Sets properties of one or more video stream.
 
 ### RemoveStream
 ```
-Set-VmsCameraStream [-Disabled] -Stream <VmsCameraStreamConfig[]> [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-VmsCameraStream -Stream <VmsCameraStreamConfig[]> [-Disabled] [-PassThru] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### AddOrUpdateStream
 ```
 Set-VmsCameraStream -Stream <VmsCameraStreamConfig[]> [-DisplayName <String>] [-LiveMode <String>]
  [-LiveDefault] [-Recorded] [-RecordingTrack <String>] [-PlaybackDefault] [-UseEdge] [-Settings <Hashtable>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -211,6 +212,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -PassThru
+Pass the modified stream
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PlaybackDefault
 Specifies that the stream should be the default stream used for playback. The
 adaptive playback feature can then switch to the other recorded stream if
@@ -353,11 +369,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### VmsCameraStreamConfig
+### MilestonePSTools.VmsCameraStreamConfig
 
 ## OUTPUTS
 
-### System.Object
+### MilestonePSTools.VmsCameraStreamConfig
+
 ## NOTES
 
 ## RELATED LINKS

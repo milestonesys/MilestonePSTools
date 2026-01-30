@@ -140,6 +140,7 @@
     <Compile Include="Lpr\ClearLprMatchListCommand.cs" />
     <Compile Include="Lpr\ImportLprMatchListCommand.cs" />
     <Compile Include="Lpr\RemoveLprMatchListEntryCommand.cs" />
+    <Compile Include="Utility\VmsCameraStreamConfig.cs" />
     <Compile Include="Utility\KindArgumentCompleter.cs" />
     <Compile Include="Utility\KindNameTransformAttribute.cs" />
     <Compile Include="Utility\MipItemNameArgumentCompleter.cs" />
