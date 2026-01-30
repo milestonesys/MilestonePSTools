@@ -79,18 +79,20 @@ namespace MilestonePSTools.DeviceCommands
                 foreach (var itemState in _itemStates.GetConsumingEnumerable(cts.Token))
                 {
                     // Ignore Event item states
-                    var kind = Kind.DefaultTypeToNameTable[itemState.FQID.Kind].ToString();
+                    var kind = Kind.DefaultTypeToNameTable.ContainsKey(itemState.FQID.Kind)
+                        ? Kind.DefaultTypeToNameTable[itemState.FQID.Kind].ToString()
+                        : "External";
                     if (kind == "Event") continue;
                     
                     var item = Configuration.Instance.GetItem(itemState.FQID);
 
                     // Ignore ItemState records where no corresponding item can be found
                     // These are typically Generic Events or built-in system events
-                    if (item == null) continue;
+                    if (item == null && kind == "Server") continue;
 
                     // Enrich the ItemState with helpful properties
                     var psObj = PSObject.AsPSObject(itemState);
-                    psObj.Properties.Add(new PSNoteProperty("Name", item?.Name ?? string.Empty));
+                    psObj.Properties.Add(new PSNoteProperty("Name", item?.Name ?? "Not available"));
                     psObj.Properties.Add(new PSNoteProperty("ItemType", kind));
                     psObj.Properties.Add(new PSNoteProperty("Id", itemState.FQID.ObjectId));
                     
