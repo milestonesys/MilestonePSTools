@@ -14,7 +14,7 @@ Gets the ItemState of all known items in the site
 ## SYNTAX
 
 ```
-Get-ItemState [-CamerasOnly] [<CommonParameters>]
+Get-ItemState [-CamerasOnly] [[-Timeout] <TimeSpan>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,8 +61,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Timeout
+Specifies a timeout period in the form of a TimeSpan. The default value is 60 seconds.
+
+```yaml
+Type: TimeSpan
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
