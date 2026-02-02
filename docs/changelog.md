@@ -7,6 +7,15 @@ hide:
 
 ## [vNext] unreleased
 
+### 🐛 Fixed
+
+- **`Get-ItemState`** output was no longer populating names for `ItemState` records in the terminal output. Now item
+  names are correctly retrieved, and `Name`, `ItemType`, and `Id` values are added to the `ItemState` object as note
+  properties making them easy to access programmatically and not just showing the values in the terminal when displayed
+  with the default formatter. We also will now hide `Event` items in the response, and `Server` item types without names
+  as well. These all tend to be user-defined events, generic events, and built-in system events that aren't useful
+  output.
+
 ## [25.2.21] 2026-01-14
 
 ### 🔄 Changed

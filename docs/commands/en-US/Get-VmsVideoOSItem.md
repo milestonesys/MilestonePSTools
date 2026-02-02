@@ -12,7 +12,7 @@ Gets `[VideoOS.Platform.Item]` objects of the specified Kind.
 
 ## SYNTAX
 
-### GetItemByFQID
+### GetItemByFQID (Default)
 ```
 Get-VmsVideoOSItem -Fqid <FQID> [<CommonParameters>]
 ```
@@ -118,7 +118,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
@@ -165,7 +165,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -177,7 +177,7 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

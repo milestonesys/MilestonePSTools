@@ -13,9 +13,9 @@ Gets a VideoOS.Platform.Item object representing a configuration item
 
 ## SYNTAX
 
-### ByFQID
+### ByFQID (Default)
 ```
-Get-PlatformItem [[-Fqid] <FQID>] [<CommonParameters>]
+Get-PlatformItem [-Fqid] <FQID> [<CommonParameters>]
 ```
 
 ### BySearch
@@ -26,7 +26,7 @@ Get-PlatformItem [[-SearchText] <String>] [[-MaxResultCount] <Int32>] [[-Timeout
 
 ### ByKind
 ```
-Get-PlatformItem [[-Kind] <Guid>] [<CommonParameters>]
+Get-PlatformItem [-Kind] <Guid> [<CommonParameters>]
 ```
 
 ### ListAvailable
@@ -88,7 +88,7 @@ Type: FQID
 Parameter Sets: ByFQID
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
@@ -157,10 +157,10 @@ Type: Guid
 Parameter Sets: ByKind
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: 00000000-0000-0000-0000-000000000000
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

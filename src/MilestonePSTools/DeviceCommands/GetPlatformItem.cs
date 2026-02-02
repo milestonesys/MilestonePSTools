@@ -44,7 +44,7 @@ namespace MilestonePSTools.DeviceCommands
     ///     <para/><para/><para/>
     /// </example>
     /// </summary>
-    [Cmdlet(VerbsCommon.Get, "PlatformItem")]
+    [Cmdlet(VerbsCommon.Get, "PlatformItem", DefaultParameterSetName = "ByFQID")]
     [OutputType(typeof(Item))]
     [RequiresVmsConnection()]
     public class GetPlatformItem : ConfigApiCmdlet
@@ -52,7 +52,7 @@ namespace MilestonePSTools.DeviceCommands
         /// <summary>
         /// <para type="description">VideoOS.Platform.FQID of a Milestone configuration Item</para>
         /// </summary>
-        [Parameter(Position = 1, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "ByFQID")]
+        [Parameter(Mandatory = true, Position = 1, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "ByFQID")]
         public FQID Fqid { get; set; }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace MilestonePSTools.DeviceCommands
         /// <summary>
         /// <para type="description">Specifies the GUID constant for the Kind of object you want to return</para>
         /// </summary>
-        [Parameter(Position = 1, ValueFromPipeline = true, ParameterSetName = "ByKind")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "ByKind")]
         [ArgumentCompleter(typeof(KindArgumentCompleter))]
         [KindNameTransform()]
         public Guid Kind { get; set; }
@@ -125,7 +125,7 @@ namespace MilestonePSTools.DeviceCommands
                 {
                     WriteError(
                         new ErrorRecord(
-                            new MIPException($"GetItemsBySearch failed: {result.ToString()}"),
+                            new MIPException($"GetItemsBySearch failed: {result}"),
                             "GetItemsBySearch Failed",
                             ErrorCategory.InvalidResult,
                             null));

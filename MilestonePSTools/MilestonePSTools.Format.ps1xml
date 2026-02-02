@@ -72,18 +72,15 @@
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Label>Name</Label>
-            <Width>25</Width>
+            <Width>36</Width>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>ItemType</Label>
             <Width>10</Width>
           </TableColumnHeader>
           <TableColumnHeader>
             <Width>18</Width>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>Id</Label>
             <Width>36</Width>
           </TableColumnHeader>
         </TableHeaders>
@@ -91,20 +88,16 @@
           <TableRowEntry>
             <TableColumnItems>
               <TableColumnItem>
-                <ScriptBlock>
-                    ($_ | Get-PlatformItem).Name
-                </ScriptBlock>
+                <PropertyName>Name</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <ScriptBlock>
-                    [VideoOS.Platform.Kind]::DefaultTypeToNameTable[$_.FQID.Kind]
-                </ScriptBlock>
+                <PropertyName>ItemType</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>State</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <ScriptBlock>$_.FQID.ObjectId</ScriptBlock>
+                <PropertyName>Id</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

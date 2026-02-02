@@ -17,7 +17,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using VideoOS.Platform;
+using VideoOS.Platform.Messaging;
 
 namespace MilestonePSTools.Utility
 {
@@ -33,6 +35,11 @@ namespace MilestonePSTools.Utility
 
         public override object Transform(EngineIntrinsics engineIntrinsics, object inputData)
         {
+            if (inputData is PSObject psobject)
+            {
+                inputData = psobject.ImmediateBaseObject;
+            }
+
             if (inputData is Guid guid)
             {
                 if (!Kind.DefaultTypeToNameTable.ContainsKey(guid))
@@ -40,6 +47,16 @@ namespace MilestonePSTools.Utility
                     throw new InvalidOperationException($"No VideoOS.Platform.Kind found matching '{guid}'.");
                 }
                 return guid;
+            }
+
+            if (inputData is FQID fqid)
+            {
+                return fqid.Kind;
+            }
+
+            if (inputData is ItemState itemState)
+            {
+                return itemState.FQID.Kind;
             }
 
             if (inputData is string kindName)
@@ -61,6 +78,15 @@ namespace MilestonePSTools.Utility
 
         private Guid ConvertToGuid(string kindName)
         {
+            // Input is a guid in string format
+            if (Guid.TryParse(kindName, out var parsedGuid)) return parsedGuid;
+
+            // Input is FQID.ToString()
+            var match = Regex.Match(kindName, @"Type:(?<id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$");
+            if (match.Success)
+            {
+                return Guid.Parse(match.Groups["id"].Value);
+            }
             var field = _fields.SingleOrDefault(f => f.FieldType == typeof(Guid) && f.Name.Equals(kindName, StringComparison.OrdinalIgnoreCase));
             if (field == null)
             {

@@ -13,11 +13,11 @@
 # limitations under the License.
 
 function Get-VmsVideoOSItem {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'GetItemByFQID')]
     [OutputType([VideoOS.Platform.Item])]
     [RequiresVmsConnection()]
     param(
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'GetItemByFQID')]
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName, ParameterSetName = 'GetItemByFQID')]
         [VideoOS.Platform.FQID]
         $Fqid,
 
@@ -29,7 +29,7 @@ function Get-VmsVideoOSItem {
         [guid]
         $Id,
 
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'GetItem')]
+        [Parameter(Mandatory, ParameterSetName = 'GetItem')]
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'GetItems')]
         [ArgumentCompleter([KindArgumentCompleter])]
         [KindNameTransform()]

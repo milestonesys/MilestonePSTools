@@ -16,6 +16,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
+using System.Threading;
 using VideoOS.Platform;
 using VideoOS.Platform.Messaging;
 
@@ -51,8 +52,11 @@ namespace MilestonePSTools.DeviceCommands
         /// <summary>
         /// <para type="description">Filter the ItemState results to Camera items</para>
         /// </summary>
-        [Parameter(Position = 1)]
+        [Parameter()]
         public SwitchParameter CamerasOnly { get; set; }
+
+        [Parameter(Position = 1)]
+        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(60);
 
         /// <summary>
         /// 
@@ -62,6 +66,7 @@ namespace MilestonePSTools.DeviceCommands
             _itemStates = new BlockingCollection<ItemState>();
             MessageCommunication mc = null;
             object obj = null;
+            CancellationTokenSource cts = null;
             try
             {
                 MessageCommunicationManager.Start(Connection.CurrentSite.FQID.ServerId);
@@ -70,11 +75,39 @@ namespace MilestonePSTools.DeviceCommands
                 obj = mc.RegisterCommunicationFilter(ProvideCurrentStateResponse,
                     new CommunicationIdFilter(MessageCommunication.ProvideCurrentStateResponse));
                 mc.TransmitMessage(new Message(MessageCommunication.ProvideCurrentStateRequest), null, null, null);
-
-                foreach (var itemState in _itemStates.GetConsumingEnumerable())
+                cts = new CancellationTokenSource(Timeout);
+                foreach (var itemState in _itemStates.GetConsumingEnumerable(cts.Token))
                 {
-                    WriteObject(itemState);
+                    // Ignore Event item states
+                    var kind = Kind.DefaultTypeToNameTable.ContainsKey(itemState.FQID.Kind)
+                        ? Kind.DefaultTypeToNameTable[itemState.FQID.Kind].ToString()
+                        : "External";
+                    if (kind == "Event") continue;
+                    
+                    var item = Configuration.Instance.GetItem(itemState.FQID);
+
+                    // Ignore ItemState records where no corresponding item can be found
+                    // These are typically Generic Events or built-in system events
+                    if (item == null && kind == "Server") continue;
+
+                    // Enrich the ItemState with helpful properties
+                    var psObj = PSObject.AsPSObject(itemState);
+                    psObj.Properties.Add(new PSNoteProperty("Name", item?.Name ?? "Not available"));
+                    psObj.Properties.Add(new PSNoteProperty("ItemType", kind));
+                    psObj.Properties.Add(new PSNoteProperty("Id", itemState.FQID.ObjectId));
+                    
+                    WriteObject(psObj);
                 }
+            }
+            catch (PipelineStoppedException)
+            {
+                throw;
+            }
+            catch (OperationCanceledException cancelledException)
+            {
+                WriteError(
+                    new ErrorRecord(
+                        cancelledException, $"The operation timed out after the Timeout delay of {Timeout}", ErrorCategory.OperationTimeout, null));
             }
             catch (Exception e)
             {
@@ -84,6 +117,7 @@ namespace MilestonePSTools.DeviceCommands
             }
             finally
             {
+                cts?.Dispose();
                 mc?.UnRegisterCommunicationFilter(obj);
                 mc?.Dispose();
                 MessageCommunicationManager.Stop(Connection.CurrentSite.FQID.ServerId);

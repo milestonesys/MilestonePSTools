@@ -14,18 +14,16 @@ Gets the ItemState of all known items in the site
 ## SYNTAX
 
 ```
-Get-ItemState [-CamerasOnly] [<CommonParameters>]
+Get-ItemState [-CamerasOnly] [[-Timeout] <TimeSpan>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Sends a MessageCommunication.ProvideCurrentStateRequest message and returns the response.
+The `Get-ItemState` cmdlet sends a "MessageCommunication.ProvideCurrentStateRequest" message and returns the response
+from the XProtect Event Server.
 
-The ProvideCurrentStateResponse contains a flat collection of ItemState objects representing the state of all known items in the site.
-Each ItemState contains an FQID, and State property.
-The FQID.Kind and FQID.ObjectId can be used to determine what type of object the state represents, and the ID of that object.
-
-Most of the time, you will probably only be interested in Camera objects, so you can filter the output with the -CamerasOnly switch.
+The `VideoOS.Platform.Messaging.ItemState` objects returned by this command have an `FQID` and `State` property, and
+using the `FQID` this command enriches the output by adding the item `Name`, `ItemType`, and `Id` as note properties.
 
 REQUIREMENTS  
 
@@ -61,8 +59,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Timeout
+Specifies a timeout period in the form of a TimeSpan. The default value is 60 seconds.
+
+```yaml
+Type: TimeSpan
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
