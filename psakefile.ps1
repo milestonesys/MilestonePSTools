@@ -87,7 +87,7 @@ using namespace VideoOS.Platform.ConfigurationItems
     #     $psake.context.tasks.GenerateMAML.DependsOn = $psake.context.tasks.GenerateMAML.DependsOn | Where-Object { $_ -ne 'GenerateMarkdown' }
     # }
 
-    $script:MkdocsImage = 'ghcr.io/milestonesystemsinc/mkdocs-material-insiders:latest'
+    $script:MkdocsImage = $env:DOCKER_PROXY + 'squidfunk/mkdocs-material:latest'
     $script:EmbeddedModules = @(
         @{
             Name            = 'ImportExcel'
