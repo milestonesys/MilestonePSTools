@@ -7,14 +7,28 @@ hide:
 
 ## [vNext] unreleased
 
+### 🔄 Changed
+
+- **`Get-VmsCameraStream`** and **`Set-VmsCameraStream`** have been rewritten from scratch and are now _significantly faster_
+  in addition to being more reliable. The commands remain compatible with the previous version, introduce a `-PassThru`
+  switch, and add a unique way to provide stream settings and values. If you supply a parameter that does not exist when
+  calling `Set-VmsCameraStream`, that parameter will be interpreted as if it had been supplied using the `-Settings`
+  parameter. For example, this is now a valid way to update the resolution (assuming the camera stream has a "Resolution"
+  setting): `$stream | Set-VmsCameraStream -Resolution 1920x1080`
+- **`Get-ItemState`** now...
+  - omits items representing events for a cleaner, more relevant output
+  - adds `Name`, `ItemType`, and `Id` values to the `ItemState` object as note properties
+  - has a `-Timeout` parameter with a default value of 1 minute to address the risk that we wait for an event server
+    response that never arrives.
+
 ### 🐛 Fixed
 
-- **`Get-ItemState`** output was no longer populating names for `ItemState` records in the terminal output. Now item
-  names are correctly retrieved, and `Name`, `ItemType`, and `Id` values are added to the `ItemState` object as note
-  properties making them easy to access programmatically and not just showing the values in the terminal when displayed
-  with the default formatter. We also will now hide `Event` items in the response, and `Server` item types without names
-  as well. These all tend to be user-defined events, generic events, and built-in system events that aren't useful
-  output.
+- **`Get-VmsViewGroup`** when used with the `-Name` and `-Recurse` parameters would not return any matches. (Thanks @Silex!)
+- **`Copy-VmsViewGroup`** failed with the error "View with provided ID already exists". (Thanks @Silex!)
+- **`Import-VmsHardware`** failed with an error suggesting the device pack driver was not found on the recorder if the recorder itself was not found.
+- **`Get-VmsLprEvent`** would not filter LPR events by camera whether the camera was piped in or the camera ID was supplied using the named parameter.
+- **`Set-VmsCameraStream`** would, in some cases, seem to fail to apply all the specified settings if providing new "stream usage settings" and "stream settings" at the same time.
+- **`Get-ItemState`** output was no longer populating names for `ItemState` records in the terminal output.
 
 ## [25.2.21] 2026-01-14
 
