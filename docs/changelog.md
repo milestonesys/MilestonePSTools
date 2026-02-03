@@ -7,6 +7,8 @@ hide:
 
 ## [vNext] unreleased
 
+## [25.2.38] 2026-02-02
+
 ### 🔄 Changed
 
 - **`Get-VmsCameraStream`** and **`Set-VmsCameraStream`** have been rewritten from scratch and are now _significantly faster_
