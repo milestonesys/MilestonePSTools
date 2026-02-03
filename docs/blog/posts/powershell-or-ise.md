@@ -10,7 +10,7 @@ categories:
 
 On an standard Windows operating system you typically have two choices for how to use PowerShell. More than that if you consider the x86 (32-bit) variants! When you're getting started, it's difficult to know which to use, and why. When you click the Start menu button or press your Windows key (++win++), and type "powershell", here's what you get...
 
-![Start Menu screenshot showing PowerShell](https://github.com/MilestoneSystemsInc/PowerShellSamples/blob/main/Getting-Started/images/Start-Menu.png?raw=true)
+![Start Menu screenshot showing PowerShell](../../assets/images/vscode.png)
 
 <!-- more -->
 
@@ -18,7 +18,7 @@ On an standard Windows operating system you typically have two choices for how t
 
 This is your go-to option for entering one command at a time to perform a simple, one-time task. It's not great for writing out longer, complex scripts since every time you press ++enter++ it will evaluate what you've typed and run it. I often use the Windows PowerShell terminal to run single commands like `ping`, and `Test-NetConnection`, or sometimes for one-off tasks that require multiple commands that I'm comfortable running in a terminal instead of an editer like ISE.
 
-![Windows PowerShell screenshot](https://github.com/MilestoneSystemsInc/PowerShellSamples/blob/main/Getting-Started/images/Windows-PowerShell.png?raw=true)
+![Windows PowerShell screenshot](../../assets/images/windows-powershell.png)
 
 ## Windows PowerShell ISE
 
@@ -28,7 +28,7 @@ This is your go-to option for entering one command at a time to perform a simple
 
  There are better environments to write PowerShell code in than the ISE. For instance, Visual Studio Code is a *free* editor from Microsoft with extensions for PowerShell which make it a far more productive environment for larger PowerShell projects. However, the ISE is available on *every* Windows computer and offers the least intimidating starting point for your PowerShell learning path.
 
- ![PowerShell ISE screenshot](https://github.com/MilestoneSystemsInc/PowerShellSamples/blob/main/Getting-Started/images/PowerShell-ISE.png?raw=true)
+ ![PowerShell ISE screenshot](../../assets/images/powershell-ise.png)
 
 ## Windows PowerShell (x86) and Windows PowerShell ISE (x86)
 
@@ -38,7 +38,7 @@ These are the 32-bit equivalents of the same two PowerShell environments already
 
 Microsoft's VSCode is a fantastic environment for working on many different kinds of projects from PowerShell, to HTML/CSS/JavaScript, to Python and more. It's a text editor with extensions which make it a comfortable environment for working with multiple files of different types, and even running/executing code. It's an integral part of the maintenance of MilestonePSTools and other PowerShell projects we've worked on, and as you get more comfortable with PowerShell, I highly recommend trying it out. The script below will automate the installation of code, as well as my favorite extensions for working with PowerShell and GitHub.
 
-![Visual Studio Code screenshot](https://github.com/MilestoneSystemsInc/PowerShellSamples/blob/main/Getting-Started/images/VSCode.png?raw=true)
+![Visual Studio Code screenshot](../../assets/images/vscode.png)
 
 ```powershell
 $InformationPreference = 'Continue'

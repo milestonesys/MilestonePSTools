@@ -4,9 +4,9 @@ site_dir: Output/site
 site_description: "Configure. Automate. Report. You decide what is possible on the Open Platform."
 docs_dir: docs
 remote_branch: gh-pages
-repo_name: milestonesystemsinc/powershellsamples
-repo_url: https://github.com/MilestoneSystemsInc/PowerShellSamples
-edit_uri: ""
+repo_name: milestonesys/MilestonePSTools
+repo_url: https://github.com/milestonesys/MilestonePSTools
+edit_uri: "edit/main/docs/"
 copyright: <a href="#__consent" class="md-button">Change cookie settings</a><br/> Copyright &copy; 2019-2025 Milestone Systems A/S. All rights reserved.
 
 theme:
@@ -16,6 +16,8 @@ theme:
   icon:
     logo: milestone/logo-white
     repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
   font:
     text: Open Sans
     code: Cascadia Code
@@ -30,6 +32,7 @@ theme:
         name: Switch to light mode
   features:
     - announce.dismiss
+    - content.action.edit
     - content.code.annotate
     - content.code.copy
     - content.footnote.tooltips
