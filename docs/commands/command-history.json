@@ -1,0 +1,3595 @@
+{
+    "Date":  "\/Date(1769800928428)\/",
+    "Commands":  [
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-GenericEvent",
+                         "VersionAdded":  "1.0.30",
+                         "DatePublished":  "\/Date(1557818250000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsRoleMember",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsTrustedIssuer",
+                         "VersionAdded":  "24.2.1",
+                         "DatePublished":  "\/Date(1731142662000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-ManagementServerConfig",
+                         "VersionAdded":  "1.0.80",
+                         "DatePublished":  "\/Date(1600310905000)\/",
+                         "VersionRemoved":  "1.1.5",
+                         "DateRemoved":  "\/Date(1622709061000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsFailoverRecorder",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsOutput",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-IServerProxyService",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-TestCmdlet",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  "1.0.13",
+                         "DateRemoved":  "\/Date(1556200603000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsRoleMember",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsDevice",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Kind",
+                         "VersionAdded":  "1.0.47",
+                         "DatePublished":  "\/Date(1563626225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-OutputSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Invoke-Method",
+                         "VersionAdded":  "1.0.31",
+                         "DatePublished":  "\/Date(1558058313000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-LicenseInfo",
+                         "VersionAdded":  "1.0.23",
+                         "DatePublished":  "\/Date(1556956259000)\/",
+                         "VersionRemoved":  "",
+                         "DateRemoved":  "\/Date(-62135568000000)\/",
+                         "AliasedTo":  ""
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-PublicViewGroup",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Invoke-LicenseActivation",
+                         "VersionAdded":  "1.1.4",
+                         "DatePublished":  "\/Date(1622306412000)\/",
+                         "VersionRemoved":  "25.1.39",
+                         "DateRemoved":  "\/Date(1748014837000)\/",
+                         "AliasedTo":  "Invoke-VmsLicenseActivation"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Test-VmsConnection",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Select-Camera",
+                         "VersionAdded":  "1.0.77",
+                         "DatePublished":  "\/Date(1588925223000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-RecordingServer",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsWebhook",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-ConnectionString",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsConnectionString",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsCameraGeneralSetting",
+                         "VersionAdded":  "21.2.3",
+                         "DatePublished":  "\/Date(1642755304000)\/",
+                         "VersionRemoved":  "25.1.39",
+                         "DateRemoved":  "\/Date(1748014837000)\/",
+                         "AliasedTo":  "Get-VmsDeviceGeneralSetting"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsDeviceStatus",
+                         "VersionAdded":  "21.2.5",
+                         "DatePublished":  "\/Date(1643361042000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-PlatformItem",
+                         "VersionAdded":  "1.0.46",
+                         "DatePublished":  "\/Date(1563555080000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-OverallSecurity",
+                         "VersionAdded":  "1.0.56",
+                         "DatePublished":  "\/Date(1569633581000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Disconnect-Vms",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-RecorderStatusService2",
+                         "VersionAdded":  "1.0.67",
+                         "DatePublished":  "\/Date(1575957814000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLoginProviderClaim",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-DeviceGroup",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsDeviceGroup",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-LicenseManager",
+                         "VersionAdded":  "1.0.31",
+                         "DatePublished":  "\/Date(1558058313000)\/",
+                         "VersionRemoved":  "1.0.66",
+                         "DateRemoved":  "\/Date(1575955525000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsViewGroup",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-ConnectionString",
+                         "VersionAdded":  "1.0.9",
+                         "DatePublished":  "\/Date(1555574744000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "Get-VmsConnectionString"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-FailoverServerGroup",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsFailoverGroup",
+                         "VersionAdded":  "21.2.2",
+                         "DatePublished":  "\/Date(1636078831000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsIServiceRegistrationService",
+                         "VersionAdded":  "23.3.2",
+                         "DatePublished":  "\/Date(1708650526000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-HardwarePassword",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsHardwarePassword",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-VmsCameraGeneralSetting Get-VmsHardwareGeneralSetting Get-VmsInputGeneralSetting Get-VmsMetadataGeneralSetting Get-VmsMicrophoneGeneralSetting Get-VmsOutputGeneralSetting Get-VmsSpeakerGeneralSetting",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsDeviceGeneralSetting",
+                         "VersionAdded":  "25.1.39",
+                         "DatePublished":  "\/Date(1748014837000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-OverallSecurity",
+                         "VersionAdded":  "1.0.56",
+                         "DatePublished":  "\/Date(1569633581000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsClientProfile",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-ProgressTest",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "1.0.7",
+                         "DateRemoved":  "\/Date(1555483155000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-User",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Set-VmsRm",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsRestrictedMedia",
+                         "VersionAdded":  "24.1.27",
+                         "DatePublished":  "\/Date(1727426172000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Copy-VmsView",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Save-VmsConnectionProfile",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Connect-ManagementServer",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Copy-VmsViewGroup",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsDeviceGroupMember",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-CameraSetting",
+                         "VersionAdded":  "1.0.7",
+                         "DatePublished":  "\/Date(1555483155000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-GenericEvent",
+                         "VersionAdded":  "1.0.31",
+                         "DatePublished":  "\/Date(1558058313000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Output",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  "24.1.5",
+                         "DateRemoved":  "\/Date(1719908403000)\/",
+                         "AliasedTo":  "Get-VmsOutput"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsViewGroupAcl",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-CurrentDeviceStatus",
+                         "VersionAdded":  "21.1.451385",
+                         "DatePublished":  "\/Date(1625018007000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsRoleOverallSecurity",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-AlarmStatistics",
+                         "VersionAdded":  "1.0.81",
+                         "DatePublished":  "\/Date(1600499098000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsLprMatchListEntry",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsStorage",
+                         "VersionAdded":  "1.1.1",
+                         "DatePublished":  "\/Date(1621051923000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Hardware",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsHardware",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-ManagementServer",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "21.2.6",
+                         "DateRemoved":  "\/Date(1644417131000)\/",
+                         "AliasedTo":  "Get-VmsManagementServer"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-Stream",
+                         "VersionAdded":  "1.0.7",
+                         "DatePublished":  "\/Date(1555483155000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsModuleConfig",
+                         "VersionAdded":  "23.3.42",
+                         "DatePublished":  "\/Date(1718091256000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-MipMessageIdList",
+                         "VersionAdded":  "1.0.76",
+                         "DatePublished":  "\/Date(1586332742000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-HardwareSetting",
+                         "VersionAdded":  "1.0.7",
+                         "DatePublished":  "\/Date(1555483155000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Set-VmsCameraGeneralSetting Set-VmsHardwareGeneralSetting Set-VmsInputGeneralSetting Set-VmsMetadataGeneralSetting Set-VmsMicrophoneGeneralSetting Set-VmsOutputGeneralSetting Set-VmsSpeakerGeneralSetting",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsDeviceGeneralSetting",
+                         "VersionAdded":  "25.1.39",
+                         "DatePublished":  "\/Date(1748014837000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Test-VmsLicensedFeature",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Update-AlarmLine",
+                         "VersionAdded":  "1.0.81",
+                         "DatePublished":  "\/Date(1600499098000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsRoleClaim",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsOpenIdConfig",
+                         "VersionAdded":  "24.2.1",
+                         "DatePublished":  "\/Date(1731142662000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "ConvertFrom-ConfigurationItem",
+                         "VersionAdded":  "21.1.453308",
+                         "DatePublished":  "\/Date(1631939373000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-HardwareDriver",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsHardwareDriver",
+                         "VersionAdded":  "22.3.1",
+                         "DatePublished":  "\/Date(1676015674000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsConnectionProfile",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-PlaybackInfo",
+                         "VersionAdded":  "1.0.51",
+                         "DatePublished":  "\/Date(1564306271000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Export-VmsViewGroup",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsRoleClaim",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-BankTable",
+                         "VersionAdded":  "1.0.70",
+                         "DatePublished":  "\/Date(1578793224000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Stop-VmsRm",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Stop-VmsRestrictedLiveMode",
+                         "VersionAdded":  "24.1.27",
+                         "DatePublished":  "\/Date(1727426172000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsFailoverGroup",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsWebhook",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsBasicUser",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsLicense",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Update-License",
+                         "VersionAdded":  "1.0.66",
+                         "DatePublished":  "\/Date(1575955525000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Speaker",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsSpeaker",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Log",
+                         "VersionAdded":  "1.0.9",
+                         "DatePublished":  "\/Date(1555574744000)\/",
+                         "VersionRemoved":  "21.2.6",
+                         "DateRemoved":  "\/Date(1644417131000)\/",
+                         "AliasedTo":  "Get-VmsLog"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLprMatchList",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-StreamProperties",
+                         "VersionAdded":  "21.1.451385",
+                         "DatePublished":  "\/Date(1625018007000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-LicenseDetails",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLicenseDetails",
+                         "VersionAdded":  "25.1.39",
+                         "DatePublished":  "\/Date(1748014837000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Site",
+                         "VersionAdded":  "1.0.20",
+                         "DatePublished":  "\/Date(1556687465000)\/",
+                         "VersionRemoved":  "23.2.1",
+                         "DateRemoved":  "\/Date(1692271583000)\/",
+                         "AliasedTo":  "Get-VmsSite"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Resolve-VmsDeviceGroupPath",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsArchiveStorage",
+                         "VersionAdded":  "1.1.1",
+                         "DatePublished":  "\/Date(1621051923000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Export-VmsRule",
+                         "VersionAdded":  "23.1.3",
+                         "DatePublished":  "\/Date(1682064386000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Input",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsInput",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Import-VmsRule",
+                         "VersionAdded":  "23.1.3",
+                         "DatePublished":  "\/Date(1682064386000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-CameraRecordingStats",
+                         "VersionAdded":  "21.1.451385",
+                         "DatePublished":  "\/Date(1625018007000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Assert-VmsRequirementsMet",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Select-Site",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Select-VmsSite",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsRoleOverallSecurity",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsVideoOSItem",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsLoginProviderClaim",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Select-VideoOSItem",
+                         "VersionAdded":  "1.0.77",
+                         "DatePublished":  "\/Date(1588925223000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsMetadataRecord",
+                         "VersionAdded":  "23.3.51",
+                         "DatePublished":  "\/Date(1719046079000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsBasicUser",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Import-VmsHardware",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VideoDeviceStatistics",
+                         "VersionAdded":  "21.1.451385",
+                         "DatePublished":  "\/Date(1625018007000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsFailoverRecorder",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsSiteInfo",
+                         "VersionAdded":  "22.1.0",
+                         "DatePublished":  "\/Date(1650435259000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Split-VmsConfigItemPath",
+                         "VersionAdded":  "23.2.3",
+                         "DatePublished":  "\/Date(1697049784000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-EvidenceLock",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsSiteInfo",
+                         "VersionAdded":  "22.1.0",
+                         "DatePublished":  "\/Date(1650435259000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Start-VmsRm",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Start-VmsRestrictedLiveMode",
+                         "VersionAdded":  "24.1.27",
+                         "DatePublished":  "\/Date(1727426172000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-IServerCommandService",
+                         "VersionAdded":  "1.0.31",
+                         "DatePublished":  "\/Date(1558058313000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Remove-Hardware",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsHardware",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-GenericEventDataSource",
+                         "VersionAdded":  "1.0.30",
+                         "DatePublished":  "\/Date(1557818250000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Invoke-MipSdkEula",
+                         "VersionAdded":  "1.0.64",
+                         "DatePublished":  "\/Date(1572668509000)\/",
+                         "VersionRemoved":  "25.2.1",
+                         "DateRemoved":  "\/Date(1749626935000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsLoginProviderClaim",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsTrustedIssuer",
+                         "VersionAdded":  "24.2.1",
+                         "DatePublished":  "\/Date(1731142662000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-VmsCameraStreamSetting Get-VmsMetadataStreamSetting Get-VmsMicrophoneStreamSetting Get-VmsSpeakerStreamSetting",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsDeviceStreamSetting",
+                         "VersionAdded":  "25.1.39",
+                         "DatePublished":  "\/Date(1748014837000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "New-VmsRm",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsRestrictedMedia",
+                         "VersionAdded":  "24.1.27",
+                         "DatePublished":  "\/Date(1727426172000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsTrustedIssuer",
+                         "VersionAdded":  "24.2.1",
+                         "DatePublished":  "\/Date(1731142662000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-AlarmDefinition",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsAlarmDefinition",
+                         "VersionAdded":  "24.2.18",
+                         "DatePublished":  "\/Date(1738229294000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsFailoverGroup",
+                         "VersionAdded":  "21.2.2",
+                         "DatePublished":  "\/Date(1636078831000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Set-HardwarePassword",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsHardware",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsRecordingServer",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Update-Bookmark",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Copy-VmsClientProfile",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-LicensedProducts",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLicensedProducts",
+                         "VersionAdded":  "25.1.39",
+                         "DatePublished":  "\/Date(1748014837000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsLprMatchList",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "ConvertFrom-ConfigurationApiProperties",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-LicensedProducts",
+                         "VersionAdded":  "1.1.4",
+                         "DatePublished":  "\/Date(1622306412000)\/",
+                         "VersionRemoved":  "25.1.39",
+                         "DateRemoved":  "\/Date(1748014837000)\/",
+                         "AliasedTo":  "Get-VmsLicensedProducts"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-Stream",
+                         "VersionAdded":  "1.0.7",
+                         "DatePublished":  "\/Date(1555483155000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-FailoverServer",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsSpeaker",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsLprMatchListEntry",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Find-VmsVideoOSItem",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-ManagementServer",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsManagementServer",
+                         "VersionAdded":  "21.2.6",
+                         "DatePublished":  "\/Date(1644417131000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Export-VmsRole",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-UserDefinedEvent",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-DeviceGroup",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "New-VmsDeviceGroup"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsDeviceStorage",
+                         "VersionAdded":  "23.3.33",
+                         "DatePublished":  "\/Date(1718084557000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsSystemLicense",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-Hardware",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "23.2.2",
+                         "DateRemoved":  "\/Date(1695916168000)\/",
+                         "AliasedTo":  "Remove-VmsHardware"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Update-RegisteredService",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-ValueDisplayName",
+                         "VersionAdded":  "21.1.451385",
+                         "DatePublished":  "\/Date(1625018007000)\/",
+                         "VersionRemoved":  "25.1.39",
+                         "DateRemoved":  "\/Date(1748014837000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-Hardware",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-RegisteredService",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsDevice",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-Role",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "New-VmsRole"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "ConvertFrom-Snapshot",
+                         "VersionAdded":  "21.1.451385",
+                         "DatePublished":  "\/Date(1625018007000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Invoke-LicenseActivation",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Invoke-VmsLicenseActivation",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Import-HardwareCsv",
+                         "VersionAdded":  "1.0.56",
+                         "DatePublished":  "\/Date(1569633581000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-UserDefinedEvent",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsLoginProvider",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Export-VmsClientProfile",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Camera",
+                         "VersionAdded":  "1.0.8",
+                         "DatePublished":  "\/Date(1555501851000)\/",
+                         "VersionRemoved":  "21.2.7",
+                         "DateRemoved":  "\/Date(1645681660000)\/",
+                         "AliasedTo":  "Get-VmsCamera"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Clear-VmsLprMatchList",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsViewGroup",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsLprMatchList",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Camera",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsCamera",
+                         "VersionAdded":  "21.2.3",
+                         "DatePublished":  "\/Date(1642755304000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-HardwarePassword",
+                         "VersionAdded":  "1.0.9",
+                         "DatePublished":  "\/Date(1555574744000)\/",
+                         "VersionRemoved":  "23.1.1",
+                         "DateRemoved":  "\/Date(1680049866000)\/",
+                         "AliasedTo":  "Set-VmsHardware"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Microphone",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  "24.1.5",
+                         "DateRemoved":  "\/Date(1719908403000)\/",
+                         "AliasedTo":  "Get-VmsMicrophone"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Join-VmsDeviceGroupPath",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Assert-VmsLicensedFeature",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Clear-VmsCache",
+                         "VersionAdded":  "21.2.6",
+                         "DatePublished":  "\/Date(1644417131000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-RecorderConfig",
+                         "VersionAdded":  "1.0.57",
+                         "DatePublished":  "\/Date(1569987384000)\/",
+                         "VersionRemoved":  "1.1.5",
+                         "DateRemoved":  "\/Date(1622709061000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-CameraReport",
+                         "VersionAdded":  "1.0.65",
+                         "DatePublished":  "\/Date(1573200970000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsDeviceGroup",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-RecordingServer",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsRecordingServer",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-HardwareDriver",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.1",
+                         "DateRemoved":  "\/Date(1676015674000)\/",
+                         "AliasedTo":  "Get-VmsHardwareDriver"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsInput",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLprMatchListEntry",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Hardware",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "Get-VmsHardware"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-DeviceAcl",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-IConfigurationService",
+                         "VersionAdded":  "1.0.31",
+                         "DatePublished":  "\/Date(1558058313000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-PublicViewGroup",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Export-VmsHardware",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-LicenseOverview",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLicenseOverview",
+                         "VersionAdded":  "25.1.39",
+                         "DatePublished":  "\/Date(1748014837000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-InputSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsCameraStream",
+                         "VersionAdded":  "21.2.3",
+                         "DatePublished":  "\/Date(1642755304000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsWebhook",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-AlarmLine",
+                         "VersionAdded":  "1.0.81",
+                         "DatePublished":  "\/Date(1600499098000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsClientProfile",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Import-VmsLicense",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Role",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Trace-Events",
+                         "VersionAdded":  "1.0.23",
+                         "DatePublished":  "\/Date(1556956259000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsMetadata",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-DeviceGroupMember",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "Add-VmsDeviceGroupMember"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsStorage",
+                         "VersionAdded":  "1.1.1",
+                         "DatePublished":  "\/Date(1621051923000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsLoginProvider",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-MicrophoneSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-User",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsAlarmDefinition",
+                         "VersionAdded":  "24.2.18",
+                         "DatePublished":  "\/Date(1738229294000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-DeviceGroup",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "Get-VmsDeviceGroup"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsRole",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsClientProfileAttributes",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Log",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLog",
+                         "VersionAdded":  "21.2.6",
+                         "DatePublished":  "\/Date(1644417131000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsRoleClaim",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Speaker",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  "24.1.5",
+                         "DateRemoved":  "\/Date(1719908403000)\/",
+                         "AliasedTo":  "Get-VmsSpeaker"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsDeviceEvent",
+                         "VersionAdded":  "23.2.3",
+                         "DatePublished":  "\/Date(1697049784000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-MicrophoneSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-ManagementServerConfig",
+                         "VersionAdded":  "1.0.80",
+                         "DatePublished":  "\/Date(1600310905000)\/",
+                         "VersionRemoved":  "",
+                         "DateRemoved":  "\/Date(-62135568000000)\/",
+                         "AliasedTo":  ""
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsRule",
+                         "VersionAdded":  "23.1.3",
+                         "DatePublished":  "\/Date(1682064386000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsModuleConfig",
+                         "VersionAdded":  "23.3.42",
+                         "DatePublished":  "\/Date(1718091256000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Move-VmsHardware",
+                         "VersionAdded":  "23.2.3",
+                         "DatePublished":  "\/Date(1697049784000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Remove-Role",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsRole",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-EventLine",
+                         "VersionAdded":  "1.0.81",
+                         "DatePublished":  "\/Date(1600499098000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Send-GenericEvent",
+                         "VersionAdded":  "1.0.49",
+                         "DatePublished":  "\/Date(1564247988000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Add-Role",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsRole",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Clear-VmsSiteInfo",
+                         "VersionAdded":  "22.1.0",
+                         "DatePublished":  "\/Date(1650435259000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsBasicUser",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsMetadataLiveRecord",
+                         "VersionAdded":  "23.3.51",
+                         "DatePublished":  "\/Date(1719046079000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-MobileServerCertificate",
+                         "VersionAdded":  "1.0.56",
+                         "DatePublished":  "\/Date(1569633581000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsArchiveStorage",
+                         "VersionAdded":  "1.1.1",
+                         "DatePublished":  "\/Date(1621051923000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsView",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Update-EvidenceLock",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Add-DeviceGroupMember",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsDeviceGroupMember",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-Bookmark",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-EvidenceLock",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Connect-Vms",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Copy-EvidenceLock",
+                         "VersionAdded":  "1.0.36",
+                         "DatePublished":  "\/Date(1559807618000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Start-VmsHardwareScan",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsCameraMotion",
+                         "VersionAdded":  "23.3.33",
+                         "DatePublished":  "\/Date(1718084557000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-MobileServerCertificate",
+                         "VersionAdded":  "1.0.56",
+                         "DatePublished":  "\/Date(1569633581000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Diagnostics",
+                         "VersionAdded":  "1.0.23",
+                         "DatePublished":  "\/Date(1556956259000)\/",
+                         "VersionRemoved":  "1.0.87",
+                         "DateRemoved":  "\/Date(1607395261000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-FailoverServer",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Send-UserDefinedEvent",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Import-VmsLprMatchList",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-AlarmOrder",
+                         "VersionAdded":  "1.0.81",
+                         "DatePublished":  "\/Date(1600499098000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-Role",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "Remove-VmsRole"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-SequenceData",
+                         "VersionAdded":  "1.0.40",
+                         "DatePublished":  "\/Date(1560319477000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsClientProfileAttributes",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsFailoverGroup",
+                         "VersionAdded":  "21.2.2",
+                         "DatePublished":  "\/Date(1636078831000)\/",
+                         "VersionRemoved":  "23.2.1",
+                         "DateRemoved":  "\/Date(1692271583000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsConnectionString",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLoginProvider",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsStorage",
+                         "VersionAdded":  "1.1.1",
+                         "DatePublished":  "\/Date(1621051923000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Send-MipMessage",
+                         "VersionAdded":  "1.0.76",
+                         "DatePublished":  "\/Date(1586332742000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsRule",
+                         "VersionAdded":  "23.1.3",
+                         "DatePublished":  "\/Date(1682064386000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsLoginProviderClaim",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Metadata",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  "24.1.5",
+                         "DateRemoved":  "\/Date(1719908403000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsFailoverRecorder",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-RecordingServer",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "Get-VmsRecordingServer"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-SpeakerSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Import-VmsViewGroup",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Set-VmsCameraStreamSetting Set-VmsMetadataStreamSetting Set-VmsMicrophoneStreamSetting Set-VmsSpeakerStreamSetting",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsDeviceStreamSetting",
+                         "VersionAdded":  "25.1.39",
+                         "DatePublished":  "\/Date(1748014837000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsRoleMember",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Copy-VmsRole",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-ItemState",
+                         "VersionAdded":  "1.0.45",
+                         "DatePublished":  "\/Date(1563523725000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-MipSdkEula",
+                         "VersionAdded":  "1.0.64",
+                         "DatePublished":  "\/Date(1572668509000)\/",
+                         "VersionRemoved":  "25.2.1",
+                         "DateRemoved":  "\/Date(1749626935000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsMicrophone",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsView",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsCameraReport",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Initialize-RecordingServer",
+                         "VersionAdded":  "1.0.39",
+                         "DatePublished":  "\/Date(1560224947000)\/",
+                         "VersionRemoved":  "1.0.78",
+                         "DateRemoved":  "\/Date(1592367506000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VideoSource",
+                         "VersionAdded":  "1.0.53",
+                         "DatePublished":  "\/Date(1565751404000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Token",
+                         "VersionAdded":  "1.0.20",
+                         "DatePublished":  "\/Date(1556687465000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "Get-VmsToken"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsAlarmDefinition",
+                         "VersionAdded":  "24.2.18",
+                         "DatePublished":  "\/Date(1738229294000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-DeviceGroup",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  "Remove-VmsDeviceGroup"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsClientProfile",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Disconnect-ManagementServer",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-SpeakerSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Site",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsSite",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsWebhook",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-LicenseDetails",
+                         "VersionAdded":  "1.0.66",
+                         "DatePublished":  "\/Date(1575955525000)\/",
+                         "VersionRemoved":  "25.1.39",
+                         "DateRemoved":  "\/Date(1748014837000)\/",
+                         "AliasedTo":  "Get-VmsLicenseDetails"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-PublicViewGroup",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-CameraReportV1",
+                         "VersionAdded":  "21.1.451385",
+                         "DatePublished":  "\/Date(1625018007000)\/",
+                         "VersionRemoved":  "21.2.0",
+                         "DateRemoved":  "\/Date(1635400305000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-GenericEvent",
+                         "VersionAdded":  "1.0.30",
+                         "DatePublished":  "\/Date(1557818250000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-VmsRm",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsRestrictedMedia",
+                         "VersionAdded":  "24.1.27",
+                         "DatePublished":  "\/Date(1727426172000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmoClient",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsLprMatchList",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-AlarmDefinition",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  "25.1.50",
+                         "DateRemoved":  "\/Date(1749263892000)\/",
+                         "AliasedTo":  "Get-VmsAlarmDefinition"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsCameraStream",
+                         "VersionAdded":  "21.2.3",
+                         "DatePublished":  "\/Date(1642755304000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Import-VmsRole",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-OutputSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Input",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  "24.1.5",
+                         "DateRemoved":  "\/Date(1719908403000)\/",
+                         "AliasedTo":  "Get-VmsInput"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-DeviceAcl",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Microphone",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsMicrophone",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsViewGroup",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-InputSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Snapshot",
+                         "VersionAdded":  "1.0.15",
+                         "DatePublished":  "\/Date(1556321925000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLprEvent",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Invoke-DiagnosticsTool",
+                         "VersionAdded":  "1.0.87",
+                         "DatePublished":  "\/Date(1607395261000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Add-DeviceGroup",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsDeviceGroup",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-MetadataSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Test-Playback",
+                         "VersionAdded":  "1.0.15",
+                         "DatePublished":  "\/Date(1556321925000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Install-StableFPS",
+                         "VersionAdded":  "1.0.70",
+                         "DatePublished":  "\/Date(1578793224000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Find-ConfigurationItem",
+                         "VersionAdded":  "21.1.453308",
+                         "DatePublished":  "\/Date(1631939373000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-AlarmCondition",
+                         "VersionAdded":  "1.0.81",
+                         "DatePublished":  "\/Date(1600499098000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Invoke-ServerConfigurator",
+                         "VersionAdded":  "1.0.86",
+                         "DatePublished":  "\/Date(1606271677000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-ConfigurationItem",
+                         "VersionAdded":  "1.0.31",
+                         "DatePublished":  "\/Date(1558058313000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-RegisteredService",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsParentItem",
+                         "VersionAdded":  "24.1.6",
+                         "DatePublished":  "\/Date(1722676980000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Select-Site",
+                         "VersionAdded":  "1.0.20",
+                         "DatePublished":  "\/Date(1556687465000)\/",
+                         "VersionRemoved":  "23.2.1",
+                         "DateRemoved":  "\/Date(1692271583000)\/",
+                         "AliasedTo":  "Select-VmsSite"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "ConvertFrom-GisPoint",
+                         "VersionAdded":  "21.1.451385",
+                         "DatePublished":  "\/Date(1625018007000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsRole",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsBasicUser",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsLoginProvider",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsViewGroupAcl",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-WhoIsOnline",
+                         "VersionAdded":  "1.0.74",
+                         "DatePublished":  "\/Date(1586308069000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsView",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-FailoverServer",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-VmsHardware",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "ConvertTo-GisPoint",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Output",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsOutput",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsCameraGeneralSetting",
+                         "VersionAdded":  "21.2.3",
+                         "DatePublished":  "\/Date(1642755304000)\/",
+                         "VersionRemoved":  "25.1.39",
+                         "DateRemoved":  "\/Date(1748014837000)\/",
+                         "AliasedTo":  "Set-VmsDeviceGeneralSetting"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-IAlarmClient",
+                         "VersionAdded":  "1.0.81",
+                         "DatePublished":  "\/Date(1600499098000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-ConfigurationItemProperty",
+                         "VersionAdded":  "1.0.80",
+                         "DatePublished":  "\/Date(1600310905000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Translations",
+                         "VersionAdded":  "1.0.31",
+                         "DatePublished":  "\/Date(1558058313000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-CameraSetting",
+                         "VersionAdded":  "1.0.7",
+                         "DatePublished":  "\/Date(1555483155000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Stream",
+                         "VersionAdded":  "1.0.7",
+                         "DatePublished":  "\/Date(1555483155000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-ConfigurationItem",
+                         "VersionAdded":  "1.0.31",
+                         "DatePublished":  "\/Date(1558058313000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-ConfigurationItemProperty",
+                         "VersionAdded":  "1.0.80",
+                         "DatePublished":  "\/Date(1600310905000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Token",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsToken",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsClientProfile",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-License",
+                         "VersionAdded":  "1.0.66",
+                         "DatePublished":  "\/Date(1575955525000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsDeviceEvent",
+                         "VersionAdded":  "23.2.3",
+                         "DatePublished":  "\/Date(1697049784000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-MetadataSetting",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-Stream",
+                         "VersionAdded":  "1.0.7",
+                         "DatePublished":  "\/Date(1555483155000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-Vms",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsConnectionProfile",
+                         "VersionAdded":  "23.2.2",
+                         "DatePublished":  "\/Date(1695916168000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsHardwareDriver",
+                         "VersionAdded":  "22.3.1",
+                         "DatePublished":  "\/Date(1676015674000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-MobileServerInfo",
+                         "VersionAdded":  "1.0.56",
+                         "DatePublished":  "\/Date(1569633581000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-LoginSettings",
+                         "VersionAdded":  "1.0.41",
+                         "DatePublished":  "\/Date(1560927423000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsFailoverRecorder",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsMetadata",
+                         "VersionAdded":  "24.1.5",
+                         "DatePublished":  "\/Date(1719908403000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Import-VmsClientProfile",
+                         "VersionAdded":  "23.1.2",
+                         "DatePublished":  "\/Date(1680940751000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-HardwareSetting",
+                         "VersionAdded":  "1.0.7",
+                         "DatePublished":  "\/Date(1555483155000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsVmoClient",
+                         "VersionAdded":  "24.2.1",
+                         "DatePublished":  "\/Date(1731142662000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsViewGroup",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsRule",
+                         "VersionAdded":  "23.1.3",
+                         "DatePublished":  "\/Date(1682064386000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-Bookmark",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsRule",
+                         "VersionAdded":  "23.1.3",
+                         "DatePublished":  "\/Date(1682064386000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-MethodInfo",
+                         "VersionAdded":  "1.0.31",
+                         "DatePublished":  "\/Date(1558058313000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Export-HardwareCsv",
+                         "VersionAdded":  "1.0.56",
+                         "DatePublished":  "\/Date(1569633581000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-RecorderConfig",
+                         "VersionAdded":  "1.0.57",
+                         "DatePublished":  "\/Date(1569987384000)\/",
+                         "VersionRemoved":  "",
+                         "DateRemoved":  "\/Date(-62135568000000)\/",
+                         "AliasedTo":  ""
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-XProtectCertificate",
+                         "VersionAdded":  "21.1.453308",
+                         "DatePublished":  "\/Date(1631939373000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-HardwarePassword",
+                         "VersionAdded":  "1.0.9",
+                         "DatePublished":  "\/Date(1555574744000)\/",
+                         "VersionRemoved":  "23.1.1",
+                         "DateRemoved":  "\/Date(1680049866000)\/",
+                         "AliasedTo":  "Get-VmsHardwarePassword"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-RegisteredService",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-EvidenceLock",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Resize-Image",
+                         "VersionAdded":  "21.1.451385",
+                         "DatePublished":  "\/Date(1625018007000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Find-XProtectDevice",
+                         "VersionAdded":  "21.1.453308",
+                         "DatePublished":  "\/Date(1631939373000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Wait-VmsTask",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsStorageRetention",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Remove-DeviceGroup",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsDeviceGroup",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Export-VmsLicenseRequest",
+                         "VersionAdded":  "21.2.0",
+                         "DatePublished":  "\/Date(1635400305000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Split-VmsDeviceGroupPath",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsAlarmDefinition",
+                         "VersionAdded":  "24.2.18",
+                         "DatePublished":  "\/Date(1738229294000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Remove-VmsRm",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsRestrictedMedia",
+                         "VersionAdded":  "24.1.27",
+                         "DatePublished":  "\/Date(1727426172000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-LicenseOverview",
+                         "VersionAdded":  "1.1.4",
+                         "DatePublished":  "\/Date(1622306412000)\/",
+                         "VersionRemoved":  "25.1.39",
+                         "DateRemoved":  "\/Date(1748014837000)\/",
+                         "AliasedTo":  "Get-VmsLicenseOverview"
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-Bookmark",
+                         "VersionAdded":  "1.0.12",
+                         "DatePublished":  "\/Date(1556086129000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-Alarm",
+                         "VersionAdded":  "1.0.81",
+                         "DatePublished":  "\/Date(1600499098000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Add-User",
+                         "VersionAdded":  "1.0.6",
+                         "DatePublished":  "\/Date(1555397316000)\/",
+                         "VersionRemoved":  "22.3.0",
+                         "DateRemoved":  "\/Date(1669815755000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsBasicUserClaim",
+                         "VersionAdded":  "23.1.1",
+                         "DatePublished":  "\/Date(1680049866000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsArchiveStorage",
+                         "VersionAdded":  "1.1.1",
+                         "DatePublished":  "\/Date(1621051923000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Start-Export",
+                         "VersionAdded":  "1.0.13",
+                         "DatePublished":  "\/Date(1556200603000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsCameraMotion",
+                         "VersionAdded":  "23.3.33",
+                         "DatePublished":  "\/Date(1718084557000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-UserDefinedEvent",
+                         "VersionAdded":  "1.0.10",
+                         "DatePublished":  "\/Date(1555658225000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsView",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "Get-LicenseInfo",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Get-VmsLicenseInfo",
+                         "VersionAdded":  "25.1.39",
+                         "DatePublished":  "\/Date(1748014837000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Remove-VmsDeviceGroupMember",
+                         "VersionAdded":  "22.3.0",
+                         "DatePublished":  "\/Date(1669815755000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-FailoverServerGroup",
+                         "VersionAdded":  "1.0.69",
+                         "DatePublished":  "\/Date(1576051327000)\/",
+                         "VersionRemoved":  "1.1.4",
+                         "DateRemoved":  "\/Date(1622306412000)\/",
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Send-Alarm",
+                         "VersionAdded":  "1.0.81",
+                         "DatePublished":  "\/Date(1600499098000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Set-VmsCamera",
+                         "VersionAdded":  "21.2.3",
+                         "DatePublished":  "\/Date(1642755304000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "New-VmsFailoverGroup",
+                         "VersionAdded":  "23.2.1",
+                         "DatePublished":  "\/Date(1692271583000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     },
+                     {
+                         "Aliases":  "",
+                         "Module":  "MilestonePSTools",
+                         "Name":  "Clear-VmsView",
+                         "VersionAdded":  "21.2.7",
+                         "DatePublished":  "\/Date(1645681660000)\/",
+                         "VersionRemoved":  null,
+                         "DateRemoved":  null,
+                         "AliasedTo":  null
+                     }
+                 ]
+}
