@@ -102,6 +102,7 @@ function Get-VmsCameraReport {
             $cache = @{
                 DeviceState    = @{}
                 PlaybackInfo   = @{}
+                TrueRetention  = @{}
                 Snapshots      = @{}
                 Passwords      = @{}
                 RecordingStats = @{}
@@ -208,6 +209,20 @@ function Get-VmsCameraReport {
             }
 
             if ($IncludeRetentionInfo) {
+                Write-Verbose 'Fetching evidence locks'
+                $evidenceLockedDeviceIds = [System.Collections.Generic.HashSet[guid]]::new()
+                try {
+                    $evidenceLocks = Get-EvidenceLock -ErrorAction Stop
+                    foreach ($lock in $evidenceLocks) {
+                        foreach ($deviceId in $lock.DeviceIds) {
+                            $null = $evidenceLockedDeviceIds.Add($deviceId)
+                        }
+                    }
+                    Write-Verbose "Found $($evidenceLockedDeviceIds.Count) device(s) with evidence locks"
+                } catch {
+                    Write-Verbose "Unable to retrieve evidence locks: $_"
+                }
+
                 Write-Verbose 'Starting Get-PlaybackInfo threadjob'
                 $playbackInfoScriptblock = {
                     param(
@@ -300,6 +315,70 @@ function Get-VmsCameraReport {
                 $playbackInfoResult = $jobRunner.ReceiveJobs($playbackInfoJobs)
                 foreach ($e in $playbackInfoResult.Errors) {
                     Write-Error $e
+                }
+
+                # For cameras with evidence locks, find the true retention begin by
+                # walking from the configured retention boundary toward the present,
+                # skipping evidence-locked video that would have otherwise been deleted.
+                if ($evidenceLockedDeviceIds.Count -gt 0) {
+                    Write-Verbose 'Starting true retention threadjobs for evidence-locked cameras'
+                    $trueRetentionScriptBlock = {
+                        param(
+                            [guid]$Id,
+                            [double]$ConfiguredRetentionDays,
+                            [hashtable]$cache
+                        )
+                        $playbackInfo = $cache.PlaybackInfo[$Id]
+                        if ($null -eq $playbackInfo) {
+                            return
+                        }
+
+                        # Start from the configured retention boundary and walk forward
+                        # to find the oldest video within the retention window.
+                        # With the formula StartTime=now-($day+1), EndTime=now-$day,
+                        # we want the first window's StartTime to align with the
+                        # retention boundary (now - ConfiguredRetentionDays).
+                        $day = [math]::Ceiling($ConfiguredRetentionDays) - 1
+                        $now = (Get-Date).ToUniversalTime()
+                        $videoFound = $null
+
+                        while (-not $videoFound -and $day -ge 0) {
+                            $videoFound = Get-SequenceData -Path "Camera[$Id]" -StartTime $now.AddDays(-$day - 1) -EndTime $now.AddDays(-$day) | Select-Object -First 1
+                            if ($videoFound) {
+                                $cache.TrueRetention[$Id] = $videoFound.EventSequence.StartDateTime
+                            }
+                            $day--
+                        }
+                    }
+
+                    $trueRetentionJobs = @()
+                    foreach ($rec in $RecordingServer) {
+                        foreach ($hw in $rec.HardwareFolder.Hardwares) {
+                            foreach ($cam in $hw.CameraFolder.Cameras) {
+                                $camId = [guid]$cam.Id
+                                if ($evidenceLockedDeviceIds.Contains($camId) -and $camId -in $ids) {
+                                    $storage = $rec.StorageFolder.Storages | Where-Object Path -EQ $cam.RecordingStorage
+                                    if ($null -ne $storage) {
+                                        $configuredRetentionDays = ($storage | Get-VmsStorageRetention).TotalDays
+                                        $trueRetentionJobs += $jobRunner.AddJob($trueRetentionScriptBlock, @{
+                                            Id                      = $camId
+                                            ConfiguredRetentionDays = $configuredRetentionDays
+                                            cache                   = $cache
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if ($trueRetentionJobs.Count -gt 0) {
+                        Write-Verbose 'Receiving results of true retention threadjobs'
+                        $jobRunner.Wait($trueRetentionJobs)
+                        $trueRetentionResult = $jobRunner.ReceiveJobs($trueRetentionJobs)
+                        foreach ($e in $trueRetentionResult.Errors) {
+                            Write-Error $e
+                        }
+                    }
                 }
             }
 
@@ -454,10 +533,24 @@ function Get-VmsCameraReport {
 
                             }
                             if ($IncludeRetentionInfo) {
-                                $obj.ActualRetentionDays  = ($cache.PlaybackInfo[$id].End - $cache.PlaybackInfo[$id].Begin).TotalDays
-                                $obj.MeetsRetentionPolicy = $obj.ActualRetentionDays -gt $obj.ExpectedRetentionDays
                                 $obj.MediaDatabaseBegin   = $cache.PlaybackInfo[$id].Begin
                                 $obj.MediaDatabaseEnd     = $cache.PlaybackInfo[$id].End
+                                $obj.HasEvidenceLock      = $evidenceLockedDeviceIds.Contains($id)
+                                if ($obj.HasEvidenceLock -and $cache.TrueRetention.ContainsKey($id)) {
+                                    # True retention walk found non-locked video
+                                    $trueBegin = $cache.TrueRetention[$id]
+                                    $obj.OldestVideoInRetentionWindow = $trueBegin
+                                    $obj.ActualRetentionDays = [math]::Round(((Get-Date).ToUniversalTime() - $trueBegin).TotalDays, 2)
+                                } elseif ($obj.HasEvidenceLock) {
+                                    # Evidence locks present but no non-locked video found within the retention window
+                                    $obj.OldestVideoInRetentionWindow = $null
+                                    $obj.ActualRetentionDays = [double]0
+                                } elseif ($null -ne $cache.PlaybackInfo[$id].Begin -and $null -ne $cache.PlaybackInfo[$id].End) {
+                                    # No evidence locks - use standard PlaybackInfo
+                                    $obj.OldestVideoInRetentionWindow = $cache.PlaybackInfo[$id].Begin
+                                    $obj.ActualRetentionDays = [math]::Round(($cache.PlaybackInfo[$id].End - $cache.PlaybackInfo[$id].Begin).TotalDays, 2)
+                                }
+                                $obj.MeetsRetentionPolicy = if ($null -ne $obj.ActualRetentionDays) { $obj.ActualRetentionDays -ge $obj.ExpectedRetentionDays } else { $null }
                             }
 
                             $obj.MotionEnabled = $motion.Enabled
