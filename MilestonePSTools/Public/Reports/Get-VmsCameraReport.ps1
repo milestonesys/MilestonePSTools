@@ -533,9 +533,12 @@ function Get-VmsCameraReport {
 
                             }
                             if ($IncludeRetentionInfo) {
-                                $obj.MediaDatabaseBegin   = $cache.PlaybackInfo[$id].Begin
-                                $obj.MediaDatabaseEnd     = $cache.PlaybackInfo[$id].End
-                                $obj.HasEvidenceLock      = $evidenceLockedDeviceIds.Contains($id)
+                                $obj.MediaDatabaseBegin           = $cache.PlaybackInfo[$id].Begin
+                                $obj.MediaDatabaseEnd             = $cache.PlaybackInfo[$id].End
+                                $obj.HasEvidenceLock              = $evidenceLockedDeviceIds.Contains($id)
+                                $obj.OldestVideoInRetentionWindow = $null
+                                $obj.ActualRetentionDays          = [double]0
+                                $obj.MeetsRetentionPolicy         = $null
                                 if ($obj.HasEvidenceLock -and $cache.TrueRetention.ContainsKey($id)) {
                                     # True retention walk found non-locked video
                                     $trueBegin = $cache.TrueRetention[$id]
