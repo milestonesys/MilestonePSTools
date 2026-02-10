@@ -318,8 +318,7 @@ function Get-VmsCameraReport {
                 }
 
                 # For cameras with evidence locks, find the true retention begin by
-                # walking from the configured retention boundary toward the present,
-                # skipping evidence-locked video that would have otherwise been deleted.
+                # using the GetNext method on VideoOS.Platform.Data.RawVideoSource.
                 if ($evidenceLockedDeviceIds.Count -gt 0) {
                     Write-Verbose 'Starting true retention threadjobs for evidence-locked cameras'
                     $trueRetentionScriptBlock = {
@@ -333,22 +332,16 @@ function Get-VmsCameraReport {
                             return
                         }
 
-                        # Start from the configured retention boundary and walk forward
-                        # to find the oldest video within the retention window.
-                        # With the formula StartTime=now-($day+1), EndTime=now-$day,
-                        # we want the first window's StartTime to align with the
-                        # retention boundary (now - ConfiguredRetentionDays).
-                        $day = [math]::Ceiling($ConfiguredRetentionDays) - 1
+                        # Use the GetNext method on VideoOS.Platform.Data.RawVideoSource
+                        # to find the GOP less than or equal to the configured retention.
                         $now = (Get-Date).ToUniversalTime()
                         $videoFound = $null
 
-                        while (-not $videoFound -and $day -ge 0) {
-                            $videoFound = Get-SequenceData -Path "Camera[$Id]" -StartTime $now.AddDays(-$day - 1) -EndTime $now.AddDays(-$day) | Select-Object -First 1
-                            if ($videoFound) {
-                                $cache.TrueRetention[$Id] = $videoFound.EventSequence.StartDateTime
-                            }
-                            $day--
-                        }
+                        $item = Get-VmsVideoOSItem -Kind Camera -Id $Id
+                        $src = [VideoOS.Platform.Data.RawVideoSource]::new($item)
+                        $src.Init()
+                        $videoFound = $src.GetNext($now.AddDays(-$configuredRetentionDays))
+                        $cache.TrueRetention[$Id] = $videoFound.List[0].DateTime
                     }
 
                     $trueRetentionJobs = @()
@@ -537,10 +530,10 @@ function Get-VmsCameraReport {
                                 $obj.MediaDatabaseEnd             = $cache.PlaybackInfo[$id].End
                                 $obj.HasEvidenceLock              = $evidenceLockedDeviceIds.Contains($id)
                                 $obj.OldestVideoInRetentionWindow = $null
-                                $obj.ActualRetentionDays          = [double]0
+                                $obj.ActualRetentionDays          = $null
                                 $obj.MeetsRetentionPolicy         = $null
                                 if ($obj.HasEvidenceLock -and $cache.TrueRetention.ContainsKey($id)) {
-                                    # True retention walk found non-locked video
+                                    # True retention found non-locked video
                                     $trueBegin = $cache.TrueRetention[$id]
                                     $obj.OldestVideoInRetentionWindow = $trueBegin
                                     $obj.ActualRetentionDays = [math]::Round(((Get-Date).ToUniversalTime() - $trueBegin).TotalDays, 2)
