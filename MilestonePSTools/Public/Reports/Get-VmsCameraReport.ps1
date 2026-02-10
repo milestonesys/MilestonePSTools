@@ -338,17 +338,14 @@ function Get-VmsCameraReport {
                         # With the formula StartTime=now-($day+1), EndTime=now-$day,
                         # we want the first window's StartTime to align with the
                         # retention boundary (now - ConfiguredRetentionDays).
-                        $day = [math]::Ceiling($ConfiguredRetentionDays) - 1
                         $now = (Get-Date).ToUniversalTime()
                         $videoFound = $null
 
-                        while (-not $videoFound -and $day -ge 0) {
-                            $videoFound = Get-SequenceData -Path "Camera[$Id]" -StartTime $now.AddDays(-$day - 1) -EndTime $now.AddDays(-$day) | Select-Object -First 1
-                            if ($videoFound) {
-                                $cache.TrueRetention[$Id] = $videoFound.EventSequence.StartDateTime
-                            }
-                            $day--
-                        }
+                        $item = Get-VmsVideoOSItem -Kind Camera -Id $Id
+                        $src = [VideoOS.Platform.Data.RawVideoSource]::new($item)
+                        $src.Init()
+                        $videoFound = $src.GetNext($now.AddDays(-$configuredRetentionDays))
+                        $cache.TrueRetention[$Id] = $videoFound.List[0].DateTime
                     }
 
                     $trueRetentionJobs = @()
@@ -537,7 +534,7 @@ function Get-VmsCameraReport {
                                 $obj.MediaDatabaseEnd             = $cache.PlaybackInfo[$id].End
                                 $obj.HasEvidenceLock              = $evidenceLockedDeviceIds.Contains($id)
                                 $obj.OldestVideoInRetentionWindow = $null
-                                $obj.ActualRetentionDays          = [double]0
+                                $obj.ActualRetentionDays          = $null
                                 $obj.MeetsRetentionPolicy         = $null
                                 if ($obj.HasEvidenceLock -and $cache.TrueRetention.ContainsKey($id)) {
                                     # True retention walk found non-locked video
