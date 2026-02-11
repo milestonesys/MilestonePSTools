@@ -1730,17 +1730,22 @@ function Import-VmsHardwareExcel {
 
                 $params = @{
                     HardwareAddress = $row.Address -as [uri]
-                    Credential      = [collections.generic.list[pscredential]]::new()
                     DriverNumber    = $row.DriverNumber -as [int]
                     RecordingServer = $recorder
                     ErrorAction     = 'Stop'
                 }
 
+                $hardwareCredentials = [collections.generic.list[pscredential]]::new()
                 if ($row.UserName -and $row.Password) {
-                    $params.Credential.Add([pscredential]::new($row.UserName, ($row.Password | ConvertTo-SecureString -AsPlainText -Force)))
+                    $hardwareCredentials.Add([pscredential]::new($row.UserName, ($row.Password | ConvertTo-SecureString -AsPlainText -Force)))
                 }
-                foreach ($pscredential in $Credential){
-                    $params.Credential.Add($pscredential)
+                foreach ($pscredential in $Credential) {
+                    if ($null -ne $pscredential) {
+                        $hardwareCredentials.Add($pscredential)
+                    }
+                }
+                if ($hardwareCredentials.Count -gt 0) {
+                    $params.Credential = $hardwareCredentials
                 }
 
                 if (-not $params.HardwareAddress -or -not $params.HardwareAddress.IsAbsoluteUri) {
@@ -1763,10 +1768,10 @@ function Import-VmsHardwareExcel {
                         if ($row.DriverGroup) {
                             $scanParams.DriverFamily = $row.DriverGroup
                         }
-                        if ($params.Credential) {
+                        if ($params.ContainsKey('Credential')) {
                             $scanParams.Credential = $params.Credential
                         } else {
-                            $scanParams.UseDefaultCredentials
+                            $scanParams.UseDefaultCredentials = $true
                         }
                         Write-Verbose "Scanning hardware at $($row.Address) for driver discovery"
                         $scans = Start-VmsHardwareScan @scanParams
@@ -1784,14 +1789,36 @@ function Import-VmsHardwareExcel {
                             continue
                         }
                     }
-                    $credentials = $params.Credential
+                    $credentials = [collections.generic.list[pscredential]]::new()
+                    if ($params.ContainsKey('Credential')) {
+                        if ($params.Credential -is [pscredential]) {
+                            $credentials.Add($params.Credential)
+                        } else {
+                            foreach ($hwCredential in $params.Credential) {
+                                if ($null -ne $hwCredential) {
+                                    $credentials.Add($hwCredential)
+                                }
+                            }
+                        }
+                    }
+                    if ($credentials.Count -eq 0) {
+                        Write-Error -Message "Skipping hardware '$($row.Name)' ($($params.HardwareAddress)) because no credentials were provided or discovered." -TargetObject $row
+                        continue
+                    }
                     foreach ($hwCredential in $credentials) {
                         try {
                             $params.Credential = $hwCredential
                             $hardware = Add-VmsHardware @params
+                            if ($null -ne $hardware) {
+                                break
+                            }
                         } catch {
                             Write-Error -ErrorRecord $_
                         }
+                    }
+                    if ($null -eq $hardware) {
+                        Write-Error -Message "Failed to add hardware '$($row.Name)' ($($params.HardwareAddress)) using the supplied credential(s)." -TargetObject $row
+                        continue
                     }
                 }
                 $setHwParams = @{
