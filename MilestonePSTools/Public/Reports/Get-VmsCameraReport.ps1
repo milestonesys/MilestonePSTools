@@ -126,8 +126,9 @@ function Get-VmsCameraReport {
             $fillChildrenJobs = $RecordingServer | ForEach-Object {
                 $jobRunner.AddJob(
                     {
-                        param([bool]$supportsFillChildren, [object]$recorder, [string]$EnableFilter, [bool]$getPasswords, [hashtable]$cache)
+                        param([bool]$supportsFillChildren, [object]$recorder, [string]$EnableFilter, [bool]$getPasswords)
 
+                        $passwords = @{}
                         $manualMethod = {
                             param([object]$recorder)
                             $null = $recorder.HardwareDriverFolder.HardwareDrivers
@@ -158,7 +159,7 @@ function Get-VmsCameraReport {
                                 if ($getPasswords) {
                                     foreach ($hw in $recorder.hardwarefolder.hardwares) {
                                         $password = $hw.ReadPasswordHardware().GetProperty('Password')
-                                        $cache.Passwords[[guid]$hw.Id] = $password
+                                        $passwords[[guid]$hw.Id] = $password
                                     }
                                 }
                             } catch {
@@ -168,8 +169,9 @@ function Get-VmsCameraReport {
                         } else {
                             $manualMethod.Invoke($recorder)
                         }
+                        $passwords
                     },
-                    @{ SupportsFillChildren = $supportsFillChildren; recorder = $_; EnableFilter = $EnableFilter; getPasswords = ($isAdmin -and $IncludePlainTextPasswords); cache = $cache }
+                    @{ SupportsFillChildren = $supportsFillChildren; recorder = $_; EnableFilter = $EnableFilter; getPasswords = ($isAdmin -and $IncludePlainTextPasswords) }
                 )
             }
 
@@ -213,18 +215,20 @@ function Get-VmsCameraReport {
                 Write-Verbose 'Starting Get-PlaybackInfo threadjob'
                 $playbackInfoScriptblock = {
                     param(
-                        [guid]$id,
-                        [hashtable]$cache
+                        [guid]$id
                     )
 
                     $info = Get-PlaybackInfo -Path "Camera[$id]"
                     if ($null -ne $info) {
-                        $cache.PlaybackInfo[$id] = $info
+                        [pscustomobject]@{
+                            DeviceId = $id
+                            PlaybackInfo = $info
+                        }
                     }
                 }
                 $playbackInfoJobs = $ids | ForEach-Object {
                     if ($null -ne $_) {
-                        $jobRunner.AddJob($playbackInfoScriptblock, @{ id = $_; cache = $cache } )
+                        $jobRunner.AddJob($playbackInfoScriptblock, @{ id = $_ } )
                     }
                 }
             }
@@ -291,17 +295,27 @@ function Get-VmsCameraReport {
 
             Write-Verbose 'Receiving results of FillChildren threadjob'
             $jobRunner.Wait($fillChildrenJobs)
-            $fillChildrenResults = $jobRunner.ReceiveJobs($fillChildrenJobs)
-            foreach ($e in $fillChildrenResults.Errors) {
-                Write-Error $e
+            foreach ($job in $jobRunner.ReceiveJobs($fillChildrenJobs)) {
+                if ($job.Output -is [hashtable]) {
+                    foreach ($key in $job.Output.Keys) {
+                        $cache.Passwords[$key] = $job.Output[$key]
+                    }
+                }
+                foreach ($e in $job.Errors) {
+                    Write-Error $e
+                }
             }
 
             if ($IncludeRetentionInfo) {
                 Write-Verbose 'Receiving results of Get-PlaybackInfo threadjob'
                 $jobRunner.Wait($playbackInfoJobs)
-                $playbackInfoResult = $jobRunner.ReceiveJobs($playbackInfoJobs)
-                foreach ($e in $playbackInfoResult.Errors) {
-                    Write-Error $e
+                foreach ($job in $jobRunner.ReceiveJobs($playbackInfoJobs)) {
+                    if ($job.Output.DeviceId) {
+                        $cache.PlaybackInfo[$job.Output.DeviceId] = $job.Output.PlaybackInfo
+                    }
+                    foreach ($e in $job.Errors) {
+                        Write-Error $e
+                    }
                 }
 
                 # For cameras with evidence locks, find the true retention begin by
