@@ -135,28 +135,23 @@ function ImportHardwareCsv {
                     $progress.CurrentOperation = "Running Start-VmsHardwareScan -Express"
                     Write-Progress @progress
                     $expressScanSplat = @{
-                        Express               = $true
-                        UseDefaultCredentials = $true
+                        Express = $true
                     }
     
                     # Build a group of credentials from the Credential parameter if provided, and a collection of unique
                     # credentials provided for devices on this recorder in the CSV file.
-                    $expressCredentials = [collections.generic.list[pscredential]]::new()
-                    $Credential | ForEach-Object {
-                        if ($null -ne $_) {
-                            $expressCredentials.Add($_)
-                        }
-                    }
+                    $expressCredentials = New-ImportHardwareCredentialList -Credential $Credential
                     $recorderGroup.Group | Where-Object {
                         ![string]::IsNullOrWhiteSpace($_.UserName) -and ![string]::IsNullOrWhiteSpace($_.Password)
                     } | Group-Object { 
                         '{0}:{1}' -f $_.UserName, $_.Password 
                     } | ForEach-Object {
-                        $expressCredentials.Add([pscredential]::new($_.Group[0].UserName, ($_.Group[0].Password | ConvertTo-SecureString -AsPlainText -Force)))
+                        $rowCredential = New-ImportHardwareCredentialList -UserName $_.Group[0].UserName -Password $_.Group[0].Password
+                        foreach ($item in $rowCredential) {
+                            $expressCredentials.Add($item)
+                        }
                     }
-                    if ($expressCredentials.Count -gt 0) {
-                        $expressScanSplat.Credential = $expressCredentials
-                    }
+                    $expressScanSplat = Set-ImportHardwareScanCredentialParameters -ScanParameters $expressScanSplat -Credential $expressCredentials
                     $recorder | Start-VmsHardwareScan @expressScanSplat -Verbose:$false -ErrorAction SilentlyContinue | Where-Object HardwareScanValidated | ForEach-Object {
                         $uri = ([uribuilder]$_.HardwareAddress).Uri.GetComponents([uricomponents]::SchemeAndServer, [uriformat]::SafeUnescaped)
                         $expressScanResults[$uri] = $_
@@ -195,9 +190,7 @@ function ImportHardwareCsv {
     
                             # Hardware not found in express scan. Perform targetted scan on hardware address
                             $scanSplat = @{
-                                Address               = $hardwareGroup.Name
-                                UseDefaultCredentials = $true
-                                Credential            = [collections.generic.list[pscredential]]::new()
+                                Address = $hardwareGroup.Name
                             }
                             if (-not [string]::IsNullOrWhiteSpace($hardwareGroup.Group[0].DriverGroup)) {
                                 $scanSplat.DriverFamily = $hardwareGroup.Group[0].DriverGroup -split ';' | Where-Object {
@@ -207,14 +200,8 @@ function ImportHardwareCsv {
     
                             # Build credential set for hardware scan using credentials from row if available along with
                             # credentials provided using the Credential parameter.
-                            if (![string]::IsNullOrWhiteSpace($hardwareGroup.Group[0].UserName) -and ![string]::IsNullOrWhiteSpace($hardwareGroup.Group[0].Password)) {
-                                $scanSplat.Credential.Add([pscredential]::new($hardwareGroup.Group[0].UserName, ($hardwareGroup.Group[0].Password | ConvertTo-SecureString -AsPlainText -Force)))
-                            }
-                            $Credential | ForEach-Object {
-                                if ($null -ne $_) {
-                                    $scanSplat.Credential.Add($_)
-                                }
-                            }
+                            $scanCredentials = New-ImportHardwareCredentialList -UserName $hardwareGroup.Group[0].UserName -Password $hardwareGroup.Group[0].Password -Credential $Credential
+                            $scanSplat = Set-ImportHardwareScanCredentialParameters -ScanParameters $scanSplat -Credential $scanCredentials
                             
                             # Perform targetted hardware scan. Multiple scans may be performed depending on the number of credentials provided
                             # so return the first validated scan.
@@ -284,47 +271,55 @@ function ImportHardwareCsv {
                             $hardwareGroup.Group | ForEach-Object { $_.Result += 'Updating existing hardware.' }
                             $hardware = $existingHardware[$hardwareGroup.Name]
                         } else {
-                            $skipHardware = $true
-                            $credentials = [collections.generic.list[pscredential[]]]::new()
-                            if (-not [string]::IsNullOrWhiteSpace($hardwareGroup.Group[0].UserName) -and -not [string]::IsNullOrWhiteSpace($hardwareGroup.Group[0].Password)) {
-                                $credentials.Add([pscredential]::new($hardwareGroup.Group[0].UserName, ($hardwareGroup.Group[0].Password | ConvertTo-SecureString -AsPlainText -Force)))
-                            }
-                            foreach ($c in $Credential) {
-                                $credentials.Add($c)
-                            }
+                            $credentials = New-ImportHardwareCredentialList -UserName $hardwareGroup.Group[0].UserName -Password $hardwareGroup.Group[0].Password -Credential $Credential
                             if ($credentials.Count -eq 0) {
                                 $hardwareGroup.Group | ForEach-Object {
                                     $_.Result += "Hardware not added - no credentials provided."
                                 }
                                 Write-Warning "Skipping $($hardwareGroup.Name) as no credentials have been provided."
-                            }
-                            for ($credIndex = 0; $credIndex -lt $credentials.Count; $credIndex++) {
-                                $cred = $credentials[$credIndex]
-                                try {
-                                    $progress.CurrentOperation = "Adding $($hardwareGroup.Name)"
-                                    Write-Progress @progress
-                                    $task = $recorder.AddHardware($hardwareGroup.Name, $driver, $cred.UserName, $cred.Password, $null) | Wait-VmsTask -Cleanup
-                                    if (($task.Properties | Where-Object Key -EQ 'State').Value -eq 'Error') {
-                                        if ($credIndex -ge $credentials.Count - 1) {
-                                            $hardwareGroup.Group | ForEach-Object { $_.Result += 'Failed to add hardware.' }
-                                            Write-Error -Message "Failed to add $($hardwareGroup.Name) in row(s) $($hardwareGroup.Group.Row -join ', ') to RecordingServer $($recorder.Name): $(($task.Properties | Where-Object Key -EQ 'ErrorText').Value)" -Category InvalidResult -ErrorId 'AddHardwareFailure' -TargetObject $hardwareGroup.Group
-                                            break
-                                        } else {
-                                            Write-Warning "Failed to add $($hardwareGroup.Name) in row(s) $($hardwareGroup.Group.Row -join ', ') to RecordingServer $($recorder.Name). Retrying with another credential..."
-                                        }
-                                        continue
-                                    } else {
-                                        
-                                        $skipHardware = $false
-                                        break
-                                    }
-                                } catch {
-                                    throw
-                                }
-                            }
-                            if ($skipHardware) {
                                 continue
                             }
+
+                            $task = Invoke-ImportHardwareCredentialAttempts -Credential $credentials -AttemptScript {
+                                param($cred)
+                                    $progress.CurrentOperation = "Adding $($hardwareGroup.Name)"
+                                    Write-Progress @progress
+                                    $addTask = $recorder.AddHardware($hardwareGroup.Name, $driver, $cred.UserName, $cred.Password, $null) | Wait-VmsTask -Cleanup
+                                    if (($addTask.Properties | Where-Object Key -EQ 'State').Value -eq 'Error') {
+                                        [pscustomobject]@{
+                                            Success   = $false
+                                            ErrorText = ($addTask.Properties | Where-Object Key -EQ 'ErrorText').Value
+                                        }
+                                    } else {
+                                        [pscustomobject]@{
+                                            Success = $true
+                                            Value   = $addTask
+                                        }
+                                    }
+                            } -OnAttemptFailure {
+                                param($attempt)
+                                if ($attempt.IsLastAttempt) {
+                                    $hardwareGroup.Group | ForEach-Object { $_.Result += 'Failed to add hardware.' }
+                                    $errorText = $null
+                                    if ($attempt.AttemptResult -and $attempt.AttemptResult.PSObject.Properties.Name -contains 'ErrorText') {
+                                        $errorText = $attempt.AttemptResult.ErrorText
+                                    }
+                                    if ([string]::IsNullOrWhiteSpace($errorText) -and $attempt.ErrorRecord) {
+                                        $errorText = $attempt.ErrorRecord.Exception.Message
+                                    }
+                                    if ([string]::IsNullOrWhiteSpace($errorText)) {
+                                        $errorText = 'Unknown error.'
+                                    }
+                                    Write-Error -Message "Failed to add $($hardwareGroup.Name) in row(s) $($hardwareGroup.Group.Row -join ', ') to RecordingServer $($recorder.Name): $errorText" -Category InvalidResult -ErrorId 'AddHardwareFailure' -TargetObject $hardwareGroup.Group
+                                } else {
+                                    Write-Warning "Failed to add $($hardwareGroup.Name) in row(s) $($hardwareGroup.Group.Row -join ', ') to RecordingServer $($recorder.Name). Retrying with another credential..."
+                                }
+                            } -RethrowOnException
+
+                            if ($null -eq $task) {
+                                continue
+                            }
+
                             $hardwareGroup.Group | ForEach-Object {
                                 $_.Result += 'Hardware successfully added.'
                             }
