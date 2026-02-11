@@ -56,6 +56,7 @@ function ImportHardwareCsv {
         }
         $records = [pscustomobject[]](ValidateHardwareCsvRows -Rows $rows)
         $recordsProcessed = 0
+        $progressStopwatch = [diagnostics.stopwatch]::StartNew()
 
         # Set RecordingServer property on all records to match RecordingServer parameter if provided.
         # Warn user that the RecordingServer from the CSV, if present, will be ignored.
@@ -167,6 +168,15 @@ function ImportHardwareCsv {
                 foreach ($hardwareGroup in $recordsByHardware) {
                     $recordsProcessed += $hardwareGroup.Count
                     $progress.PercentComplete = $recordsProcessed / $records.Count * 100
+                    $completedRecords = [math]::Max(($recordsProcessed - $hardwareGroup.Count), 0)
+                    if ($completedRecords -gt 0 -and $records.Count -gt 0) {
+                        $timePerRecord = $progressStopwatch.ElapsedMilliseconds / $completedRecords
+                        $remainingRecords = $records.Count - $completedRecords
+                        $remainingTime = [timespan]::FromMilliseconds($remainingRecords * $timePerRecord)
+                        $progress.SecondsRemaining = [int]$remainingTime.TotalSeconds
+                    } else {
+                        $progress.Remove('SecondsRemaining')
+                    }
                     Write-Progress @progress
 
                     # If hardware already exists, update DriverNumber for related CSV records
