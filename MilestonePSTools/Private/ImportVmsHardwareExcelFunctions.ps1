@@ -1735,15 +1735,7 @@ function Import-VmsHardwareExcel {
                     ErrorAction     = 'Stop'
                 }
 
-                $hardwareCredentials = [collections.generic.list[pscredential]]::new()
-                if ($row.UserName -and $row.Password) {
-                    $hardwareCredentials.Add([pscredential]::new($row.UserName, ($row.Password | ConvertTo-SecureString -AsPlainText -Force)))
-                }
-                foreach ($pscredential in $Credential) {
-                    if ($null -ne $pscredential) {
-                        $hardwareCredentials.Add($pscredential)
-                    }
-                }
+                $hardwareCredentials = New-ImportHardwareCredentialList -UserName $row.UserName -Password $row.Password -Credential $Credential
                 if ($hardwareCredentials.Count -gt 0) {
                     $params.Credential = $hardwareCredentials
                 }
@@ -1768,11 +1760,7 @@ function Import-VmsHardwareExcel {
                         if ($row.DriverGroup) {
                             $scanParams.DriverFamily = $row.DriverGroup
                         }
-                        if ($params.ContainsKey('Credential')) {
-                            $scanParams.Credential = $params.Credential
-                        } else {
-                            $scanParams.UseDefaultCredentials = $true
-                        }
+                        $scanParams = Set-ImportHardwareScanCredentialParameters -ScanParameters $scanParams -Credential $params.Credential
                         Write-Verbose "Scanning hardware at $($row.Address) for driver discovery"
                         $scans = Start-VmsHardwareScan @scanParams
                         $scan = if ($null -eq ($scans | Where-Object HardwareScanValidated)) {
@@ -1789,31 +1777,23 @@ function Import-VmsHardwareExcel {
                             continue
                         }
                     }
-                    $credentials = [collections.generic.list[pscredential]]::new()
-                    if ($params.ContainsKey('Credential')) {
-                        if ($params.Credential -is [pscredential]) {
-                            $credentials.Add($params.Credential)
-                        } else {
-                            foreach ($hwCredential in $params.Credential) {
-                                if ($null -ne $hwCredential) {
-                                    $credentials.Add($hwCredential)
-                                }
-                            }
-                        }
-                    }
+                    $credentials = New-ImportHardwareCredentialList -Credential $params.Credential
                     if ($credentials.Count -eq 0) {
                         Write-Error -Message "Skipping hardware '$($row.Name)' ($($params.HardwareAddress)) because no credentials were provided or discovered." -TargetObject $row
                         continue
                     }
-                    foreach ($hwCredential in $credentials) {
-                        try {
-                            $params.Credential = $hwCredential
-                            $hardware = Add-VmsHardware @params
-                            if ($null -ne $hardware) {
-                                break
-                            }
-                        } catch {
-                            Write-Error -ErrorRecord $_
+                    $hardware = Invoke-ImportHardwareCredentialAttempts -Credential $credentials -AttemptScript {
+                        param($hwCredential)
+                        $params.Credential = $hwCredential
+                        $addedHardware = Add-VmsHardware @params
+                        [pscustomobject]@{
+                            Success = $null -ne $addedHardware
+                            Value   = $addedHardware
+                        }
+                    } -OnAttemptFailure {
+                        param($attempt)
+                        if ($attempt.ErrorRecord) {
+                            Write-Error -ErrorRecord $attempt.ErrorRecord
                         }
                     }
                     if ($null -eq $hardware) {
