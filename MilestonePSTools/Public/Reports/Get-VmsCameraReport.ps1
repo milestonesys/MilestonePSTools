@@ -169,7 +169,15 @@ function Get-VmsCameraReport {
                         } else {
                             $manualMethod.Invoke($recorder)
                         }
-                        $passwords
+                        
+                        if ($passwords.Count -gt 0) {
+                            foreach ($key in $passwords.Keys) {
+                                [pscustomobject]@{
+                                    HardwareId = $key
+                                    Password = $passwords[$key]
+                                }
+                            }
+                        }
                     },
                     @{ SupportsFillChildren = $supportsFillChildren; recorder = $_; EnableFilter = $EnableFilter; getPasswords = ($isAdmin -and $IncludePlainTextPasswords) }
                 )
@@ -296,9 +304,9 @@ function Get-VmsCameraReport {
             Write-Verbose 'Receiving results of FillChildren threadjob'
             $jobRunner.Wait($fillChildrenJobs)
             foreach ($job in $jobRunner.ReceiveJobs($fillChildrenJobs)) {
-                if ($job.Output -is [hashtable]) {
-                    foreach ($key in $job.Output.Keys) {
-                        $cache.Passwords[$key] = $job.Output[$key]
+                foreach ($output in $job.Output) {
+                    if ($output.HardwareId) {
+                        $cache.Passwords[$output.HardwareId] = $output.Password
                     }
                 }
                 foreach ($e in $job.Errors) {
