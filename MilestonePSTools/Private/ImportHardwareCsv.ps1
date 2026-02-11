@@ -296,7 +296,7 @@ function ImportHardwareCsv {
                                 $hardwareGroup.Group | ForEach-Object {
                                     $_.Result += "Hardware not added - no credentials provided."
                                 }
-                                Write-Warning "Skipping $($hardware.Name) as no credentials have been provided."
+                                Write-Warning "Skipping $($hardwareGroup.Name) as no credentials have been provided."
                             }
                             for ($credIndex = 0; $credIndex -lt $credentials.Count; $credIndex++) {
                                 $cred = $credentials[$credIndex]
@@ -323,14 +323,10 @@ function ImportHardwareCsv {
                                 }
                             }
                             if ($skipHardware) {
-                                $hardwareGroup.Group | ForEach-Object {
-                                    $_.Result += 'Hardware successfully added.'
-                                }
                                 continue
-                            } else {
-                                $hardwareGroup.Group | ForEach-Object {
-                                    $_.Result += 'Hardware successfully added.'
-                                }
+                            }
+                            $hardwareGroup.Group | ForEach-Object {
+                                $_.Result += 'Hardware successfully added.'
                             }
     
                             $hardware = [VideoOS.Platform.ConfigurationItems.Hardware]::new($recorder.ServerId, ($task.Properties | Where-Object Key -EQ 'Path').Value)
