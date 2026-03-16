@@ -54,7 +54,11 @@ function Find-XProtectDevice {
 
         [Parameter(ParameterSetName = 'ShowDialog')]
         [switch]
-        $ShowDialog
+        $ShowDialog,
+
+        [Parameter(ParameterSetName = 'ShowDialog')]
+        [IntPtr]
+        $OwnerHandle = [IntPtr]::Zero
     )
 
     begin {
@@ -63,7 +67,7 @@ function Find-XProtectDevice {
 
     process {
         if ($ShowDialog) {
-            Find-XProtectDeviceDialog
+            Find-XProtectDeviceDialog -OwnerHandle $OwnerHandle
             return
         }
         if ($MyInvocation.BoundParameters.ContainsKey('Address')) {
@@ -107,4 +111,3 @@ function Find-XProtectDevice {
         }
     }
 }
-
