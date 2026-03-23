@@ -455,7 +455,7 @@ ____________
 
 <div class="grid cards" markdown>
 
--   :octicons-device-camera-video-24:{{ .lg .middle }} __{0} cameras__
+-   :octicons-device-camera-video-24:{{ .lg .middle }} __{1} cameras__
 
     ---
 
@@ -479,13 +479,13 @@ ____________
 
     In the last 30 days, at least {3} unique customers have used MilestonePSTools.
 
--   :material-login:{{ .lg .middle }} __{4} sessions__
+-   :material-login:{{ .lg .middle }} __{5} sessions__
 
     ---
 
     There have been more than {5} PowerShell sessions using MilestonePSTools in the last 30 days.
 
--   :material-download:{{ .lg .middle }} __{6} downloads__
+-   :material-download:{{ .lg .middle }} __{7} downloads__
 
     ---
 
