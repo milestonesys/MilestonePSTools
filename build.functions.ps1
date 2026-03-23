@@ -1324,3 +1324,28 @@ AppEvents
 | order by Command asc
 '@
 }
+
+# This function formats numbers as 513K or 3.4M, 
+# then replace the three Floor / 1000 lines in psakefile.ps1.
+
+function Get-ShortNumber 
+{
+    param([double]$number)
+
+    $million = 1000000
+    $thousand = 1000
+
+    if ($number -ge $million) {
+        
+        # if number in the millions show as 3.4M
+        return "$( [math]::Round ($number / $million, 1) )M" 
+    }
+
+    if ($number -ge $thousand) {   
+
+        # if number in the thousands, show as 300K
+        return "$( [math]::Round ($number / $thousand, 0))K"
+    }
+    #otherwise just show the number as is
+    return $number.ToString('N0')
+}

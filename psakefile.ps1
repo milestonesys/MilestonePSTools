@@ -459,7 +459,7 @@ ____________
 
     ---
 
-    More than {1}k cameras have been managed by MilestonePSTools globally.
+    More than {1} cameras have been managed by MilestonePSTools globally.
 
 -   :fontawesome-solid-server:{{ .lg .middle }} __{8} sites__
 
@@ -483,26 +483,26 @@ ____________
 
     ---
 
-    There have been more than {5}k PowerShell sessions using MilestonePSTools in the last 30 days.
+    There have been more than {5} PowerShell sessions using MilestonePSTools in the last 30 days.
 
 -   :material-download:{{ .lg .middle }} __{6} downloads__
 
     ---
 
-    MilestonePSTools has been downloaded more than {7}k times since the initial release in 2019.
+    MilestonePSTools has been downloaded more than {7} times since the initial release in 2019.
 
     [:octicons-arrow-right-24: PowerShell Gallery](https://www.powershellgallery.com/packages/MilestonePSTools)
 
 </div>
 '@ -f @(
     $telemetry.TotalCameras.ToString('N0'),
-    ([int][math]::Floor($telemetry.TotalCameras / 1000)),
+    (Get-ShortNumber $telemetry.TotalCameras),
     $telemetry.TotalCountries,
     $telemetry.TotalUsers.ToString('N0'),
     $telemetry.TotalSessions.ToString('N0'),
-    ([int][math]::Floor($telemetry.TotalSessions / 1000)),
+    (Get-ShortNumber $telemetry.TotalSessions),
     $telemetry.Downloads.ToString('N0'),
-    ([int][math]::Floor($telemetry.Downloads / 1000)),
+    (Get-ShortNumber $telemetry.Downloads),
     $telemetry.TotalSites.ToString('N0'),
     $telemetry.LastUpdated.ToString('D')
 )
