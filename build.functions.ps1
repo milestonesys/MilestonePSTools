@@ -1324,3 +1324,29 @@ AppEvents
 | order by Command asc
 '@
 }
+
+
+
+function Get-ShortNumber {
+    [CmdletBinding()]
+    param([double]$Number)
+
+    process {
+        $million = 1000000
+        $thousand = 1000
+
+        if ($Number -ge $million) {
+
+            # if number in the millions show as 3.4M
+            return "$([math]::Round ($Number / $million, 1))M" 
+        }
+
+        if ($Number -ge $thousand) {   
+            # if number in the thousands, show as 300K
+            return "$([math]::Round ($Number / $thousand, 0))K"
+        }
+
+        #otherwise just show the number as is
+        return $Number.ToString('N0')
+    }
+}
