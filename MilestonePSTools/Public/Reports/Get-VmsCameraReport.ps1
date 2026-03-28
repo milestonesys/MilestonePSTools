@@ -154,23 +154,10 @@ function Get-VmsCameraReport {
                                 }
                                 $recorder.FillChildren($itemTypes, $itemFilters)
 
-                                # TODO: Remove this after TFS 447559 is addressed. The StreamFolder.Streams collection is empty after using FillChildren
-                                # So this entire foreach block is only necessary to flush the children of StreamFolder and force another query for every
-                                # camera so we can fill the collection up in this background task before enumerating over everything at the end.
                                 foreach ($hw in $recorder.hardwarefolder.hardwares) {
                                     if ($getPasswords) {
                                         $password = $hw.ReadPasswordHardware().GetProperty('Password')
                                         $cache.Passwords[[guid]$hw.Id] = $password
-                                    }
-                                    foreach ($cam in $hw.camerafolder.cameras) {
-                                        try {
-                                            if ($null -ne $cam.StreamFolder -and $cam.StreamFolder.Streams.Count -eq 0) {
-                                                $cam.StreamFolder.ClearChildrenCache()
-                                                $null = $cam.StreamFolder.Streams
-                                            }
-                                        } catch {
-                                            Write-Error $_
-                                        }
                                     }
                                 }
                             } catch {
