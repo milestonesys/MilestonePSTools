@@ -22,7 +22,7 @@ namespace MilestonePSTools.AlarmCommands
     /// <para type="description">Other Alarm cmdlets are wrappers for the commands you can send directly through
     /// the IAlarmClient interface. If you need access to additional functionality not provided in the cmdlets,
     /// this cmdlet will give you direct access to the Event Server and the ability to query/send events and alarms.
-    /// Just remember to call CloseClient() when you're finished as this will not be done for you.</para>
+    /// Just remember to calld CloseClient() when you're finished as this will not be done for you.</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, nameof(IAlarmClient))]
     [OutputType(typeof(IAlarmClient))]
@@ -37,6 +37,7 @@ namespace MilestonePSTools.AlarmCommands
             WriteObject(new AlarmClientManager().GetAlarmClient(Connection.CurrentSite.FQID.ServerId));
         }
     }
+]
 }
 
 
