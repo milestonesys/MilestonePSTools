@@ -12,14 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using MilestonePSTools.Connection;
 using MilestonePSTools.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Windows.Forms;
 using VideoOS.Platform.ConfigurationItems;
 
+#pragma warning disable CS0618 // Type or member is obsolete
+// Record property is only obsolete on 2023 R2 and newer. Still used on older versions.
 namespace MilestonePSTools
 {
     public class VmsCameraStreamConfig
@@ -122,16 +126,49 @@ namespace MilestonePSTools
             }
         }
 
-        public string RecordingTrackName => RecordingTrackFromId[GetStreamUsage()?.RecordTo ?? string.Empty].ToString();
+        public string RecordingTrackName
+        {
+            get
+            {
+                if (SupportsSecondaryRecording())
+                {
+                    return RecordingTrackFromId[GetStreamUsage()?.RecordTo ?? string.Empty].ToString();
+                }
+                else
+                {
+                    return RecordingTrackFromId[
+                        GetStreamUsage()?.Record ?? false
+                        ? RecordingTrackToId[RecordingTracks.Primary]
+                        : RecordingTrackToId[RecordingTracks.None
+                        ]].ToString();
+                }
+            }
+        }
 
         public bool PlaybackDefault
         {
-            get => GetStreamUsage()?.DefaultPlayback ?? false;
+            get
+            {
+                var usage = GetStreamUsage();
+                if (usage == null) return true; // If there is no stream usage, default to true because super old drivers might not have stream usages but still record.
+                if (SupportsSecondaryRecording())
+                {
+                    return usage.DefaultPlayback;
+                }
+                else
+                {
+                    return usage.Record;
+                }
+            }
             set
             {
                 var streamUsage = GetStreamUsage();
-                if (streamUsage == null) return;
-                if (streamUsage?.DefaultPlayback == value) return;
+                // There are no stream usages to configure
+                if (streamUsage == null) return; 
+                // The value is already set to the provided value
+                if (streamUsage.DefaultPlayback == value) return;
+                // The RecordTo property is not set, so this is probably a version without Primary/Secondary tracks
+                if (string.IsNullOrEmpty(streamUsage.RecordTo)) return;
                 streamUsage.DefaultPlayback = value;
                 if (value)
                 {
@@ -162,20 +199,55 @@ namespace MilestonePSTools
         [Hidden()]
         public bool Recorded
         {
-            get => GetStreamUsage()?.RecordTo.Equals(GetStreamUsage().RecordToValues["Primary recording"]) ?? false;
+            get
+            {
+                return SupportsSecondaryRecording()
+                    ? GetStreamUsage()?.RecordTo.Equals(GetStreamUsage().RecordToValues["Primary recording"]) ?? false
+                    : GetStreamUsage()?.Record ?? false;
+            }
             set
             {
                 var streamUsage = GetStreamUsage();
                 if (streamUsage == null) return;
-                RecordingTrack = RecordingTrackToId[RecordingTracks.Primary];
-                PlaybackDefault = true;
+                if (SupportsSecondaryRecording())
+                {
+                    if (value == streamUsage.RecordTo.Equals(RecordingTrackToId[RecordingTracks.Primary]))
+                    {
+                        return;
+                    }
+                    RecordingTrack = RecordingTrackToId[RecordingTracks.Primary];
+                }
+                else
+                {
+                    if (value == streamUsage.Record) return;
+                    var otherUsage = FindStreamUsage(u => u.Record);
+                    if (value && otherUsage != null)
+                    {
+                        otherUsage.Record = false;
+                    }
+                    streamUsage.Record = value;
+                }
+                PlaybackDefault = value;
+                _dirtyStreamDefinition[Camera.Id] = true;
             }
         }
 
         [Hidden()]
         public string RecordingTrack
         {
-            get => GetStreamUsage()?.RecordTo ?? string.Empty;
+            get
+            {
+                if (SupportsSecondaryRecording())
+                {
+                    return GetStreamUsage()?.RecordTo ?? string.Empty;
+                }
+                else
+                {
+                    return GetStreamUsage()?.Record == true
+                        ? RecordingTrackToId[RecordingTracks.Primary]
+                        : string.Empty;
+                }
+            }
             set
             {
                 // Accepts None, Primary, Secondary as well as the actual IDs
@@ -183,23 +255,34 @@ namespace MilestonePSTools
                 {
                     value = RecordingTrackToId[(RecordingTracks)Enum.Parse(typeof(RecordingTracks), value, true)];
                 }
-                var streamUsage = GetStreamUsage();
-                if (streamUsage?.RecordTo.Equals(value, StringComparison.OrdinalIgnoreCase) ?? true) return;
+                if (SupportsSecondaryRecording())
+                {
+                    var streamUsage = GetStreamUsage();
+                    if (streamUsage?.RecordTo.Equals(value, StringComparison.OrdinalIgnoreCase) ?? true) return;
 
-                // If another stream usage is designated the same recording track, set it to None
-                var otherUsage = FindStreamUsage(u => u.RecordTo == value);
-                if (otherUsage != null)
-                {
-                    otherUsage.RecordTo = RecordingTrackToId[RecordingTracks.None];
-                    // The other stream usage can't be the playback default if recording track is set to None
-                    otherUsage.DefaultPlayback = false;
+                    // If another stream usage is designated the same recording track, set it to None
+                    var otherUsage = FindStreamUsage(u => u.RecordTo == value);
+                    if (otherUsage != null)
+                    {
+                        otherUsage.RecordTo = RecordingTrackToId[RecordingTracks.None];
+                        // The other stream usage can't be the playback default if recording track is set to None
+                        otherUsage.DefaultPlayback = false;
+                    }
+                    if (FindStreamUsage(u => u.DefaultPlayback) == null)
+                    {
+                        streamUsage.DefaultPlayback = true;
+                    }
+                    streamUsage.RecordTo = value;
+                    _dirtyStreamDefinition[Camera.Id] = true;
                 }
-                if (FindStreamUsage(u => u.DefaultPlayback) == null)
+                else if (value.Equals(RecordingTrackToId[RecordingTracks.Secondary], StringComparison.OrdinalIgnoreCase))
                 {
-                    streamUsage.DefaultPlayback = true;
+                    throw new NotSupportedException("Secondary recording is not supported. This may be because the XProtect VMS version is older than 2023 R2.");
                 }
-                streamUsage.RecordTo = value;
-                _dirtyStreamDefinition[Camera.Id] = true;
+                else
+                {
+                    Recorded = value.Equals(RecordingTrackToId[RecordingTracks.Primary], StringComparison.OrdinalIgnoreCase);
+                }
             }
         }
 
@@ -251,7 +334,7 @@ namespace MilestonePSTools
 
         public string GetRecordingTrackName()
         {
-            if (RecordToValues.Count > 0)
+            if (SupportsSecondaryRecording())
             {
                 return RecordToValues.Where(r => r.Value == RecordingTrack)
                     .Select(r => r.Key).FirstOrDefault();
@@ -290,6 +373,11 @@ namespace MilestonePSTools
         #endregion
 
         #region Private Methods
+        private bool SupportsSecondaryRecording()
+        {
+            return MilestoneConnection.Instance.SystemLicense.IsFeatureEnabled("MultistreamRecording");
+        }
+
         private StreamUsageChildItem FindStreamUsage(Func<StreamUsageChildItem, bool> predicate)
         {
             return GetStreamDefinition().StreamUsageChildItems
@@ -345,3 +433,4 @@ namespace MilestonePSTools
         }
     }
 }
+#pragma warning restore CS0618 // Type or member is obsolete

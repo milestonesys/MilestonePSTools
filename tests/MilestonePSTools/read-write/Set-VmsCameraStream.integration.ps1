@@ -3,7 +3,16 @@ Context 'Set-VmsCameraStream' -Skip:($script:SkipReadWriteTests) {
         $script:StableFpsHardware = Get-VmsHardware -Name 'MilestonePSTools.Tests'
         $script:streams = $script:StableFpsHardware | Get-VmsCamera -Channel 0 | Get-VmsCameraStream
         $stream1 = $script:streams | Select-Object -First 1
-        $stream1 | Set-VmsCameraStream -RecordingTrack Primary -PlaybackDefault -LiveDefault -LiveMode WhenNeeded -DisplayName $stream1.Name
+        $splat = @{
+            RecordingTrack  = 'Primary'
+            LiveDefault     = $true
+            LiveMode        = 'WhenNeeded'
+            DisplayName     = $stream1.Name
+        }
+        if (Test-VmsLicensedFeature -Name MultistreamRecording) {
+            $splat.PlaybackDefault = $true
+        }
+        $stream1 | Set-VmsCameraStream @splat
         $script:streams | Select-Object -Skip 1 | Set-VmsCameraStream -Disabled
     }
 
@@ -55,7 +64,16 @@ Context 'Set-VmsCameraStream' -Skip:($script:SkipReadWriteTests) {
         $oldLiveStream.LiveDefault | Should -BeFalse
 
         # Cleanup
-        $oldLiveStream | Set-VmsCameraStream -LiveDefault -RecordingTrack Primary -PlaybackDefault -LiveMode WhenNeeded -ErrorAction Stop
+        $splat = @{
+            LiveDefault     = $true
+            RecordingTrack  = 'Primary'
+            LiveMode        = 'WhenNeeded'
+            ErrorAction     = 'Stop'
+        }
+        if (Test-VmsLicensedFeature -Name MultistreamRecording) {
+            $splat.PlaybackDefault = $true
+        }
+        $oldLiveStream | Set-VmsCameraStream @splat
         $stream | Set-VmsCameraStream -Disabled -ErrorAction Stop
     }
 
@@ -69,7 +87,13 @@ Context 'Set-VmsCameraStream' -Skip:($script:SkipReadWriteTests) {
             ($camera | Get-VmsCameraStream | Where-Object Enabled -EQ $false).Count | Should -Be 0 -Because 'All streams should be enabled with LiveMode "WhenNeeded"'
 
         # Disable all streams except one
-        $camera | Get-VmsCameraStream -LiveDefault | Set-VmsCameraStream -RecordingTrack Primary -PlaybackDefault
+        $splat = @{
+             RecordingTrack = 'Primary'
+        }
+        if (Test-VmsLicensedFeature -Name MultistreamRecording) {
+            $splat.PlaybackDefault = $true
+        }
+        $camera | Get-VmsCameraStream -LiveDefault | Set-VmsCameraStream @splat
         $camera | Get-VmsCameraStream | Where-Object LiveDefault -EQ $false | Set-VmsCameraStream -Disabled
             ($camera | Get-VmsCameraStream -Enabled).Count | Should -Be 1
     }
