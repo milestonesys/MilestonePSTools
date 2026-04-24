@@ -19,15 +19,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Windows.Forms;
 using VideoOS.Platform.ConfigurationItems;
 
-#pragma warning disable CS0618 // Type or member is obsolete
-// Record property is only obsolete on 2023 R2 and newer. Still used on older versions.
 namespace MilestonePSTools
 {
     public class VmsCameraStreamConfig
     {
+        // Use of the obsolete .Record property is necessary for compatibility with pre-2023 R2 versions without the MultistreamRecording feature.
         #region Static Members
         private static readonly Dictionary<string, bool> _dirtyStreamDefinition = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<string, bool> _dirtyDriverSettings = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
@@ -136,11 +134,13 @@ namespace MilestonePSTools
                 }
                 else
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     return RecordingTrackFromId[
                         GetStreamUsage()?.Record ?? false
                         ? RecordingTrackToId[RecordingTracks.Primary]
                         : RecordingTrackToId[RecordingTracks.None
                         ]].ToString();
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
         }
@@ -150,15 +150,12 @@ namespace MilestonePSTools
             get
             {
                 var usage = GetStreamUsage();
-                if (usage == null) return true; // If there is no stream usage, default to true because super old drivers might not have stream usages but still record.
-                if (SupportsSecondaryRecording())
-                {
-                    return usage.DefaultPlayback;
-                }
-                else
-                {
-                    return usage.Record;
-                }
+                if (usage == null) return false;
+#pragma warning disable CS0618 // Type or member is obsolete
+                return SupportsSecondaryRecording()
+                    ? usage.DefaultPlayback
+                    : usage.Record;
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             set
             {
@@ -201,9 +198,13 @@ namespace MilestonePSTools
         {
             get
             {
+                var usage = GetStreamUsage();
+                if (usage == null) return false;
+#pragma warning disable CS0618 // Type or member is obsolete
                 return SupportsSecondaryRecording()
-                    ? GetStreamUsage()?.RecordTo.Equals(GetStreamUsage().RecordToValues["Primary recording"]) ?? false
-                    : GetStreamUsage()?.Record ?? false;
+                    ? usage.RecordTo.Equals(RecordingTrackToId[RecordingTracks.Primary], StringComparison.InvariantCultureIgnoreCase)
+                    : usage.Record;
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             set
             {
@@ -219,6 +220,7 @@ namespace MilestonePSTools
                 }
                 else
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     if (value == streamUsage.Record) return;
                     var otherUsage = FindStreamUsage(u => u.Record);
                     if (value && otherUsage != null)
@@ -226,6 +228,7 @@ namespace MilestonePSTools
                         otherUsage.Record = false;
                     }
                     streamUsage.Record = value;
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
                 PlaybackDefault = value;
                 _dirtyStreamDefinition[Camera.Id] = true;
@@ -243,9 +246,11 @@ namespace MilestonePSTools
                 }
                 else
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     return GetStreamUsage()?.Record == true
                         ? RecordingTrackToId[RecordingTracks.Primary]
                         : string.Empty;
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
             set
@@ -433,4 +438,3 @@ namespace MilestonePSTools
         }
     }
 }
-#pragma warning restore CS0618 // Type or member is obsolete
