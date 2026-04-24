@@ -1,6 +1,6 @@
 Context 'Get-VmsCameraStream' -Skip:($script:SkipReadWriteTests) {
     BeforeAll {
-        $script:StableFpsHardware = Get-VmsHardware -Name 'MilestonePSTools.Tests'
+        $script:StableFpsHardware = Get-VmsHardware -Name 'MilestonePSTools.Tests' -EnableFilter All
         $script:streams = $script:StableFpsHardware | Get-VmsCamera | Select-Object -First 1 | Get-VmsCameraStream
     }
 

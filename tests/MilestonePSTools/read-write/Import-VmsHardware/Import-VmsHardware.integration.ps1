@@ -48,7 +48,7 @@ Context 'Import-VmsHardware' -Skip:($script:SkipReadWriteTests) {
                 UserName     = 'a'
                 Password     = 'a'
                 DriverNumber = '421'
-                DriverFamily = 'Universal'
+                DriverGroup  = 'Universal'
                 Enabled      = 'True'
                 HardwareName = 'Universal Driver (http://127.0.0.1:2001/)'
                 StorageName  = 'Local default'
@@ -63,7 +63,7 @@ Context 'Import-VmsHardware' -Skip:($script:SkipReadWriteTests) {
                 UserName     = 'a'
                 Password     = 'a'
                 DriverNumber = '421'
-                DriverFamily = 'Universal'
+                DriverGroup  = 'Universal'
                 Enabled      = 'False'
                 HardwareName = 'Universal Driver (http://127.0.0.1:2002/)'
                 StorageName  = $script:Storage.Name
@@ -81,7 +81,7 @@ Context 'Import-VmsHardware' -Skip:($script:SkipReadWriteTests) {
                 UserName     = 'a'
                 Password     = 'a'
                 DriverNumber = '421'
-                DriverFamily = 'Universal'
+                DriverGroup  = 'Universal'
                 Enabled      = 'True'
                 HardwareName = 'Universal Driver (http://127.0.0.1:2001/)'
                 StorageName  = 'Local default'
@@ -96,7 +96,7 @@ Context 'Import-VmsHardware' -Skip:($script:SkipReadWriteTests) {
                 UserName     = 'a'
                 Password     = 'a'
                 DriverNumber = '421'
-                DriverFamily = 'Universal'
+                DriverGroup  = 'Universal'
                 Enabled      = 'False'
                 HardwareName = 'Universal Driver (http://127.0.0.1:2002/)'
                 StorageName  = $script:Storage.Name
@@ -173,11 +173,11 @@ Context 'Import-VmsHardware' -Skip:($script:SkipReadWriteTests) {
     #     throw "Test not implemented"
     # }
 
-    # It 'Can import hardware with DriverFamily' {
+    # It 'Can import hardware with DriverGroup' {
     #     throw "Test not implemented"
     # }
 
-    # It 'Can import hardware with out DriverNumber or DriverFamily' {
+    # It 'Can import hardware with out DriverNumber or DriverGroup' {
     #     throw "Test not implemented"
     # }
 

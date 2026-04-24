@@ -37,6 +37,15 @@ Context 'Set-VmsHardware' -Skip:($script:SkipReadWriteTests) {
 
         # Update the hardware, check all properties, then clear cache and get a fresh
         # copy from the management server and check all properties again.
+        if ([version](Get-VmsManagementServer).Version -lt [version]'23.2') {
+            $assert = @{
+                 Throw         = $true
+                 ExceptionType = [System.Management.Automation.ParameterBindingException]
+                 Because       = 'UpdateRemoteHardware requires VMS version 2023 R2 or greater'
+            }
+            { Set-VmsHardware @hwParams } | Should @assert
+            $hwParams.Remove('UpdateRemoteHardware')
+        }
         $updatedHw = Set-VmsHardware @hwParams
         for ($i = 0; $i -lt 2; $i++) {
             $updatedHw.Enabled | Should -Be $hwParams.Enabled

@@ -1,6 +1,6 @@
 Context 'Set-VmsCameraStream' -Skip:($script:SkipReadWriteTests) {
     BeforeAll {
-        $script:StableFpsHardware = Get-VmsHardware -Name 'MilestonePSTools.Tests'
+        $script:StableFpsHardware = Get-VmsHardware -Name 'MilestonePSTools.Tests' -EnableFilter All
         $script:streams = $script:StableFpsHardware | Get-VmsCamera -Channel 0 | Get-VmsCameraStream
         $stream1 = $script:streams | Select-Object -First 1
         $splat = @{
@@ -118,5 +118,40 @@ Context 'Set-VmsCameraStream' -Skip:($script:SkipReadWriteTests) {
         }
 
         $streams | Set-VmsCameraStream -Settings @{ Resolution = $oldResolution }
+    }
+
+    It 'Can change Primary stream using deprecated Recorded switch' {
+        $camera = $script:StableFpsHardware | Get-VmsCamera -Channel 0
+        $streams = $camera | Get-VmsCameraStream
+        $oldPrimaryStream = $streams | Where-Object Recorded | Select-Object -First 1
+        $targetStream = $streams | Where-Object Name -NE $oldPrimaryStream.Name | Select-Object -First 1
+
+        $oldPrimaryStream | Should -Not -BeNullOrEmpty
+        $targetStream | Should -Not -BeNullOrEmpty -Because 'This test requires another stream to promote to Primary.'
+
+        $targetStream | Set-VmsCameraStream -Recorded -ErrorAction Stop
+
+        foreach ($round in 1..2) {
+            # Check local "live" results first, then clear cache
+            # and pull current values from management server to
+            # verify they were also correctly set there.
+            if ($round -eq 2) {
+                $camera.ClearChildrenCache()
+                $streams = $camera | Get-VmsCameraStream
+                $oldPrimaryStream = $streams | Where-Object Name -EQ $oldPrimaryStream.Name
+                $targetStream = $streams | Where-Object Name -EQ $targetStream.Name
+            }
+
+            $targetStream.Recorded | Should -BeTrue
+            $oldPrimaryStream.Recorded | Should -BeFalse
+            ($streams | Where-Object Recorded).Count | Should -Be 1
+
+            if (Test-VmsLicensedFeature -Name MultistreamRecording) {
+                $targetStream.RecordingTrackName | Should -Be 'Primary'
+                $targetStream.PlaybackDefault | Should -BeTrue
+                $oldPrimaryStream.RecordingTrackName | Should -Be 'None'
+                $oldPrimaryStream.PlaybackDefault | Should -BeFalse
+            }
+        }
     }
 }

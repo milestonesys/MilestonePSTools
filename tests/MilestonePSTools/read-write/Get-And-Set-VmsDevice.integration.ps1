@@ -8,7 +8,7 @@ Context 'Read and write device settings' -Skip:($script:SkipReadWriteTests)  {
         try {
             $rec = Get-VmsRecordingServer | Select-Object -First 1
             $address = [uri]('http://{0}' -f $rec.HostName)
-            $rec | Get-VmsHardware | Where-Object { [uri]$_.Address -eq $address } | Remove-Hardware -Confirm:$false
+            $rec | Get-VmsHardware -EnableFilter All | Where-Object { [uri]$_.Address -eq $address } | Remove-Hardware -Confirm:$false
             $cred = [pscredential]::new('a', ('a' | ConvertTo-SecureString -AsPlainText -Force))
             $script:hw = $rec | Add-VmsHardware -HardwareAddress $address -DriverNumber 5000 -Credential $cred -ErrorAction Stop
         } catch {
