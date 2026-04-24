@@ -7,6 +7,10 @@ hide:
 
 ## [vNext] unreleased
 
+### 🔄 Changed
+
+- **`Get-VmsCameraReport`** no longer uses a workaround to manually refresh `StreamFolder.Streams` for each camera after calling `FillChildren`. This workaround was previously required due to a bug in the MIP SDK where the streams collection would be empty after `FillChildren`. The hardware password loop is also now skipped entirely when passwords are not being fetched, improving performance slightly. This solves [Issue 164](https://github.com/milestonesys/MilestonePSTools/issues/164).
+
 ## [25.2.38] 2026-02-02
 
 ### 🔄 Changed
