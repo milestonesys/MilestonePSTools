@@ -154,8 +154,8 @@ function Get-VmsCameraReport {
                                 }
                                 $recorder.FillChildren($itemTypes, $itemFilters)
 
-                                foreach ($hw in $recorder.hardwarefolder.hardwares) {
-                                    if ($getPasswords) {
+                                if ($getPasswords) {
+                                    foreach ($hw in $recorder.hardwarefolder.hardwares) {
                                         $password = $hw.ReadPasswordHardware().GetProperty('Password')
                                         $cache.Passwords[[guid]$hw.Id] = $password
                                     }
