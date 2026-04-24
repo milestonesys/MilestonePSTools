@@ -216,7 +216,10 @@ namespace MilestonePSTools
                     {
                         return;
                     }
-                    RecordingTrack = RecordingTrackToId[RecordingTracks.Primary];
+                    PlaybackDefault = value ? true : PlaybackDefault;
+                    RecordingTrack = value
+                        ? RecordingTrackToId[RecordingTracks.Primary]
+                        : RecordingTrackToId[RecordingTracks.None];
                 }
                 else
                 {
@@ -230,7 +233,6 @@ namespace MilestonePSTools
                     streamUsage.Record = value;
 #pragma warning restore CS0618 // Type or member is obsolete
                 }
-                PlaybackDefault = value;
                 _dirtyStreamDefinition[Camera.Id] = true;
             }
         }
