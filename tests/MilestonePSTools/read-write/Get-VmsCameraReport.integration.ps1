@@ -132,4 +132,11 @@ Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) {
         $snapshots.Count | Should -BeGreaterThan 0
         $snapshots | Select-Object -First 1 | Should -BeOfType -ExpectedType [System.Drawing.Image]
     }
+
+    It 'Returns populated stream properties for at least one camera' {
+        $cameraWithStreams = $script:camerareport | Where-Object { -not [string]::IsNullOrEmpty($_.LiveStream) } | Select-Object -First 1
+        $cameraWithStreams | Should -Not -BeNullOrEmpty -Because 'At least one camera should have a populated LiveStream name, indicating StreamFolder.Streams was populated correctly after FillChildren'
+        $cameraWithStreams.LiveStreamDescription | Should -Not -BeNullOrEmpty -Because 'LiveStreamDescription should be populated when LiveStream is populated'
+        $cameraWithStreams.RecordedStream | Should -Not -BeNullOrEmpty -Because 'RecordedStream should be populated when LiveStream is populated'
+    }
 }
