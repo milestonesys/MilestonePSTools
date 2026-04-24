@@ -202,7 +202,7 @@ namespace MilestonePSTools
                 if (usage == null) return false;
 #pragma warning disable CS0618 // Type or member is obsolete
                 return SupportsSecondaryRecording()
-                    ? usage.RecordTo.Equals(RecordingTrackToId[RecordingTracks.Primary], StringComparison.InvariantCultureIgnoreCase)
+                    ? usage.RecordTo.Equals(RecordingTrackToId[RecordingTracks.Primary], StringComparison.OrdinalIgnoreCase)
                     : usage.Record;
 #pragma warning restore CS0618 // Type or member is obsolete
             }
@@ -212,7 +212,7 @@ namespace MilestonePSTools
                 if (streamUsage == null) return;
                 if (SupportsSecondaryRecording())
                 {
-                    if (value == streamUsage.RecordTo.Equals(RecordingTrackToId[RecordingTracks.Primary]))
+                    if (value == streamUsage.RecordTo.Equals(RecordingTrackToId[RecordingTracks.Primary], StringComparison.OrdinalIgnoreCase))
                     {
                         return;
                     }
@@ -266,7 +266,7 @@ namespace MilestonePSTools
                     if (streamUsage?.RecordTo.Equals(value, StringComparison.OrdinalIgnoreCase) ?? true) return;
 
                     // If another stream usage is designated the same recording track, set it to None
-                    var otherUsage = FindStreamUsage(u => u.RecordTo == value);
+                    var otherUsage = FindStreamUsage(u => u.RecordTo.Equals(value, StringComparison.OrdinalIgnoreCase));
                     if (otherUsage != null)
                     {
                         otherUsage.RecordTo = RecordingTrackToId[RecordingTracks.None];
@@ -408,7 +408,7 @@ namespace MilestonePSTools
         private StreamUsageChildItem GetStreamUsage()
         {
             return GetStreamDefinition().StreamUsageChildItems
-                    .Where(u => u.StreamReferenceId.Equals(u.StreamReferenceIdValues[Name]))
+                    .Where(u => u.StreamReferenceId.Equals(u.StreamReferenceIdValues[Name], StringComparison.OrdinalIgnoreCase))
                     .FirstOrDefault();
         }
 
