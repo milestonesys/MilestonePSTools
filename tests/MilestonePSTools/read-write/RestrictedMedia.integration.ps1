@@ -1,4 +1,4 @@
-Context 'Restricted Media' -Skip:($script:SkipReadWriteTests) {
+Context 'Restricted Media' -Skip:($script:SkipReadWriteTests -or -not (Test-VmsLicensedFeature -Name RestrictedMedia)) {
     BeforeAll {
         $script:RestrictedMediaPrefix = 'PESTER'
         Get-VmsRestrictedMedia -Live | Remove-VmsRestrictedMedia -Confirm:$false

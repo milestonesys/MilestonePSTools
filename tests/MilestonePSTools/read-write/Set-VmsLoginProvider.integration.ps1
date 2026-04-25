@@ -40,11 +40,8 @@ Context 'Set-VmsLoginProvider' -Skip:($script:SkipReadWriteTests) {
             $updatedProvider = $provider | Set-VmsLoginProvider @newParams
             Clear-VmsCache
             $updatedProvider = Get-VmsLoginProvider -Name $newParams.Name
-            if ([version](Get-VmsManagementServer).Version -ge 23.1) {
-                $updatedProvider.ClientSecretHasValue | Should -BeTrue
-            } else {
-                $updatedProvider.ClientSecret | Should -BeExactly $newParams.ClientSecret
-            }
+            
+            $updatedProvider.ClientSecretHasValue | Should -BeTrue
             $updatedProvider.PromptForLogin | Should -BeFalse
             $updatedProvider.UserNameClaimType | Should -BeExactly $newParams.UserNameClaim
             $newParams.Scopes | Foreach-Object {
