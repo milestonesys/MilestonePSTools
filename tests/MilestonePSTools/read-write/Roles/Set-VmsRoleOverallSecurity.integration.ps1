@@ -43,7 +43,7 @@ Context 'Set-VmsRoleOverallSecurity' -Skip:($script:SkipReadWriteTests) {
         $cameras = $script:role | Get-VmsRoleOverallSecurity -SecurityNamespace Cameras
         $namespaceName = 'Cameras'
         $key = 'GENERIC_WRITE'
-        $newValue = if ($cameras[$key] -eq 'None') { 'Allow' } else { 'None' }
+        $newValue = if ($cameras[$key] -ne 'Allow') { 'Allow' } else { 'None' }
         $script:role | Set-VmsRoleOverallSecurity -SecurityNamespace $namespaceName -Permissions (@{"$key" = $newValue})
 
         ($script:role | Get-VmsRoleOverallSecurity -SecurityNamespace $namespaceName).$key | Should -Be $newValue

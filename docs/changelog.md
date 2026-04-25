@@ -7,6 +7,13 @@ hide:
 
 ## [vNext] unreleased
 
+### 🐛 Fixed
+
+- Fixed [Issue 184](https://github.com/milestonesys/MilestonePSTools/issues/184) where `Get-VmsCameraReport` returned
+  empty values for the `ConfiguredRecordedResolution`, `ConfiguredRecordedCodec`, and `ConfiguredRecordedFPS` columns.
+  This bug also affected `Get-VmsCameraStream` where empty values were returned for the `RecordingTrack` and `Recorded`
+  properties, and `PlaybackDefault` was always `$false`.
+
 ## [25.2.38] 2026-02-02
 
 ### 🔄 Changed

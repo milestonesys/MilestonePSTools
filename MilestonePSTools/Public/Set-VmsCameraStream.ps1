@@ -40,6 +40,12 @@ function Set-VmsCameraStream {
         $LiveDefault,
 
         [Parameter(ParameterSetName = 'AddOrUpdateStream')]
+        [ValidateScript({
+            if (!$_) {
+                throw $script:Messages.FalseNotAllowedForRecordedProperty
+            }
+            $true
+        })]
         [switch]
         $Recorded,
 
