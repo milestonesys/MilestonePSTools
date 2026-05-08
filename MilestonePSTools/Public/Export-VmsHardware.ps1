@@ -57,7 +57,7 @@ function Export-VmsHardware {
     
     process {
         if ($Hardware.Count -eq 0) {
-            $Hardware = Get-VmsHardware
+            $Hardware = Get-VmsHardware -EnableFilter $EnableFilter
         }
         
         foreach ($hw in $Hardware) {
