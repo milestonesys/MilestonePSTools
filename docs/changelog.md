@@ -13,6 +13,8 @@ hide:
   empty values for the `ConfiguredRecordedResolution`, `ConfiguredRecordedCodec`, and `ConfiguredRecordedFPS` columns.
   This bug also affected `Get-VmsCameraStream` where empty values were returned for the `RecordingTrack` and `Recorded`
   properties, and `PlaybackDefault` was always `$false`.
+- Fixed [Issue 161](https://github.com/milestonesys/MilestonePSTools/issues/161) where `Export-VmsHardware` would not
+  export _disabled hardware_ even if you provided the parameter `-EnableFilter All`.
 
 ## [25.2.38] 2026-02-02
 
