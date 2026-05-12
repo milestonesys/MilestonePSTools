@@ -314,8 +314,8 @@ function Get-VmsCameraReport {
                             [double]$ConfiguredRetentionDays,
                             [hashtable]$cache
                         )
-                        $playbackInfo = $cache.PlaybackInfo[$Id]
-                        if ($null -eq $playbackInfo) {
+                        
+                        if (-not $cache.PlaybackInfo.ContainsKey($Id)) {
                             return
                         }
 
