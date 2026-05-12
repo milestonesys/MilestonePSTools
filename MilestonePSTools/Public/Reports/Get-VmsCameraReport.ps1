@@ -312,22 +312,21 @@ function Get-VmsCameraReport {
                         param(
                             [guid]$Id,
                             [double]$ConfiguredRetentionDays,
-                            [hashtable]$cache
+                            [bool]$HasPlaybackInfo
                         )
-                        
-                        if (-not $cache.PlaybackInfo.ContainsKey($Id)) {
+
+                        if (-not $HasPlaybackInfo) {
                             return
                         }
 
                         # Use the GetNext method on VideoOS.Platform.Data.RawVideoSource
                         # to find the GOP less than or equal to the configured retention.
                         $now = (Get-Date).ToUniversalTime()
-                        $videoFound = $null
 
                         $item = Get-VmsVideoOSItem -Kind Camera -Id $Id
                         $src = [VideoOS.Platform.Data.RawVideoSource]::new($item)
                         $src.Init()
-                        $videoFound = $src.GetNext($now.AddDays(-$configuredRetentionDays))
+                        $videoFound = $src.GetNext($now.AddDays(-$ConfiguredRetentionDays))
                         if ($null -eq $videoFound -or $null -eq $videoFound.List -or $videoFound.List.Count -lt 1) {
                             return
                         }
@@ -337,7 +336,7 @@ function Get-VmsCameraReport {
                             return
                         }
 
-                        $cache.TrueRetention[$Id] = $gopStart.DateTime
+                        [pscustomobject]@{ Id = $Id; TrueBegin = $gopStart.DateTime }
                     }
 
                     $trueRetentionJobs = @()
@@ -352,7 +351,7 @@ function Get-VmsCameraReport {
                                         $trueRetentionJobs += $jobRunner.AddJob($trueRetentionScriptBlock, @{
                                             Id                      = $camId
                                             ConfiguredRetentionDays = $configuredRetentionDays
-                                            cache                   = $cache
+                                            HasPlaybackInfo         = $cache.PlaybackInfo.ContainsKey($camId)
                                         })
                                     }
                                 }
@@ -363,9 +362,13 @@ function Get-VmsCameraReport {
                     if ($trueRetentionJobs.Count -gt 0) {
                         Write-Verbose 'Receiving results of true retention threadjobs'
                         $jobRunner.Wait($trueRetentionJobs)
-                        $trueRetentionResult = $jobRunner.ReceiveJobs($trueRetentionJobs)
-                        foreach ($e in $trueRetentionResult.Errors) {
-                            Write-Error $e
+                        foreach ($job in $jobRunner.ReceiveJobs($trueRetentionJobs)) {
+                            if ($null -ne $job.Output.Id) {
+                                $cache.TrueRetention[$job.Output.Id] = $job.Output.TrueBegin
+                            }
+                            foreach ($e in $job.Errors) {
+                                Write-Error $e
+                            }
                         }
                     }
                 }
