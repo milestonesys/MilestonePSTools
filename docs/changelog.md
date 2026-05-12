@@ -7,7 +7,17 @@ hide:
 
 ## [vNext] unreleased
 
-### 🐛 Fixed
+### � Changed
+
+- **`Get-VmsCameraReport`** with `-IncludeRetentionInfo` now accounts for Evidence Locks when calculating
+  `ActualRetentionDays` and `MeetsRetentionPolicy`. Previously, if an Evidence Lock preserved video older than the
+  configured retention, those values would reflect the age of the oldest locked video rather than the oldest
+  non-locked video within the retention window. Two new output columns are also included when using
+  `-IncludeRetentionInfo`: `HasEvidenceLock` indicates whether the camera has any active Evidence Locks, and
+  `OldestVideoInRetentionWindow` is the timestamp of the oldest non-locked video within the configured retention
+  window. Addresses [Issue 160](https://github.com/milestonesys/MilestonePSTools/issues/160).
+
+### �🐛 Fixed
 
 - Fixed [Issue 184](https://github.com/milestonesys/MilestonePSTools/issues/184) where `Get-VmsCameraReport` returned
   empty values for the `ConfiguredRecordedResolution`, `ConfiguredRecordedCodec`, and `ConfiguredRecordedFPS` columns.
