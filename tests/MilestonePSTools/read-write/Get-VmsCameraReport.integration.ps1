@@ -154,7 +154,11 @@ Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) {
         }
         $hasEvidenceLock.HasEvidenceLock | Should -Be $true -Because 'HasEvidenceLock should be true when evidence lock is present.'
         $hasEvidenceLock | Should -HaveProperty 'OldestVideoInRetentionWindow' -Because 'OldestVideoInRetentionWindow should be present.'
-        $hasEvidenceLock.OldestVideoInRetentionWindow | Should -Not -BeNullOrEmpty -Because 'OldestVideoInRetentionWindow should not be null when evidence lock is present.'
-        $hasEvidenceLock.OldestVideoInRetentionWindow | Should -BeOfType -ExpectedType [datetime] -Because 'OldestVideoInRetentionWindow should be a datetime.'
+        if ($null -ne $hasEvidenceLock.OldestVideoInRetentionWindow) {
+            $hasEvidenceLock.OldestVideoInRetentionWindow | Should -BeOfType -ExpectedType [datetime] -Because 'OldestVideoInRetentionWindow should be a datetime when non-null.'
+        }
+        else {
+            $hasEvidenceLock.ActualRetentionDays | Should -Be 0 -Because 'OldestVideoInRetentionWindow may be null when all video in the retention window is evidence-locked.'
+        }
     }
 }
