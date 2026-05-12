@@ -328,7 +328,16 @@ function Get-VmsCameraReport {
                         $src = [VideoOS.Platform.Data.RawVideoSource]::new($item)
                         $src.Init()
                         $videoFound = $src.GetNext($now.AddDays(-$configuredRetentionDays))
-                        $cache.TrueRetention[$Id] = $videoFound.List[0].DateTime
+                        if ($null -eq $videoFound -or $null -eq $videoFound.List -or $videoFound.List.Count -lt 1) {
+                            return
+                        }
+
+                        $gopStart = $videoFound.List[0]
+                        if ($null -eq $gopStart) {
+                            return
+                        }
+
+                        $cache.TrueRetention[$Id] = $gopStart.DateTime
                     }
 
                     $trueRetentionJobs = @()
