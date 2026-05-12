@@ -199,7 +199,7 @@ function Get-VmsCameraReport {
                 Write-Verbose 'Fetching evidence locks'
                 $evidenceLockedDeviceIds = [System.Collections.Generic.HashSet[guid]]::new()
                 try {
-                    $evidenceLocks = Get-EvidenceLock -ErrorAction Stop
+                    $evidenceLocks = Get-EvidenceLock -DeviceIds $ids -ErrorAction Stop
                     foreach ($lock in $evidenceLocks) {
                         foreach ($deviceId in $lock.DeviceIds) {
                             $null = $evidenceLockedDeviceIds.Add($deviceId)
