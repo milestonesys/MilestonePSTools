@@ -311,51 +311,48 @@ function Get-VmsCameraReport {
                     $trueRetentionScriptBlock = {
                         param(
                             [guid]$Id,
-                            [double]$ConfiguredRetentionDays,
-                            [bool]$HasPlaybackInfo
+                            [double]$ConfiguredRetentionDays
                         )
-
-                        if (-not $HasPlaybackInfo) {
-                            return
-                        }
 
                         # Use the GetNext method on VideoOS.Platform.Data.RawVideoSource
                         # to find the GOP less than or equal to the configured retention.
                         $now = (Get-Date).ToUniversalTime()
-
-                        $item = Get-VmsVideoOSItem -Kind Camera -Id $Id
-                        $src = [VideoOS.Platform.Data.RawVideoSource]::new($item)
-                        $src.Init()
-                        $videoFound = $src.GetNext($now.AddDays(-$ConfiguredRetentionDays))
-                        if ($null -eq $videoFound -or $null -eq $videoFound.List -or $videoFound.List.Count -lt 1) {
-                            return
+                        try {
+                            $item = Get-VmsVideoOSItem -Kind Camera -Id $Id
+                            $src = [VideoOS.Platform.Data.RawVideoSource]::new($item)
+                            $src.Init()
+                            $videoFound = $src.GetNext($now.AddDays(-$ConfiguredRetentionDays))
+                            if ($videoFound.List.Count -lt 1 -or $null -eq $videoFound.List[0]) {
+                                return
+                            }
+                            [pscustomobject]@{
+                                Id        = $Id
+                                TrueBegin = $videoFound.List[0].DateTime
+                            }
+                        } finally {
+                            if ($src) {
+                                $src.Close()
+                            }
                         }
-
-                        $gopStart = $videoFound.List[0]
-                        if ($null -eq $gopStart) {
-                            return
-                        }
-
-                        [pscustomobject]@{ Id = $Id; TrueBegin = $gopStart.DateTime }
                     }
 
                     $trueRetentionJobs = @()
                     foreach ($rec in $RecordingServer) {
                         foreach ($hw in $rec.HardwareFolder.Hardwares) {
                             foreach ($cam in $hw.CameraFolder.Cameras) {
-                                $camId = [guid]$cam.Id
-                                if (-not $evidenceLockedDeviceIds.Contains($camId)) {
+                                if (-not $evidenceLockedDeviceIds.Contains($cam.Id)) {
+                                    continue
+                                }
+                                if (-not $cache.PlaybackInfo.ContainsKey([guid]$cam.Id)) {
                                     continue
                                 }
                                 $storage = $rec.StorageFolder.Storages | Where-Object Path -EQ $cam.RecordingStorage
                                 if ($null -eq $storage) {
                                     continue
                                 }
-                                $configuredRetentionDays = ($storage | Get-VmsStorageRetention).TotalDays
                                 $trueRetentionJobs += $jobRunner.AddJob($trueRetentionScriptBlock, @{
-                                    Id                      = $camId
-                                    ConfiguredRetentionDays = $configuredRetentionDays
-                                    HasPlaybackInfo         = $cache.PlaybackInfo.ContainsKey($camId)
+                                    Id                      = $cam.Id
+                                    ConfiguredRetentionDays = ($storage | Get-VmsStorageRetention).TotalDays
                                 })
                             }
                         }
