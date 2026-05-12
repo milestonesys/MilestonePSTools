@@ -522,8 +522,9 @@ function Get-VmsCameraReport {
                                 if ($obj.HasEvidenceLock -and $cache.TrueRetention.ContainsKey($id)) {
                                     # True retention found non-locked video
                                     $trueBegin = $cache.TrueRetention[$id]
+                                    $retentionEnd = if ($null -ne $cache.PlaybackInfo[$id].End) { $cache.PlaybackInfo[$id].End } else { (Get-Date).ToUniversalTime() }
                                     $obj.OldestVideoInRetentionWindow = $trueBegin
-                                    $obj.ActualRetentionDays = [math]::Round(((Get-Date).ToUniversalTime() - $trueBegin).TotalDays, 2)
+                                    $obj.ActualRetentionDays = [math]::Round(($retentionEnd - $trueBegin).TotalDays, 2)
                                 } elseif ($obj.HasEvidenceLock) {
                                     # Evidence locks present but no non-locked video found within the retention window
                                     $obj.OldestVideoInRetentionWindow = $null
