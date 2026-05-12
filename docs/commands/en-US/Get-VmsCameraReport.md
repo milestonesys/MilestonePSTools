@@ -108,7 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -IncludeRetentionInfo
-Specifies that the report should include timestamps for the first and last recorded images, a timestamp for the oldest video within the configured retention (useful if Evidence Locks are in use), the actual number of days of video (excluding Evidence Locks outside the configured retention), and whether each camera meets the configured retention settings for the storage configuration.
+Specifies that the report should include additional retention-related output columns for each camera, including the timestamps of the first and last recorded images, the timestamp of the oldest video that still falls within the configured retention window (useful when Evidence Locks preserve older video), the actual number of retained video days excluding Evidence Locks outside the configured retention window, and whether the camera currently meets the configured retention setting for its storage configuration.
 
 ```yaml
 Type: SwitchParameter
