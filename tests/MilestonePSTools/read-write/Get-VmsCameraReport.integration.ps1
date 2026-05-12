@@ -72,6 +72,8 @@ Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) {
             'UsedSpaceInGB',
             'ActualRetentionDays',
             'MeetsRetentionPolicy',
+            'HasEvidenceLock',
+            'OldestVideoInRetentionWindow',
             'MotionEnabled',
             'MotionKeyframesOnly',
             'MotionProcessTime',
@@ -142,5 +144,17 @@ Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) {
         $cameraWithStreams | Should -Not -BeNullOrEmpty -Because 'At least one camera should have a populated LiveStream name, indicating StreamFolder.Streams was populated correctly after FillChildren'
         $cameraWithStreams.LiveStreamDescription | Should -Not -BeNullOrEmpty -Because 'LiveStreamDescription should be populated when LiveStream is populated'
         $cameraWithStreams.RecordedStream | Should -Not -BeNullOrEmpty -Because 'RecordedStream should be populated when LiveStream is populated'
+    }
+
+    It 'Has correct HasEvidenceLock and OldestVideoInRetentionWindow behavior' {
+        $hasEvidenceLock = $script:camerareport | Where-Object { $_.HasEvidenceLock -eq $true } | Select-Object -First 1
+        if ($null -eq $hasEvidenceLock) {
+            Set-ItResult -Skipped -Because 'No cameras with evidence locks present in this environment.'
+            return
+        }
+        $hasEvidenceLock.HasEvidenceLock | Should -Be $true -Because 'HasEvidenceLock should be true when evidence lock is present.'
+        $hasEvidenceLock | Should -HaveProperty 'OldestVideoInRetentionWindow' -Because 'OldestVideoInRetentionWindow should be present.'
+        $hasEvidenceLock.OldestVideoInRetentionWindow | Should -Not -BeNullOrEmpty -Because 'OldestVideoInRetentionWindow should not be null when evidence lock is present.'
+        $hasEvidenceLock.OldestVideoInRetentionWindow | Should -BeOfType -ExpectedType [datetime] -Because 'OldestVideoInRetentionWindow should be a datetime.'
     }
 }
