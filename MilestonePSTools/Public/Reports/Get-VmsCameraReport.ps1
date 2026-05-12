@@ -344,17 +344,19 @@ function Get-VmsCameraReport {
                         foreach ($hw in $rec.HardwareFolder.Hardwares) {
                             foreach ($cam in $hw.CameraFolder.Cameras) {
                                 $camId = [guid]$cam.Id
-                                if ($evidenceLockedDeviceIds.Contains($camId) -and $camId -in $ids) {
-                                    $storage = $rec.StorageFolder.Storages | Where-Object Path -EQ $cam.RecordingStorage
-                                    if ($null -ne $storage) {
-                                        $configuredRetentionDays = ($storage | Get-VmsStorageRetention).TotalDays
-                                        $trueRetentionJobs += $jobRunner.AddJob($trueRetentionScriptBlock, @{
-                                            Id                      = $camId
-                                            ConfiguredRetentionDays = $configuredRetentionDays
-                                            HasPlaybackInfo         = $cache.PlaybackInfo.ContainsKey($camId)
-                                        })
-                                    }
+                                if (-not $evidenceLockedDeviceIds.Contains($camId)) {
+                                    continue
                                 }
+                                $storage = $rec.StorageFolder.Storages | Where-Object Path -EQ $cam.RecordingStorage
+                                if ($null -eq $storage) {
+                                    continue
+                                }
+                                $configuredRetentionDays = ($storage | Get-VmsStorageRetention).TotalDays
+                                $trueRetentionJobs += $jobRunner.AddJob($trueRetentionScriptBlock, @{
+                                    Id                      = $camId
+                                    ConfiguredRetentionDays = $configuredRetentionDays
+                                    HasPlaybackInfo         = $cache.PlaybackInfo.ContainsKey($camId)
+                                })
                             }
                         }
                     }
