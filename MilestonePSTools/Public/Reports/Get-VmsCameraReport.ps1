@@ -102,6 +102,7 @@ function Get-VmsCameraReport {
             $cache = @{
                 DeviceState    = @{}
                 PlaybackInfo   = @{}
+                TrueRetention  = @{}
                 Snapshots      = @{}
                 Passwords      = @{}
                 RecordingStats = @{}
@@ -195,6 +196,20 @@ function Get-VmsCameraReport {
             }
 
             if ($IncludeRetentionInfo) {
+                Write-Verbose 'Fetching evidence locks'
+                $evidenceLockedDeviceIds = [System.Collections.Generic.HashSet[guid]]::new()
+                try {
+                    $evidenceLocks = Get-EvidenceLock -DeviceIds $ids -ErrorAction Stop
+                    foreach ($lock in $evidenceLocks) {
+                        foreach ($deviceId in $lock.DeviceIds) {
+                            $null = $evidenceLockedDeviceIds.Add($deviceId)
+                        }
+                    }
+                    Write-Verbose "Found $($evidenceLockedDeviceIds.Count) device(s) with evidence locks"
+                } catch {
+                    Write-Verbose "Unable to retrieve evidence locks: $_"
+                }
+
                 Write-Verbose 'Starting Get-PlaybackInfo threadjob'
                 $playbackInfoScriptblock = {
                     param(
@@ -287,6 +302,81 @@ function Get-VmsCameraReport {
                 $playbackInfoResult = $jobRunner.ReceiveJobs($playbackInfoJobs)
                 foreach ($e in $playbackInfoResult.Errors) {
                     Write-Error $e
+                }
+
+                # For cameras with evidence locks, find the true retention begin by
+                # using the GetNext method on VideoOS.Platform.Data.RawVideoSource.
+                if ($evidenceLockedDeviceIds.Count -gt 0) {
+                    Write-Verbose 'Starting true retention threadjobs for evidence-locked cameras'
+                    $trueRetentionScriptBlock = {
+                        param(
+                            [VideoOS.Platform.ConfigItem]$CameraItem,
+                            [double]$ConfiguredRetentionDays
+                        )
+
+                        # Use the GetNext method on VideoOS.Platform.Data.RawVideoSource
+                        # to find the GOP less than or equal to the configured retention.
+                        $now = (Get-Date).ToUniversalTime()
+                        try {
+                            $src = [VideoOS.Platform.Data.RawVideoSource]::new($CameraItem)
+                            $src.Init()
+                            $videoFound = $src.GetNext($now.AddDays(-$ConfiguredRetentionDays))
+                            if ($videoFound.List.Count -lt 1 -or $null -eq $videoFound.List[0]) {
+                                Write-Verbose "No recordings found within the configured retention period for camera with ID '$($CameraItem.FQID.ObjectId)'."
+                                return
+                            }
+                            [pscustomobject]@{
+                                Id        = $CameraItem.FQID.ObjectId
+                                TrueBegin = $videoFound.List[0].DateTime
+                            }
+                        } finally {
+                            if ($src) {
+                                $src.Close()
+                            }
+                        }
+                    }
+
+                    $trueRetentionJobs = @()
+                    foreach ($rec in $RecordingServer) {
+                        foreach ($hw in $rec.HardwareFolder.Hardwares) {
+                            foreach ($cam in $hw.CameraFolder.Cameras) {
+                                if (-not $evidenceLockedDeviceIds.Contains($cam.Id)) {
+                                    continue
+                                }
+                                if (-not $cache.PlaybackInfo.ContainsKey([guid]$cam.Id)) {
+                                    Write-Warning "Evidence lock found for $($cam.Name) but Get-PlaybackInfo did not return the first and last timestamps from the media database"
+                                    continue
+                                }
+                                $storage = $rec | Get-VmsStorage | Where-Object Path -EQ $cam.RecordingStorage
+                                if ($null -eq $storage) {
+                                    Write-Error "Unable to find storage '$($cam.RecordingStorage)' for camera '$($cam.Name)' on recording server '$($rec.Name)'." -TargetObject $cam
+                                    continue
+                                }
+                                $item = Get-VmsVideoOSItem -Kind Camera -Id $cam.Id
+                                if ($null -eq $item) {
+                                    Write-Error ($script:Messages.VideoOSDeviceNotFound -f $cam.Name) -TargetObject $cam
+                                    continue
+                                }
+                                $trueRetentionJobs += $jobRunner.AddJob($trueRetentionScriptBlock, @{
+                                    CameraItem              = $item
+                                    ConfiguredRetentionDays = ($storage | Get-VmsStorageRetention).TotalDays
+                                })
+                            }
+                        }
+                    }
+
+                    if ($trueRetentionJobs.Count -gt 0) {
+                        Write-Verbose 'Receiving results of true retention threadjobs'
+                        $jobRunner.Wait($trueRetentionJobs)
+                        foreach ($job in $jobRunner.ReceiveJobs($trueRetentionJobs)) {
+                            if ($null -ne $job.Output.Id) {
+                                $cache.TrueRetention[$job.Output.Id] = $job.Output.TrueBegin
+                            }
+                            foreach ($e in $job.Errors) {
+                                Write-Error $e
+                            }
+                        }
+                    }
                 }
             }
 
@@ -441,10 +531,27 @@ function Get-VmsCameraReport {
 
                             }
                             if ($IncludeRetentionInfo) {
-                                $obj.ActualRetentionDays  = ($cache.PlaybackInfo[$id].End - $cache.PlaybackInfo[$id].Begin).TotalDays
-                                $obj.MeetsRetentionPolicy = $obj.ActualRetentionDays -gt $obj.ExpectedRetentionDays
-                                $obj.MediaDatabaseBegin   = $cache.PlaybackInfo[$id].Begin
-                                $obj.MediaDatabaseEnd     = $cache.PlaybackInfo[$id].End
+                                $obj.HasEvidenceLock              = $evidenceLockedDeviceIds.Contains($id)
+                                $obj.OldestVideoInRetentionWindow = $null
+                                $obj.ActualRetentionDays          = $null
+                                $obj.MeetsRetentionPolicy         = $null
+                                if ($obj.HasEvidenceLock -and $cache.TrueRetention.ContainsKey($id)) {
+                                    # True retention found non-locked video
+                                    $trueBegin = $cache.TrueRetention[$id]
+                                    $retentionEnd = if ($null -ne $cache.PlaybackInfo[$id].End) { $cache.PlaybackInfo[$id].End } else { (Get-Date).ToUniversalTime() }
+                                    $obj.OldestVideoInRetentionWindow = $trueBegin
+                                    $obj.ActualRetentionDays = [math]::Round(($retentionEnd - $trueBegin).TotalDays, 2)
+                                } elseif ($obj.HasEvidenceLock) {
+                                    # Evidence locks are present, but true retention was not populated.
+                                    # Leave values as $null so unknown/unavailable is not reported as zero retention.
+                                    $obj.OldestVideoInRetentionWindow = $null
+                                    $obj.ActualRetentionDays = $null
+                                } elseif ($null -ne $cache.PlaybackInfo[$id].Begin -and $null -ne $cache.PlaybackInfo[$id].End) {
+                                    # No evidence locks - use standard PlaybackInfo
+                                    $obj.OldestVideoInRetentionWindow = $cache.PlaybackInfo[$id].Begin
+                                    $obj.ActualRetentionDays = [math]::Round(($cache.PlaybackInfo[$id].End - $cache.PlaybackInfo[$id].Begin).TotalDays, 2)
+                                }
+                                $obj.MeetsRetentionPolicy = if ($null -ne $obj.ActualRetentionDays) { $obj.ActualRetentionDays -ge $obj.ExpectedRetentionDays } else { $null }
                             }
 
                             $obj.MotionEnabled = $motion.Enabled

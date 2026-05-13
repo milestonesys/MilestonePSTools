@@ -94,6 +94,7 @@ using namespace VideoOS.Platform.ConfigurationItems
             RequiredVersion = '7.8.9'
         }
     )
+    $PesterTags = $Tags
 }
 
 Task Default -depends StageCmdletLib, Build, UpdateModuleExports, ExportCommandHistory, UpdateCommandIndexTable, generate-compatibility-table
@@ -530,7 +531,6 @@ Task -name mkdocs-serve -depends PullMkdocsMaterialImage, generate-compatibility
 
 Task -name integration-tests -description 'Run integration tests from the tests/MilestonePSTools folder' {
     $outputModVerManifest = Join-Path -Path $env:BHBuildOutput -ChildPath "$($env:BHProjectName).psd1"
-    
     $integrationTestEntrypoint = Join-Path $psake.build_script_dir 'tests/MilestonePSTools/MilestonePSTools.integration.tests.ps1'
     $testConfig = New-PesterConfiguration -Hashtable @{
         Run = @{
@@ -539,6 +539,9 @@ Task -name integration-tests -description 'Run integration tests from the tests/
             }
             SkipRemainingOnFailure = 'Container'
             Throw = $true
+        }
+        Filter = @{
+            Tag = $PesterTags
         }
         Output = @{
             Verbosity = 'Detailed'

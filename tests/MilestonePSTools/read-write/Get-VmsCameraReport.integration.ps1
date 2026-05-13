@@ -1,4 +1,4 @@
-Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) {
+Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) -Tag 'Get-VmsCameraReport' {
     BeforeAll {
         $script:camerareport = @()
         $script:expectedColumns = @(
@@ -72,6 +72,8 @@ Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) {
             'UsedSpaceInGB',
             'ActualRetentionDays',
             'MeetsRetentionPolicy',
+            'HasEvidenceLock',
+            'OldestVideoInRetentionWindow',
             'MotionEnabled',
             'MotionKeyframesOnly',
             'MotionProcessTime',
@@ -84,8 +86,39 @@ Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) {
             'PrivacyMaskEnabled',
             'Snapshot'
         )
-        Get-VmsCamera -EnableFilter All | Set-VmsCamera -Enabled $true -ErrorAction Stop
+        Get-VmsCamera -EnableFilter All | Set-VmsCamera -Enabled $true -ErrorAction Stop -PassThru
+        if (Test-VmsLicensedFeature -Name EvidenceLock) {
+            $lockNumber = 1
+            $script:evidenceLocks = Get-VmsCamera | ForEach-Object {
+                try {
+                    $splat = @{
+                        CameraIds     = $_.Id
+                        Header        = "Test Evidence Lock $lockNumber"
+                        FootageFrom   = (Get-Date).AddDays(-1)
+                        FootageTo     = (Get-Date).AddSeconds(-10)
+                        RetentionType = 'Indefinite'
+                        ErrorAction   = 'Stop'
+                    }
+                    Add-EvidenceLock @splat
+                    $lockNumber++
+                } catch {
+                    Write-Warning "Failed to create evidence lock. $($_.Exception.Message)"
+                }
+            }
+        }
         Clear-VmsCache
+    }
+
+    AfterAll {
+        if (Test-VmsLicensedFeature -Name EvidenceLock) {
+            foreach ($lock in $script:evidenceLocks) {
+                try {
+                    $lock.MarkedData | Remove-EvidenceLock -Force -Confirm:$false -ErrorAction Stop
+                } catch {
+                    Write-Warning "Failed to remove evidence lock. $($_.Exception.Message)"
+                }
+            }
+        }
     }
 
     It 'Completes without error' {
@@ -96,6 +129,7 @@ Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) {
                     Send-MipMessage -MessageId Control.StartRecordingCommand -DestinationEndpoint $fqid -UseEnvironmentManager
                 }
             }
+
             Start-Sleep -Seconds 10
             $script:camerareport += Get-VmsCameraReport -IncludePlainTextPasswords -IncludeRetentionInfo -IncludeRecordingStats -IncludeSnapshots -SnapshotTimeoutMS 20000 -ErrorAction Stop
         } | Should -Not -Throw
@@ -142,5 +176,21 @@ Context 'Get-VmsCameraReport' -Skip:($script:SkipReadWriteTests) {
         $cameraWithStreams | Should -Not -BeNullOrEmpty -Because 'At least one camera should have a populated LiveStream name, indicating StreamFolder.Streams was populated correctly after FillChildren'
         $cameraWithStreams.LiveStreamDescription | Should -Not -BeNullOrEmpty -Because 'LiveStreamDescription should be populated when LiveStream is populated'
         $cameraWithStreams.RecordedStream | Should -Not -BeNullOrEmpty -Because 'RecordedStream should be populated when LiveStream is populated'
+    }
+
+    It 'Has correct HasEvidenceLock and OldestVideoInRetentionWindow behavior' -Skip:(-not (Test-VmsLicensedFeature -Name EvidenceLock)) {
+        $hasEvidenceLock = $script:camerareport | Where-Object { $_.HasEvidenceLock -eq $true } | Select-Object -First 1
+        if ($null -eq $hasEvidenceLock) {
+            Set-ItResult -Skipped -Because 'No cameras with evidence locks present in this environment.'
+            return
+        }
+        $hasEvidenceLock.HasEvidenceLock | Should -Be $true -Because 'HasEvidenceLock should be true when evidence lock is present.'
+        $oldestVideoProp = $hasEvidenceLock.psobject.Properties | Where-Object Name -eq 'OldestVideoInRetentionWindow'
+        $oldestVideoProp | Should -Not -BeNullOrEmpty -Because 'OldestVideoInRetentionWindow property should be present.'
+        if ($null -ne $hasEvidenceLock.OldestVideoInRetentionWindow) {
+            $hasEvidenceLock.OldestVideoInRetentionWindow | Should -BeOfType -ExpectedType [datetime] -Because 'OldestVideoInRetentionWindow should be a datetime when non-null.'
+        } else {
+            $hasEvidenceLock.ActualRetentionDays | Should -BeIn @($null, 0) -Because 'When OldestVideoInRetentionWindow is null, true retention may be unknown/unavailable or explicitly 0 when all video in the retention window is evidence-locked.'
+        }
     }
 }
