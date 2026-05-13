@@ -18,4 +18,5 @@
     PrebufferSecondsExceedsMaximumValue = 'PrebufferSeconds exceeds the maximum of value for in-memory buffering. The value will be updated to 15 seconds.'
     ClientServiceValidateResult         = 'Validation error: Failed to set {0} to "{1}". Reason: {2}.'
     FalseNotAllowedForRecordedProperty  = 'Value cannot be false for Recorded. To stop recording this stream, assign Primary to another stream using "-RecordingTrack Primary".'
+    VideoOSDeviceNotFound               = 'Device ''{0}'' not found. It may have been added or enabled after the last configuration refresh. Try again after running Clear-VmsCache or Connect-Vms.'
 }

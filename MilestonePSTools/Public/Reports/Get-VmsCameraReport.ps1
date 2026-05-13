@@ -310,7 +310,7 @@ function Get-VmsCameraReport {
                     Write-Verbose 'Starting true retention threadjobs for evidence-locked cameras'
                     $trueRetentionScriptBlock = {
                         param(
-                            [guid]$Id,
+                            [VideoOS.Platform.ConfigItem]$CameraItem,
                             [double]$ConfiguredRetentionDays
                         )
 
@@ -318,15 +318,15 @@ function Get-VmsCameraReport {
                         # to find the GOP less than or equal to the configured retention.
                         $now = (Get-Date).ToUniversalTime()
                         try {
-                            $item = Get-VmsVideoOSItem -Kind Camera -Id $Id
-                            $src = [VideoOS.Platform.Data.RawVideoSource]::new($item)
+                            $src = [VideoOS.Platform.Data.RawVideoSource]::new($CameraItem)
                             $src.Init()
                             $videoFound = $src.GetNext($now.AddDays(-$ConfiguredRetentionDays))
                             if ($videoFound.List.Count -lt 1 -or $null -eq $videoFound.List[0]) {
+                                Write-Verbose "No recordings found within the configured retention period for camera with ID '$($CameraItem.FQID.ObjectId)'."
                                 return
                             }
                             [pscustomobject]@{
-                                Id        = $Id
+                                Id        = $CameraItem.FQID.ObjectId
                                 TrueBegin = $videoFound.List[0].DateTime
                             }
                         } finally {
@@ -344,14 +344,21 @@ function Get-VmsCameraReport {
                                     continue
                                 }
                                 if (-not $cache.PlaybackInfo.ContainsKey([guid]$cam.Id)) {
+                                    Write-Warning "Evidence lock found for $($cam.Name) but Get-PlaybackInfo did not return the first and last timestamps from the media database"
                                     continue
                                 }
-                                $storage = $rec.StorageFolder.Storages | Where-Object Path -EQ $cam.RecordingStorage
+                                $storage = $rec | Get-VmsStorage | Where-Object Path -EQ $cam.RecordingStorage
                                 if ($null -eq $storage) {
+                                    Write-Error "Unable to find storage '$($cam.RecordingStorage)' for camera '$($cam.Name)' on recording server '$($rec.Name)'." -TargetObject $cam
+                                    continue
+                                }
+                                $item = Get-VmsVideoOSItem -Kind Camera -Id $cam.Id
+                                if ($null -eq $item) {
+                                    Write-Error ($script:Messages.VideoOSDeviceNotFound -f $cam.Name) -TargetObject $cam
                                     continue
                                 }
                                 $trueRetentionJobs += $jobRunner.AddJob($trueRetentionScriptBlock, @{
-                                    Id                      = $cam.Id
+                                    CameraItem              = $item
                                     ConfiguredRetentionDays = ($storage | Get-VmsStorageRetention).TotalDays
                                 })
                             }
