@@ -128,7 +128,6 @@ function Get-VmsCameraReport {
                     {
                         param([bool]$supportsFillChildren, [object]$recorder, [string]$EnableFilter, [bool]$getPasswords)
 
-                        $passwords = @{}
                         $manualMethod = {
                             param([object]$recorder)
                             $null = $recorder.HardwareDriverFolder.HardwareDrivers
@@ -155,13 +154,6 @@ function Get-VmsCameraReport {
                                     }
                                 }
                                 $recorder.FillChildren($itemTypes, $itemFilters)
-
-                                if ($getPasswords) {
-                                    foreach ($hw in $recorder.hardwarefolder.hardwares) {
-                                        $password = $hw.ReadPasswordHardware().GetProperty('Password')
-                                        $passwords[[guid]$hw.Id] = $password
-                                    }
-                                }
                             } catch {
                                 Write-Error $_
                                 $manualMethod.Invoke($recorder)
@@ -169,12 +161,12 @@ function Get-VmsCameraReport {
                         } else {
                             $manualMethod.Invoke($recorder)
                         }
-                        
-                        if ($passwords.Count -gt 0) {
-                            foreach ($key in $passwords.Keys) {
+
+                        if ($getPasswords) {
+                            foreach ($hw in $recorder.HardwareFolder.Hardwares) {
                                 [pscustomobject]@{
-                                    HardwareId = $key
-                                    Password = $passwords[$key]
+                                    HardwareId = [guid]$hw.Id
+                                    Password   = $hw.ReadPasswordHardware().GetProperty('Password')
                                 }
                             }
                         }
@@ -229,7 +221,7 @@ function Get-VmsCameraReport {
                     $info = Get-PlaybackInfo -Path "Camera[$id]"
                     if ($null -ne $info) {
                         [pscustomobject]@{
-                            DeviceId = $id
+                            DeviceId     = $id
                             PlaybackInfo = $info
                         }
                     }
