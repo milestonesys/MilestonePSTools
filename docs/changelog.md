@@ -23,6 +23,11 @@ hide:
   empty values for the `ConfiguredRecordedResolution`, `ConfiguredRecordedCodec`, and `ConfiguredRecordedFPS` columns.
   This bug also affected `Get-VmsCameraStream` where empty values were returned for the `RecordingTrack` and `Recorded`
   properties, and `PlaybackDefault` was always `$false`.
+- Fixed [Issue 165](https://github.com/milestonesys/MilestonePSTools/issues/165) where `Get-VmsCameraReport` with
+  `-IncludeRetentionInfo` would intermittently return blank values for `MediaDatabaseBegin`, `MediaDatabaseEnd`, and
+  `ActualRetentionDays` for some cameras. Similarly, `-IncludePlainTextPasswords` would return `NotIncluded` for most
+  cameras. Both were caused by a race condition where parallel background jobs wrote to a shared hashtable
+  concurrently, resulting in lost data.
 - Fixed [Issue 161](https://github.com/milestonesys/MilestonePSTools/issues/161) where `Export-VmsHardware` would not
   export _disabled hardware_ even if you provided the parameter `-EnableFilter All`.
 
