@@ -7,6 +7,8 @@ hide:
 
 ## [vNext] unreleased
 
+## [25.2.61] 2026-05-14
+
 ### 🔄 Changed
 
 - **`Get-VmsCameraReport`** with `-IncludeRetentionInfo` now accounts for Evidence Locks when calculating
