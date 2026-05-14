@@ -7,7 +7,7 @@ hide:
 
 ## [vNext] unreleased
 
-### � Changed
+### 🔄 Changed
 
 - **`Get-VmsCameraReport`** with `-IncludeRetentionInfo` now accounts for Evidence Locks when calculating
   `ActualRetentionDays` and `MeetsRetentionPolicy`. Previously, if an Evidence Lock preserved video older than the
@@ -17,7 +17,7 @@ hide:
   `OldestVideoInRetentionWindow` is the timestamp of the oldest non-locked video within the configured retention
   window. Addresses [Issue 160](https://github.com/milestonesys/MilestonePSTools/issues/160).
 
-### �🐛 Fixed
+### 🐛 Fixed
 
 - Fixed [Issue 184](https://github.com/milestonesys/MilestonePSTools/issues/184) where `Get-VmsCameraReport` returned
   empty values for the `ConfiguredRecordedResolution`, `ConfiguredRecordedCodec`, and `ConfiguredRecordedFPS` columns.
@@ -30,6 +30,8 @@ hide:
   concurrently, resulting in lost data.
 - Fixed [Issue 161](https://github.com/milestonesys/MilestonePSTools/issues/161) where `Export-VmsHardware` would not
   export _disabled hardware_ even if you provided the parameter `-EnableFilter All`.
+- Fixed an issue where `Get-VmsCameraReport -IncludePlainTextPasswords` would not return passwords on systems older than
+  XProtect 2020 R2.
 
 ## [25.2.38] 2026-02-02
 
