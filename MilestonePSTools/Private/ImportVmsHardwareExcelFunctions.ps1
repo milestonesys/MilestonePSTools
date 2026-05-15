@@ -1730,17 +1730,14 @@ function Import-VmsHardwareExcel {
 
                 $params = @{
                     HardwareAddress = $row.Address -as [uri]
-                    Credential      = [collections.generic.list[pscredential]]::new()
                     DriverNumber    = $row.DriverNumber -as [int]
                     RecordingServer = $recorder
                     ErrorAction     = 'Stop'
                 }
 
-                if ($row.UserName -and $row.Password) {
-                    $params.Credential.Add([pscredential]::new($row.UserName, ($row.Password | ConvertTo-SecureString -AsPlainText -Force)))
-                }
-                foreach ($pscredential in $Credential){
-                    $params.Credential.Add($pscredential)
+                $hardwareCredentials = New-ImportHardwareCredentialList -UserName $row.UserName -Password $row.Password -Credential $Credential
+                if ($hardwareCredentials.Count -gt 0) {
+                    $params.Credential = $hardwareCredentials
                 }
 
                 if (-not $params.HardwareAddress -or -not $params.HardwareAddress.IsAbsoluteUri) {
@@ -1763,11 +1760,7 @@ function Import-VmsHardwareExcel {
                         if ($row.DriverGroup) {
                             $scanParams.DriverFamily = $row.DriverGroup
                         }
-                        if ($params.Credential) {
-                            $scanParams.Credential = $params.Credential
-                        } else {
-                            $scanParams.UseDefaultCredentials
-                        }
+                        $scanParams = Set-ImportHardwareScanCredentialParameters -ScanParameters $scanParams -Credential $params.Credential
                         Write-Verbose "Scanning hardware at $($row.Address) for driver discovery"
                         $scans = Start-VmsHardwareScan @scanParams
                         $scan = if ($null -eq ($scans | Where-Object HardwareScanValidated)) {
@@ -1784,14 +1777,28 @@ function Import-VmsHardwareExcel {
                             continue
                         }
                     }
-                    $credentials = $params.Credential
-                    foreach ($hwCredential in $credentials) {
-                        try {
-                            $params.Credential = $hwCredential
-                            $hardware = Add-VmsHardware @params
-                        } catch {
-                            Write-Error -ErrorRecord $_
+                    $credentials = New-ImportHardwareCredentialList -Credential $params.Credential
+                    if ($credentials.Count -eq 0) {
+                        Write-Error -Message "Skipping hardware '$($row.Name)' ($($params.HardwareAddress)) because no credentials were provided or discovered." -TargetObject $row
+                        continue
+                    }
+                    $hardware = Invoke-ImportHardwareCredentialAttempts -Credential $credentials -AttemptScript {
+                        param($hwCredential)
+                        $params.Credential = $hwCredential
+                        $addedHardware = Add-VmsHardware @params
+                        [pscustomobject]@{
+                            Success = $null -ne $addedHardware
+                            Value   = $addedHardware
                         }
+                    } -OnAttemptFailure {
+                        param($attempt)
+                        if ($attempt.ErrorRecord) {
+                            Write-Error -ErrorRecord $attempt.ErrorRecord
+                        }
+                    }
+                    if ($null -eq $hardware) {
+                        Write-Error -Message "Failed to add hardware '$($row.Name)' ($($params.HardwareAddress)) using the supplied credential(s)." -TargetObject $row
+                        continue
                     }
                 }
                 $setHwParams = @{
