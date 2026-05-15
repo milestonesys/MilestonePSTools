@@ -16,7 +16,7 @@ Offers a UI dialog for selecting items, similar to the item selection interface 
 ```
 Select-VideoOSItem [[-Title] <String>] [[-Kind] <Guid[]>] [[-Category] <Category[]>] [-SingleSelect]
  [-AllowFolders] [-AllowServers] [-KindUserSelectable] [-CategoryUserSelectable] [-FlattenOutput]
- [-HideGroupsTab] [-HideServerTab] [<CommonParameters>]
+ [-HideGroupsTab] [-HideServerTab] [[-OwnerHandle] <IntPtr>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -163,6 +163,22 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OwnerHandle
+
+Specifies an optional UI owner window handle to make the dialog modal to an existing GUI window.
+
+```yaml
+Type: IntPtr
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

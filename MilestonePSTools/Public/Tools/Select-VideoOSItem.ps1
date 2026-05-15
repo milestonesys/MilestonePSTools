@@ -49,7 +49,10 @@ function Select-VideoOSItem {
         $HideGroupsTab,
         [Parameter()]
         [switch]
-        $HideServerTab
+        $HideServerTab,
+        [Parameter()]
+        [IntPtr]
+        $OwnerHandle = [IntPtr]::Zero
     )
 
     begin {
@@ -69,12 +72,16 @@ function Select-VideoOSItem {
         $form.ServerTabVisable = -not $HideServerTab
         $form.Icon = [System.Drawing.Icon]::FromHandle([VideoOS.Platform.UI.Util]::ImageList.Images[[VideoOS.Platform.UI.Util]::SDK_GeneralIx].GetHicon())
         $form.Text = $Title
-        $form.TopMost = $true
         $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
         $form.BringToFront()
         $form.Activate()
 
-        if ($form.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
+        $dialogResult = Invoke-WithDialogOwner -Handle $OwnerHandle -TopMostFallback -ScriptBlock {
+            param($owner)
+            $form.ShowDialog($owner)
+        }
+
+        if ($dialogResult -eq [System.Windows.Forms.DialogResult]::OK) {
             if ($FlattenOutput) {
                 Write-Output $form.ItemsSelectedFlattened
             }
@@ -84,4 +91,3 @@ function Select-VideoOSItem {
         }
     }
 }
-
