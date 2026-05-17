@@ -8,7 +8,7 @@ authors:
 ## Overview
 
 XProtect Smart Client comes with a number of view layouts built-in. However, sometimes there is a need (or desire) to
-create a custom layout. The MIP SDK has supported this functionalality for quite a while, but one needed to be a
+create a custom layout. The MIP SDK has supported this functionality for quite a while, but one needed to be a
 developer in order to create them.
 
 MilestonePSTools has also been able to do this for a while, since it sits on top of the MIP SDK. However, it has not
