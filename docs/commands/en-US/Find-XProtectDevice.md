@@ -15,7 +15,8 @@ Finds devices and provides the names of the parent hardware and recording server
 
 ```
 Find-XProtectDevice [-ItemType <String[]>] [-Name <String>] [-Address <String>] [-MacAddress <String>]
- [-EnableFilter <String>] [-Properties <Hashtable>] [-ShowDialog] [<CommonParameters>]
+ [-EnableFilter <String>] [-Properties <Hashtable>] [-ShowDialog] [[-OwnerHandle] <IntPtr>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -160,6 +161,22 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OwnerHandle
+
+Specifies an optional UI owner window handle when using -ShowDialog so the dialog is modal to an existing GUI window.
+
+```yaml
+Type: IntPtr
+Parameter Sets: ShowDialog
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
