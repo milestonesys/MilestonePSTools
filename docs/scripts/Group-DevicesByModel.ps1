@@ -132,6 +132,7 @@ function Group-DevicesByModel {
             $modelGroups = $ms.RecordingServerFolder.RecordingServers.HardwareFolder.Hardwares | Where-Object $filterScript | Group-Object Model | Sort-Object Name
             $totalDevices = ($DeviceType | ForEach-Object { ($modelGroups.Group."$($_)Folder"."$($_)s").Count } | Measure-Object -Sum).Sum
             $devicesProcessed = 0
+            $progressStopwatch = [diagnostics.stopwatch]::StartNew()
             foreach ($type in $DeviceType) {
                 try {
                     $childProgress = @{
@@ -156,6 +157,12 @@ function Group-DevicesByModel {
                         
                         $childProgress.Status = "Current: $BaseGroupPath/$modelName"
                         $parentProgress.PercentComplete = $devicesProcessed / $totalDevices * 100
+                        if ($devicesProcessed -gt 0 -and $totalDevices -gt 0) {
+                            $timePerDevice = $progressStopwatch.ElapsedMilliseconds / $devicesProcessed
+                            $remainingDevices = $totalDevices - $devicesProcessed
+                            $remainingTime = [timespan]::FromMilliseconds($remainingDevices * $timePerDevice)
+                            $parentProgress.SecondsRemaining = [int]$remainingTime.TotalSeconds
+                        }
                         Write-Progress @parentProgress
         
                         Write-Verbose "Creating groups for $totalForModel $type devices of model '$modelName'"
