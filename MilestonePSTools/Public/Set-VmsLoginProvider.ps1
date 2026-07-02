@@ -107,7 +107,7 @@ function Set-VmsLoginProvider {
                         $cred = [pscredential]::new('a', $ClientSecret)
                         $LoginProvider.ClientSecret = $cred.GetNetworkCredential().Password
                         $dirty = $true
-                    } elseif ($key -eq 'ClientSecret' -and $ClientSecretType -eq 'X509Thumbprint') {
+                    } elseif ($key -eq 'ClientSecretType') {
                         # The secret carries a certificate thumbprint and is applied
                         # via the API Gateway below, not through the .NET SDK, so that
                         # clientSecretType can be set to X509Thumbprint.
