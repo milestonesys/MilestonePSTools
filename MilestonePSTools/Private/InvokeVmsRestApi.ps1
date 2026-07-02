@@ -89,7 +89,7 @@ function InvokeVmsRestApi {
 
     process {
         $uriBuilder = [uribuilder]$GatewayUri
-        $uriBuilder.Path = $uriBuilder.Path.TrimEnd('/') + '/rest/v1/' + $ResourcePath
+        $uriBuilder.Path = $uriBuilder.Path.TrimEnd('/') + '/rest/v1/' + $ResourcePath.TrimStart('/')
         $requestParams = @{
             Uri     = $uriBuilder.Uri
             Method  = $Method
