@@ -35,7 +35,7 @@ function New-VmsLoginProvider {
         [ValidateVmsVersion('25.3')]
         [ValidateSet('SharedSecret', 'X509Thumbprint')]
         [string]
-        $ClientSecretType = 'SharedSecret',
+        $ClientSecretType,
 
         [Parameter()]
         [string]
