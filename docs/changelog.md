@@ -7,6 +7,16 @@ hide:
 
 ## [vNext] unreleased
 
+### ✨ Added
+
+- **`New-VmsLoginProvider`** and **`Set-VmsLoginProvider`** now accept a `-ClientSecretType` parameter with the values
+  `SharedSecret` (default) and `X509Thumbprint`. When `X509Thumbprint` is specified, the `-ClientSecret` value is
+  interpreted as a certificate thumbprint and the external login provider is configured for certificate-based (OIDC
+  `private_key_jwt`) authentication. Because the .NET SDK does not expose this field, the cmdlets transparently
+  configure the provider through the XProtect API Gateway. Requires XProtect 2025 R3 or later, and the certificate's
+  private key must be available to the identity server. Note that editing the secret in the Management Client UI
+  reverts the provider to `SharedSecret`.
+
 ## [25.2.61] 2026-05-14
 
 ### 🔄 Changed
@@ -99,7 +109,7 @@ hide:
 
 ## [25.2.6] 2025-06-18
 
-### ➕ Added
+### ✨ Added
 
 - Added support for `Hardware` on the `Get-VmsDeviceGeneralSetting` and `Set-VmsDeviceGeneralSetting` commands, with new
   aliases -- `Get-VmsHardwareGeneralSetting` and `Set-VmsHardwareGeneralSetting`.
@@ -119,7 +129,7 @@ hide:
 
 ## [25.1.50] 2025-06-06
 
-### ➕ Added
+### ✨ Added
 
 - If [telemetry](./commands/en-US/about_Telemetry.md) is enabled, the use of any MilestonePSTools command will be
   reported to Azure Application Insights once per PowerShell session. The name of the command used, and the name of the
@@ -209,7 +219,7 @@ hide:
   This has been fixed by making an empty array the default value for `-Scopes`.
 - Fixed `SmartMap` parameter on `New-VmsAlarmDefinition` and `Set-VmsAlarmDefinition`.
 
-### ➕ Added
+### ✨ Added
 
 - The new commands `Get-VmsDeviceGeneralSetting`, and `Set-VmsDeviceGeneralSetting`, will deprecate all the
   device-specific commands like `Get-MicrophoneSetting` and `Set-SpeakerSetting` for accessing and modifying
@@ -259,13 +269,13 @@ hide:
 
 ## [24.2.12] 2025-01-29
 
-### ➕ Added
+### ✨ Added
 
 - New commands for creating and managing alarm definitions: `New-VmsAlarmDefinition`, `Get-VmsAlarmDefinition`, `Set-VmsAlarmDefinition` and `Remove-VmsAlarmDefinition`.
 
 ## [24.2.1] 2024-11-09
 
-### ➕ Added
+### ✨ Added
 
 - Added commands for creating, getting, and removing `TrustedIssuer` records to support the use of external identity
   providers for single sign-on to a Milestone Federated Architecture (MFA) hierarchy.
@@ -287,7 +297,7 @@ hide:
 
 ## [24.1.27] 2024-09-26
 
-### ➕ Added
+### ✨ Added
 
 - Added a set of commands for creating, updating, and removing live and recorded video restrictions. The associated
   commands can be listed using `Get-Command -Noun VmsRestricted*`.
@@ -311,7 +321,7 @@ hide:
 
 ## [24.1.6] 2024-08-02
 
-### ➕ Added
+### ✨ Added
 
 - `Get-VmsDevice` and `Set-VmsDevice` is a generic form of the `Get-VmsCamera`, `Get-VmsMicrophone`, and similar
   commands. When you want to modify all child devices of one or more `Hardware` objects, for example when performing
@@ -335,7 +345,7 @@ hide:
   displayed on import if you have this option enabled in your environment. The warning provides the commands needed to
   disable it.
 
-### ➕ Added
+### ✨ Added
 
 - `Get-Vms*` and `Set-Vms*` commands have been added for all device types including **Cameras**, **Microphones**,
   **Speakers**, **Metadata**, **Inputs**, and **Outputs**. The original `Get-<devicetype>` commands are now aliases to
@@ -353,7 +363,7 @@ hide:
 - Telemetry is now enabled and sent to Milestone through Azure Application Insights by default. Documentation, including
   instructions for disabling telemetry, can be found in the [about_Telemetry](./commands/en-US/about_Telemetry.md) topic.
 
-### ➕ Added
+### ✨ Added
 
 - `Get-VmsMetadataLiveRecord` and `Get-VmsMetadataRecord` are now available for retrieving live, and recorded metadata
   respectively. Metadata is typically received and stored in the form of an XML document, and due to the wide variety of
@@ -362,7 +372,7 @@ hide:
 
 ## [23.3.42] 2024-06-10
 
-### ➕ Added
+### ✨ Added
 
 - Support for Azure Application Insights telemetry has been introduced but is disabled by default in this release. In
   a future release it may be enabled by default.
@@ -373,7 +383,7 @@ hide:
 
 - `Get-VmsCameraReport` now correctly returns `$true` for the value of `PrivacyMaskEnabled` if a privacy mask is set.
 
-### ➕ Added
+### ✨ Added
 
 - `Set-VmsDeviceStorage` for assigning **Camera**, **Microphone**, **Speaker**, and **Metadata** devices to different
   storage profiles on the same recording server. Assignments can be made by display name, so if you have many recording
@@ -414,7 +424,7 @@ hide:
 
 ## [23.3.2] 2024-02-22
 
-### ➕ Added
+### ✨ Added
 
 - `Get-VmsIServiceRegistrationService` has been added to offer easy access to the ServiceRegistrationService on the management server.
 - The [installation docs](./help/compatibility.md) now include a compatibility table showing the most recent MilestonePSTools versions that should be compatible with different XProtect VMS releases, along with an indication of which combinations are supported. Generally speaking, as long as the XProtect version you connect to is not discontinued according to the official product lifecycle page, the latest MilestonePSTools release is supported for use with that VMS version.
@@ -429,7 +439,7 @@ hide:
 
 ## [23.3.1] 2023-11-17
 
-### ➕ Added
+### ✨ Added
 
 - New `[MilestonePSTools.RequiresInteractiveSession()]` attribute for commands and parameters that should only be used
   in an interactive PowerShell session. Using the `Select-Camera`, or `Select-VideoOSItem` commands, or the `-ShowDialog` parameters on `Connect-Vms` and `Connect-ManagementServer` will now throw an exception when used in a non-interactive
@@ -451,7 +461,7 @@ hide:
 
 ## [23.2.3] 2023-10-11
 
-### ➕ Added
+### ✨ Added
 
 - New `Move-VmsHardware` command can be used to move hardware between recording servers on the same management server.
 - Change passwords on supported hardware devices with `Set-VmsHardware` and the `Password` parameter by including the `-UpdateRemoteHardware` switch.
@@ -490,7 +500,7 @@ hide:
 
 ## [23.2.2] 2023-09-28
 
-### ➕ Added
+### ✨ Added
 
 - New cmdlets for managing webhooks on VMS versions 2023 R1 and later: `New-VmsWebhook`, `Get-VmsWebhook`, `Set-VmsWebhook`, and `Remove-VmsWebhook`.
 - New `Connect-Vms`, `Disconnect-Vms`, and related connection profile cmdlets `Get|Set|Remove-VmsConnectionProfile` which together introduce a new way of managing MilestonePSTools connections. When using `Connect-Vms` without parameters, or when using only the 'Name' parameter, the default, or named connection profile will be used to login to the associated VMS. Or, if no connection profile has been created yet, you will be prompted for credentials. Afterward, the login information will be persisted to disk using `Export-CliXml` which will encrypt the provided credentials using CurrentUser scope in your local appdata directory.When using MilestonePSTools with automation via scheduled tasks or other means of launching scripts on event/schedule, this greatly simplifies things by eliminating the need to figure out credential management every time.
@@ -543,7 +553,7 @@ hide:
   module should work on both 2023 R2 as well as older versions without breaking changes. However,
   you will not be able to use `-RecordingTrack Secondary` on versions older than 2023 R2.
 
-### ➕ Added
+### ✨ Added
 
 - New VmsFailoverGroup and VmsFailoverRecorder cmdlets for managing failover
   recording server groups, assigning failover recording servers to groups, or
@@ -562,7 +572,7 @@ hide:
 
 ## [23.1.3] 2023-04-20
 
-### ➕ Added
+### ✨ Added
 
 - New VmsRule cmdlets for working with Milestone VMS rules. Please see the cmdlet
   documentation for more information. A more detailed guide will be written in
@@ -597,7 +607,7 @@ hide:
 
 ## [23.1.2] 2023-04-07
 
-### ➕ Added
+### ✨ Added
 
 - Suite of nine new smart client profile cmdlets with nouns starting with 'VmsClientProfile'.
   The new cmdlets simplify adding, removing, updating, re-prioritizing, exporting, and importing
@@ -634,7 +644,7 @@ hide:
 
 ## [23.1.1] 2023-03-28
 
-### ➕ Added
+### ✨ Added
 
 - New "VmsBasicUser" and "VmsBasicUserClaim" cmdlets for managing all aspects of basic users, including
   basic user entries created for users who have logged in using an external
@@ -664,7 +674,7 @@ hide:
 
 ## [22.3.1] 2023-02-09
 
-### ➕ Added
+### ✨ Added
 
 - Introduced `Set-VmsHardwareDriver` which can be used to perform a "hardware
   replacement" on XProtect VMS versions 2023 R1 and later. This is an exciting
@@ -769,7 +779,7 @@ parameters.
 | Get-User                       | Removed | Now aliased to Get-VmsRoleMember        |
 | Remove-User                    | Removed | Now aliased to Remove-VmsRoleMember     |
 
-### ➕ Added
+### ✨ Added
 
 - New `VmsDeviceGroup*` cmdlets for adding, removing, and changing device groups and device group members for all device types.
 - New `VmsRole*` cmdlets for getting, adding, setting, and removing roles, role members, and overall security permissions.
@@ -830,7 +840,7 @@ parameters.
 - Fixed an uncommon issue with `Get-VmsCameraReport` where the error `Cannot index into a null array` is returned
   when at least one camera lacks any stream settings in the Settings tab for the camera in Smart Client.
 
-### ➕ Added
+### ✨ Added
 
 - New cmdlets for getting, setting, and clearing site information properties like company name, address, and contact information.
   - Get-VmsSiteInfo
@@ -849,7 +859,7 @@ parameters.
 - Fixed an error in `Get-VmsCameraReport` where cameras without multi-stream support would result in errors being passed to the pipeline.
 - Fixed an error in `Get-VmsCameraReport` where recording servers without cameras could cause an error when using the `-IncludeRetentionInfo` switch.
 
-### ➕ Added
+### ✨ Added
 
 - Several cmdlets for working with ViewGroup and View objects, including cmdlets for copying, exporting, and importing ViewGroups, and modifying permissions.
   - Clear-VmsView
@@ -874,7 +884,7 @@ parameters.
 
 ## [21.2.6] 2022-02-08
 
-### ➕ Added
+### ✨ Added
 
 - `Clear-VmsCache` can be used to clear the child items from the cached
   ManagementServer object (see the caching reference in changes below). This will
@@ -906,7 +916,7 @@ parameters.
 
 ## [21.2.5] 2022-01-27
 
-### ➕ Added
+### ✨ Added
 
 - `Get-VmsDeviceStatus` offers very fast streaming device status information
   through the use of the MIP SDK RecorderStatusService2 API and the
@@ -921,7 +931,7 @@ parameters.
 
 ## [21.2.3] 2022-01-20
 
-### ➕ Added
+### ✨ Added
 
 - Spanish language translations.
 - `Get-VmsCamera` replaced `Get-Camera` and adds the ability to search by name.
@@ -953,7 +963,7 @@ parameters.
 
 ## [21.2.2] 2021-11-04
 
-### ➕ Added
+### ✨ Added
 
 - `New-VmsFailoverGroup`, `Get-VmsFailoverGroup`, and `Remove-VmsFailoverGroup`
   which is supported for XProtect Expert and XProtect Corporate 2021 R2 and
@@ -985,7 +995,7 @@ parameters.
 
 ## [21.2.0] 2021-10-27
 
-### ➕ Added
+### ✨ Added
 
 - Support for `Get-Help -Online`
 - Get-VmsCameraReport as a faster, more reliable replacement for Get-CameraReport.
