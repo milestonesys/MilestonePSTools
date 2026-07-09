@@ -171,6 +171,23 @@ Task -name RestoreDependencyModules -depends CacheDependencyModules {
         $null = New-Item -Path $dstModuleVersionFolder -ItemType Directory -Force
         Get-ChildItem -Path $srcModuleVersionFolder | Copy-Item -Destination $dstModuleVersionFolder -Recurse
     }
+
+    # Validate that all embedded modules were restored successfully
+    foreach ($module in $script:EmbeddedModules) {
+        $modulePsd1 = Join-Path $PSBPreference.Build.ModuleOutDir "modules\$($module.Name)\$($module.RequiredVersion)\$($module.Name).psd1"
+        if (-not (Test-Path $modulePsd1)) {
+            throw "Embedded module '$($module.Name)' v$($module.RequiredVersion) was not found at '$modulePsd1'. The build cannot continue without this module."
+        }
+        Write-Host "Verified embedded module '$($module.Name)' v$($module.RequiredVersion) at '$modulePsd1'" -ForegroundColor Green
+    }
+
+    # Ensure embedded modules are not installed in standard module paths to avoid false-positive build results
+    foreach ($module in $script:EmbeddedModules) {
+        $installed = Get-Module -Name $module.Name -ListAvailable -ErrorAction SilentlyContinue
+        if ($installed) {
+            throw "Module '$($module.Name)' is installed in a standard module path ($($installed.ModuleBase | Select-Object -First 1)). This can mask issues with the embedded module. Please uninstall it before building."
+        }
+    }
 }
 
 Task -name CreateOrUpdateChecksumFile {
