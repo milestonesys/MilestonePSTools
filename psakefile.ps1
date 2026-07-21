@@ -91,13 +91,13 @@ using namespace VideoOS.Platform.ConfigurationItems
     $script:EmbeddedModules = @(
         @{
             Name            = 'ImportExcel'
-            RequiredVersion = '7.8.9'
+            RequiredVersion = '7.8.10'
         }
     )
     $PesterTags = $Tags
 }
 
-Task Default -depends StageCmdletLib, Build, UpdateModuleExports, ExportCommandHistory, UpdateCommandIndexTable, generate-compatibility-table
+Task Default -depends StageCmdletLib, Build, RestoreDependencyModules, UpdateModuleExports, ExportCommandHistory, UpdateCommandIndexTable, generate-compatibility-table
 
 Task Build -FromModule PowerShellBuild -minimumVersion '0.7.2'
 
@@ -184,7 +184,8 @@ Task -name RestoreDependencyModules -depends CacheDependencyModules {
     # Ensure embedded modules are not installed in standard module paths to avoid false-positive build results
     foreach ($module in $script:EmbeddedModules) {
         $installed = Get-Module -Name $module.Name -ListAvailable -ErrorAction SilentlyContinue
-        if ($installed) {
+        $filteredInstalls = $installed | Where-Object Path -notmatch '\.cache\\'
+        if ($filteredInstalls) {
             throw "Module '$($module.Name)' is installed in a standard module path ($($installed.ModuleBase | Select-Object -First 1)). This can mask issues with the embedded module. Please uninstall it before building."
         }
     }

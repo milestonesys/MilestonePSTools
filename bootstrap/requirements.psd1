@@ -13,7 +13,7 @@
         # Url: https://github.com/psake/PowerShellBuild
         Name = 'PowerShellBuild'
         DependencyType = 'PSGalleryModule'
-        Version = '0.7.2'
+        Version = '0.8.2'
     }
     'Pester' = @{
         # License: Apache-2.0
@@ -43,7 +43,7 @@
         # Url: https://github.com/psake/psake
         Name = 'psake'
         DependencyType = 'PSGalleryModule'
-        Version = '4.9.0'
+        Version = '5.0.4'
     }
     'PlatyPS' = @{
         # License: MIT
