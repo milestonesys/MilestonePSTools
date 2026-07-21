@@ -7,6 +7,11 @@ hide:
 
 ## [vNext] unreleased
 
+### 🐛 Fixed
+
+- Fixed an issue introduced in the previous release where the embedded `ImportExcel` module could be missing from
+  packaged outputs. The build now fails when the embedded `ImportExcel` module is not present.
+
 ### ✨ Added
 
 - **`New-VmsLoginProvider`** and **`Set-VmsLoginProvider`** now accept a `-ClientSecretType` parameter with the values
