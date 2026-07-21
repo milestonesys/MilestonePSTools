@@ -78,7 +78,17 @@ function Export-VmsHardware {
                 if (Get-module ImportExcel -ListAvailable) {
                     Import-Module ImportExcel
                 } else {
-                    Import-Module "$PSScriptRoot\modules\ImportExcel\7.8.9\ImportExcel.psd1"
+                    $embeddedModulesPath = Join-Path $PSScriptRoot 'modules\ImportExcel'
+                    $importExcelDir = Get-ChildItem -LiteralPath $embeddedModulesPath -Directory | Select-Object -First 1
+                    $importExcelManifest = Join-Path $importExcelDir.FullName 'ImportExcel.psd1'
+                    if ($null -eq $importExcelDir -or -not (Test-Path -LiteralPath $importExcelManifest)) {
+                        Write-Error ("ImportExcel module not found in $embeddedModulesPath. Either the MilestonePSTools " +
+                                     "module files have been modified, or there is a publishing issue. Install your own " +
+                                     "copy of ImportExcel using 'Install-Module ImportExcel' and MilestonePSTools will " +
+                                     "use that instead.")
+                        return
+                    }
+                    Import-Module $importExcelManifest
                 }
             }
             $splat = @{
