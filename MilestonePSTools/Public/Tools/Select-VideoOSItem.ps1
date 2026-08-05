@@ -54,25 +54,30 @@ function Select-VideoOSItem {
 
     begin {
         Assert-VmsRequirementsMet
+        if ($Category) {
+            Write-Warning "The Category parameter is no longer supported after migrating to the MIP SDK ItemPickerWpfWindow, and will be ignored."
+        }
+        if ($KindUserSelectable) {
+            Write-Warning "The KindUserSelectable parameter is no longer supported after migrating to the MIP SDK ItemPickerWpfWindow, and will be ignored."
+        }
+        if ($CategoryUserSelectable) {
+            Write-Warning "The CategoryUserSelectable parameter is no longer supported after migrating to the MIP SDK ItemPickerWpfWindow, and will be ignored."
+        }
+        if ($HideGroupsTab -or $HideServerTab) {
+            Write-Warning "The HideGroupsTab and HideServerTab parameters are no longer supported after migrating to the MIP SDK ItemPickerWpfWindow, which presents a single item tree instead of separate Group/Server tabs."
+        }
     }
 
     process {
         $form = [MilestonePSTools.UI.CustomItemPickerForm]::new();
         $form.KindFilter = $Kind
-        $form.CategoryFilter = $Category
         $form.AllowFolders = $AllowFolders
         $form.AllowServers = $AllowServers
-        $form.KindUserSelectable = $KindUserSelectable
-        $form.CategoryUserSelectable = $CategoryUserSelectable
         $form.SingleSelect = $SingleSelect
-        $form.GroupTabVisable = -not $HideGroupsTab
-        $form.ServerTabVisable = -not $HideServerTab
         $form.Icon = [System.Drawing.Icon]::FromHandle([VideoOS.Platform.UI.Util]::ImageList.Images[[VideoOS.Platform.UI.Util]::SDK_GeneralIx].GetHicon())
         $form.Text = $Title
         $form.TopMost = $true
         $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
-        $form.BringToFront()
-        $form.Activate()
 
         if ($form.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
             if ($FlattenOutput) {
