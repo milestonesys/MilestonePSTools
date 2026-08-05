@@ -66,6 +66,8 @@ namespace MilestonePSTools.DeviceCommands
                 }
             }
 
+            // This deprecated cmdlet only ever supported the legacy single-track recording model.
+#pragma warning disable CS0618 // Type or member is obsolete
             if (Record.IsPresent || Stream?.Record == true)
             {
                 setting.Record = true;
@@ -74,6 +76,7 @@ namespace MilestonePSTools.DeviceCommands
                     item.Record = false;
                 }
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             try
             {

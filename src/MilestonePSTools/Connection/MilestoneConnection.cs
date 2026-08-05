@@ -211,7 +211,9 @@ namespace MilestonePSTools.Connection
                 if (!VideoOS.Platform.SDK.Environment.IsLoggedIn(_uri))
                 {
                     // This login method may be obsolete, but it's also necessary when logging in to older VMS
+#pragma warning disable CS0618 // Type or member is obsolete
                     VideoOS.Platform.SDK.Environment.Login(_uri);
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
                 if (!VideoOS.Platform.SDK.Environment.IsLoggedIn(_uri))
                 {
@@ -265,7 +267,10 @@ namespace MilestonePSTools.Connection
         private void AddSite(Uri uri)
         {
             if (_loginSettings.IsOAuthIdentity) return;
+            // NetworkCredential is safe here since IsOAuthIdentity was already confirmed false above.
+#pragma warning disable CS0618 // Type or member is obsolete
             _cc.Add(uri, AuthType, _loginSettings.NetworkCredential);
+#pragma warning restore CS0618 // Type or member is obsolete
             VideoOS.Platform.SDK.Environment.AddServer(SecureOnly, uri, _cc);
             VideoOS.Platform.SDK.Environment.Login(uri, IntegrationId, IntegrationName, IntegrationVersion,
                   ManufacturerName);
