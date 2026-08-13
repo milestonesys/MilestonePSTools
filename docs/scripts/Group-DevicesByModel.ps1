@@ -114,7 +114,7 @@ function Group-DevicesByModel {
             Write-Verbose "Discovering $($EnableFilter.ToString().ToLower()) devices"
             $ms = [VideoOS.Platform.ConfigurationItems.ManagementServer]::new((Get-VmsSite).FQID)
             $filters = 'RecordingServer', 'Hardware', 'Camera' | ForEach-Object {
-                [VideoOS.ConfigurationApi.ClientService.ItemFilter]::new($_, @(), 'Enabled')
+                [VideoOS.ConfigurationApi.ClientService.ItemFilter]::new($_, @(), $EnableFilter)
             }
             $ms.FillChildren($filters.ItemType, $filters)
 
