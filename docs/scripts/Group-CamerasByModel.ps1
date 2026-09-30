@@ -75,7 +75,7 @@ function Group-CamerasByModel {
             Write-Verbose 'Discovering all enabled cameras'
             $ms = [VideoOS.Platform.ConfigurationItems.ManagementServer]::new((Get-VmsSite).FQID.ServerId)
             $filters = 'RecordingServer', 'Hardware', 'Camera' | ForEach-Object {
-                [VideoOS.ConfigurationApi.ClientService.ItemFilter]::new($_, $null, 'Enabled')
+                [VideoOS.ConfigurationApi.ClientService.ItemFilter]::new($_, @(), 'Enabled')
             }
             $ms.FillChildren($filters.ItemType, $filters)
 
