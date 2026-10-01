@@ -15,7 +15,10 @@
 function Find-XProtectDeviceDialog {
     [CmdletBinding()]
     [RequiresInteractiveSession()]
-    param ()
+    param (
+        [IntPtr]
+        $OwnerHandle = [IntPtr]::Zero
+    )
 
     begin {
         Assert-VmsRequirementsMet
@@ -201,7 +204,7 @@ function Find-XProtectDeviceDialog {
                 $saveDialog.Title = "Save As CSV"
                 $saveDialog.Filter = "Comma delimited (*.csv)|*.csv"
 
-                $saveAs = $saveDialog.ShowDialog()
+                $saveAs = $saveDialog.ShowDialog($window)
 
                 if ($saveAs -eq $true) {
                     $script:searchResults | Export-Csv -Path $saveDialog.FileName -NoTypeInformation
@@ -238,7 +241,10 @@ function Find-XProtectDeviceDialog {
                 $var_lblPropertyValueBlank.Visibility = "Hidden"
             })
 
-        $null = $window.ShowDialog()
+        Invoke-WithWpfDialogOwner -Window $window -Handle $OwnerHandle -TopMostFallback -ScriptBlock {
+            param($dialogWindow)
+            $null = $dialogWindow.ShowDialog()
+        }
     }
 }
 
@@ -311,4 +317,3 @@ function Find-XProtectDeviceSearch {
         return $results
     }
 }
-
