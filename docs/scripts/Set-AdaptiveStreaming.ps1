@@ -103,6 +103,7 @@ function Set-AdaptiveStreaming {
             }
         }
         $camProcessed = 1
+        $progressStopwatch = [diagnostics.stopwatch]::StartNew()
 
         if ($null -ne $FPS) {
             [decimal]$FPS = $FPS
@@ -111,7 +112,20 @@ function Set-AdaptiveStreaming {
         foreach ($rec in $recs) {
             foreach ($hw in $rec | Get-VmsHardware | Where-Object Enabled) {
                 foreach ($cam in $hw | Get-VmsCamera -EnableFilter Enable -Name $CameraName) {
-                    Write-Progress -Activity "Configuring streams for camera $($camProcessed) of $($camQty) (or possibly less)" -PercentComplete ($camProcessed / $camQty * 100)
+                    $completedCameras = [math]::Max($camProcessed - 1, 0)
+                    $progressParams = @{
+                        Activity        = "Configuring streams for camera $($camProcessed) of $($camQty) (or possibly less)"
+                        PercentComplete = ($camProcessed / $camQty * 100)
+                    }
+                    if ($completedCameras -gt 0 -and $camQty -gt 0) {
+                        $timePerCamera = $progressStopwatch.ElapsedMilliseconds / $completedCameras
+                        $remainingCameras = $camQty - $completedCameras
+                        if ($remainingCameras -gt 0) {
+                            $remainingTime = [timespan]::FromMilliseconds($remainingCameras * $timePerCamera)
+                            $progressParams.SecondsRemaining = [int]$remainingTime.TotalSeconds
+                        }
+                    }
+                    Write-Progress @progressParams
 
                     # Get all streams that support a codec other than just JPEG/MJPEG
                     $totalSupportedStreams = $cam | Get-VmsCameraStream -WarningAction SilentlyContinue | Where-Object { $_.ValueTypeInfo.Codec.Value -ne 'JPEG' -and $_.ValueTypeInfo.Codec.Value -ne 'MJPEG' }
