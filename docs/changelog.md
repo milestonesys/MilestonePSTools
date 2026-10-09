@@ -7,7 +7,16 @@ hide:
 
 ## [vNext] unreleased
 
-### 🐛 Fixed
+### � Changed
+
+- **`Select-VideoOSItem`** (and therefore **`Select-Camera`**) now use the MIP SDK's WPF-based `ItemPickerWpfWindow`
+  internally instead of the deprecated WinForms `ItemPickerForm`/`ItemPickerUserControl` controls, removing several
+  build-time obsolete-API warnings. The new item picker window has no equivalent for the old Category filter or the
+  separate Groups/Servers tabs, so the `-Category`, `-KindUserSelectable`, `-CategoryUserSelectable`,
+  `-HideGroupsTab`, and `-HideServerTab` parameters on `Select-VideoOSItem` no longer affect the picker's
+  presentation, and a warning is displayed if they are used.
+
+### �🐛 Fixed
 
 - Fixed an issue introduced in the previous release where the embedded `ImportExcel` module could be missing from
   packaged outputs. The build now fails when the embedded `ImportExcel` module is not present.
