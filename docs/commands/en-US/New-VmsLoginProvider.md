@@ -14,8 +14,8 @@ Adds a new external login provider to enable authentication by an external ident
 
 ```
 New-VmsLoginProvider [-Name] <String> [-ClientId] <String> [-ClientSecret] <SecureString>
- [[-CallbackPath] <String>] [-Authority] <Uri> [[-UserNameClaim] <String>] [[-Scopes] <String[]>]
- [[-PromptForLogin] <Boolean>] [[-Enabled] <Boolean>] [<CommonParameters>]
+ [[-ClientSecretType] <String>] [[-CallbackPath] <String>] [-Authority] <Uri> [[-UserNameClaim] <String>]
+ [[-Scopes] <String[]>] [[-PromptForLogin] <Boolean>] [[-Enabled] <Boolean>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -77,6 +77,29 @@ as-is, unless you have confirmed with the administrator for your identity manage
 system that users will have a claim named "vms_role", and that the value of this
 claim will match the name of a role in the VMS.
 
+### Example 2
+```powershell
+$providerParams = @{
+    Name             = 'EntraID'
+    ClientId         = '11111111-2222-3333-4444-555555555555'
+    ClientSecret     = 'C263B6DC2B40237A9C13ED9FD84327033B6CD722'
+    ClientSecretType = 'X509Thumbprint'
+    Authority        = 'https://login.microsoftonline.com/contoso.onmicrosoft.com/v2.0'
+    UserNameClaim    = 'preferred_username'
+    Scopes           = 'email', 'profile'
+    ErrorAction      = 'Stop'
+}
+New-VmsLoginProvider @providerParams
+```
+
+Adds an external login provider that uses certificate-based authentication. The
+`-ClientSecret` value is interpreted as the thumbprint of a certificate whose
+private key is available to the identity server. This requires XProtect 2025 R3
+or later.
+
+Note that if the secret is later edited in the Management Client UI, the provider
+reverts to `SharedSecret` authentication.
+
 ## PARAMETERS
 
 ### -Authority
@@ -89,7 +112,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -107,7 +130,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: /signin-oidc
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -143,6 +166,31 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ClientSecretType
+Specifies how the `-ClientSecret` value should be interpreted by the external
+login provider. The default is `SharedSecret`, where `-ClientSecret` is the
+client secret issued by the identity provider. When set to `X509Thumbprint`,
+`-ClientSecret` is interpreted as the thumbprint of a certificate used for
+certificate-based authentication (OIDC `private_key_jwt`), and the certificate's
+private key must be available to the identity server. Because the .NET SDK does
+not expose this setting, specifying `X509Thumbprint` configures the provider
+through the XProtect API Gateway and requires XProtect 2025 R3 or later. Note
+that if the secret is later edited in the Management Client UI, the provider
+reverts to `SharedSecret`.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: SharedSecret, X509Thumbprint
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Enabled
 Specifies whether the external login provider should be enabled immediately. The
 default value is `$true`.
@@ -153,7 +201,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -188,7 +236,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: True
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -207,7 +255,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -224,7 +272,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

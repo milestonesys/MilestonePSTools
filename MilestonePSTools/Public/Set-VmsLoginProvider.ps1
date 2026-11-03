@@ -38,6 +38,12 @@ function Set-VmsLoginProvider {
         $ClientSecret,
 
         [Parameter()]
+        [ValidateVmsVersion('25.3')]
+        [ValidateSet('SharedSecret', 'X509Thumbprint')]
+        [string]
+        $ClientSecretType,
+
+        [Parameter()]
         [string]
         $CallbackPath,
 
@@ -96,11 +102,15 @@ function Set-VmsLoginProvider {
                             }
                             $dirty = $true
                         }
-                    } elseif ($key -eq 'ClientSecret') {
+                    } elseif ($key -eq 'ClientSecret' -and $ClientSecretType -ne 'X509Thumbprint') {
                         Write-Verbose "Updating $key on login provider '$initialName'"
                         $cred = [pscredential]::new('a', $ClientSecret)
                         $LoginProvider.ClientSecret = $cred.GetNetworkCredential().Password
                         $dirty = $true
+                    } elseif ($key -eq 'ClientSecretType') {
+                        # The secret carries a certificate thumbprint and is applied
+                        # via the API Gateway below, not through the .NET SDK, so that
+                        # clientSecretType can be set to X509Thumbprint.
                     } elseif ($key -eq 'Enabled' -and $LoginProvider.Enabled -ne $Enabled) {
                         Write-Verbose "Setting Enabled to $Enabled on login provider '$initialName'"
                         $LoginProvider.Enabled = $Enabled
@@ -117,8 +127,26 @@ function Set-VmsLoginProvider {
                 }
                 if ($dirty) {
                     $LoginProvider.Save()
-                } else {
+                } elseif ($ClientSecretType -ne 'X509Thumbprint') {
                     Write-Verbose "No changes were made to login provider '$initialName'."
+                }
+
+                if ($ClientSecretType -eq 'X509Thumbprint') {
+                    if (-not $MyInvocation.BoundParameters.ContainsKey('ClientSecret')) {
+                        throw "The ClientSecret parameter is required when ClientSecretType is 'X509Thumbprint'. Provide the certificate thumbprint as the ClientSecret value."
+                    }
+                    # The .NET SDK does not support the clientSecretType field, so
+                    # certificate-based authentication is configured directly against
+                    # the API Gateway REST endpoint.
+                    Write-Verbose "Updating ClientSecret and ClientSecretType on login provider '$initialName' via the API Gateway"
+                    $cred = [pscredential]::new('a', $ClientSecret)
+                    $loginProviderBody = @{
+                        clientSecret     = $cred.GetNetworkCredential().Password
+                        clientSecretType = $ClientSecretType
+                    }
+                    $null = InvokeVmsRestApi -ResourcePath "loginproviders/$($LoginProvider.Id)" -Method 'PATCH' -Body $loginProviderBody
+                    (Get-VmsManagementServer).LoginProviderFolder.ClearChildrenCache()
+                    $LoginProvider = Get-VmsLoginProvider -Name $LoginProvider.Name
                 }
             }
 

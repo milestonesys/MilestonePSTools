@@ -60,9 +60,7 @@ if ($Help) {
     $ProgressPreference = 'SilentlyContinue'
 
     Write-Verbose "Current PID = $PID"
-    $previousPWD = $PWD
-    Push-Location $PSScriptRoot
-    [Environment]::CurrentDirectory = $PSScriptRoot
+    [Environment]::CurrentDirectory = Push-Location $PSScriptRoot -PassThru
     try {
         $cachedModulePath = (New-Item "$PSScriptRoot/.cache/modules/" -ItemType Directory -Force).FullName
         if ($env:PSModulePath -notmatch [regex]::Escape($cachedModulePath)) {
@@ -91,7 +89,6 @@ if ($Help) {
             exit ([int](-not $psake.build_success))
         }
     } finally {
-        Pop-Location
-        [Environment]::CurrentDirectory = $previousPWD
+        [Environment]::CurrentDirectory = Pop-Location -PassThru
     }
 }
