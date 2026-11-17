@@ -46,6 +46,7 @@ function Import-VmsRule {
                 Activity        = 'Importing rules'
                 PercentComplete = 0
             }
+            $progressStopwatch = [diagnostics.stopwatch]::StartNew()
             Write-Progress @progressParams
             if ($PSCmdlet.ParameterSetName -eq 'FromFile') {
                 $Path = (Resolve-Path -Path $Path -ErrorAction Stop).Path
@@ -58,6 +59,12 @@ function Import-VmsRule {
                     $progressParams.CurrentOperation = "Importing rule '$($exportedRule.DisplayName)'"
                     $progressParams.PercentComplete = $processed / $total * 100
                     $progressParams.Status = ($progressParams.PercentComplete / 100).ToString('p0')
+                    if ($processed -gt 0 -and $total -gt 0) {
+                        $timePerRule = $progressStopwatch.ElapsedMilliseconds / $processed
+                        $remainingRules = $total - $processed
+                        $remainingTime = [timespan]::FromMilliseconds($remainingRules * $timePerRule)
+                        $progressParams.SecondsRemaining = [int]$remainingTime.TotalSeconds
+                    }
                     Write-Progress @progressParams
 
                     if ($PSCmdlet.ShouldProcess($exportedRule.DisplayName, "Create rule")) {
@@ -77,4 +84,3 @@ function Import-VmsRule {
         }
     }
 }
-

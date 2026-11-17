@@ -86,6 +86,7 @@ function Group-CamerasByModel {
             $modelGroups = $ms.RecordingServerFolder.RecordingServers.HardwareFolder.Hardwares | Group-Object Model | Sort-Object Name
             $totalCameras = ($modelGroups.Group.CameraFolder.Cameras).Count
             $camerasProcessed = 0
+            $progressStopwatch = [diagnostics.stopwatch]::StartNew()
 
             $parentProgress.Status = 'Processing'
             Write-Progress @parentProgress
@@ -102,6 +103,12 @@ function Group-CamerasByModel {
                 
                 $childProgress.Status = "Current: $BaseGroupPath/$modelName"                
                 $parentProgress.PercentComplete = $camerasProcessed / $totalCameras * 100
+                if ($camerasProcessed -gt 0 -and $totalCameras -gt 0) {
+                    $timePerCamera = $progressStopwatch.ElapsedMilliseconds / $camerasProcessed
+                    $remainingCameras = $totalCameras - $camerasProcessed
+                    $remainingTime = [timespan]::FromMilliseconds($remainingCameras * $timePerCamera)
+                    $parentProgress.SecondsRemaining = [int]$remainingTime.TotalSeconds
+                }
                 Write-Progress @parentProgress
 
                 Write-Verbose "Creating groups for $totalForModel cameras of model '$modelName'"
