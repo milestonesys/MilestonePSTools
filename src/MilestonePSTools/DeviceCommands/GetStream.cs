@@ -57,7 +57,10 @@ namespace MilestonePSTools.DeviceCommands
                 }
                 case "Recorded":
                 {
+                    // This deprecated cmdlet only ever supported the legacy single-track recording model.
+#pragma warning disable CS0618 // Type or member is obsolete
                     streams.Add(Camera.StreamFolder.Streams.First().StreamUsageChildItems.First(s => s.Record));
+#pragma warning restore CS0618 // Type or member is obsolete
                     break;
                 }
                 case "All":

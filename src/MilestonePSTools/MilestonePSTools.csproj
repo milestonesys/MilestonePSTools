@@ -57,6 +57,10 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlarmCommands\GetAlarmClient.cs" />
@@ -196,12 +200,7 @@
     <Compile Include="SnapshotCommands\GetVideoSource.cs" />
     <Compile Include="SnapshotCommands\GetSnapshot.cs" />
     <Compile Include="SnapshotCommands\TestPlayback.cs" />
-    <Compile Include="UI\CustomItemPickerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\CustomItemPickerForm.Designer.cs">
-      <DependentUpon>CustomItemPickerForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="UI\CustomItemPickerForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -212,9 +211,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\CustomItemPickerForm.resx">
-      <DependentUpon>CustomItemPickerForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

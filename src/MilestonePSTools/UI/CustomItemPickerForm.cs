@@ -15,18 +15,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using VideoOS.Platform;
-using VideoOS.Platform.Admin;
 using VideoOS.Platform.UI;
+using DialogResult = System.Windows.Forms.DialogResult;
+using FormStartPosition = System.Windows.Forms.FormStartPosition;
 
 namespace MilestonePSTools.UI
 {
-    public partial class CustomItemPickerForm : Form
+    /// <summary>
+    /// Wraps <see cref="ItemPickerWpfWindow"/>, the MIP SDK's replacement for the
+    /// deprecated WinForms ItemPickerForm/ItemPickerUserControl.
+    /// </summary>
+    public class CustomItemPickerForm
     {
+        private readonly ItemPickerWpfWindow _window = new ItemPickerWpfWindow();
+        private List<Guid> _kindFilter = new List<Guid>();
+
         public bool AllowServers { get; set; }
+
         public bool AllowFolders { get; set; }
-        public List<Item> ItemsSelected => ItemPicker.ItemsSelected;
+
+        public List<Item> ItemsSelected => _window.SelectedItems?.ToList() ?? new List<Item>();
 
         public List<Item> ItemsSelectedFlattened
         {
@@ -51,128 +62,93 @@ namespace MilestonePSTools.UI
             }
         }
 
-        public bool CategoryUserSelectable
-        {
-            get => ItemPicker.CategoryUserSelectable;
-            set => ItemPicker.CategoryUserSelectable = value;
-        }
-
-        public bool KindUserSelectable
-        {
-            get => ItemPicker.KindUserSelectable;
-            set => ItemPicker.KindUserSelectable = value;
-        }
-
-        public bool GroupTabVisable
-        {
-            get => ItemPicker.GroupTabVisible;
-            set => ItemPicker.GroupTabVisible = value;
-        }
-
-        public bool ServerTabVisable
-        {
-            get => ItemPicker.ServerTabVisible;
-            set => ItemPicker.ServerTabVisible = value;
-        }
-
-        public bool ShowDisabledItems
-        {
-            get => ItemPicker.ShowDisabledItems;
-            set => ItemPicker.ShowDisabledItems = value;
-        }
-
         public bool SingleSelect
         {
-            get => ItemPicker.SingleSelect;
-            set => ItemPicker.SingleSelect = value;
+            get => _window.SelectionMode == SelectionModeOptions.SingleSelect;
+            set => _window.SelectionMode = value ? SelectionModeOptions.SingleSelect : SelectionModeOptions.MultiSelect;
         }
 
-        public List<Item> ItemsToSelectFrom
-        {
-            set => ItemPicker.ItemsToSelectFrom = value;
-        }
-
-        public List<Item> ItemsToSelectFromGroup
-        {
-            set => ItemPicker.ItemsToSelectFromGroup = value;
-        }
-
-        public List<Item> ItemsToSelectFromServer
-        {
-            set => ItemPicker.ItemsToSelectFromServer = value;
-        }
-
-        public List<Category> CategoryFilter
-        {
-            set => ItemPicker.CategoryFilter = value;
-        }
-
-        private List<Guid> _kindFilter = new List<Guid>();
         public List<Guid> KindFilter
         {
             set
             {
-                value = value ?? new List<Guid>();
-                _kindFilter = value;
-                ItemPicker.KindFilter = _kindFilter;
-                ReloadItemPicker();
+                _kindFilter = value ?? new List<Guid>();
+                _window.KindsFilter = _kindFilter;
             }
         }
 
-        private void ReloadItemPicker()
+        public string Text
         {
-            ItemPicker.ItemsToSelectFromGroup = Configuration.Instance.GetItems(ItemHierarchy.UserDefined);
-            ItemPicker.ItemsToSelectFromServer = Configuration.Instance.GetItems(ItemHierarchy.SystemDefined);
+            get => _window.Header;
+            set => _window.Header = value;
+        }
+
+        public System.Drawing.Icon Icon
+        {
+            set => _window.Icon = value == null
+                ? null
+                : Imaging.CreateBitmapSourceFromHIcon(value.Handle, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        public bool TopMost
+        {
+            get => _window.Topmost;
+            set => _window.Topmost = value;
+        }
+
+        public FormStartPosition StartPosition
+        {
+            set => _window.WindowStartupLocation = value == FormStartPosition.CenterScreen
+                ? System.Windows.WindowStartupLocation.CenterScreen
+                : System.Windows.WindowStartupLocation.Manual;
+        }
+
+        public double Width
+        {
+            get => _window.Width;
+            set => _window.Width = value;
+        }
+
+        public double Height
+        {
+            get => _window.Height;
+            set => _window.Height = value;
         }
 
         public CustomItemPickerForm()
         {
-            InitializeComponent();
-            CancelButton.Tag = DialogResult.Cancel;
-            OkButton.Tag = DialogResult.OK;
-            SetupItemPickerForm();
-        }
-
-        private void SetupItemPickerForm()
-        {
-            ItemPicker.Init();
-            CategoryUserSelectable = false;
-            KindUserSelectable = false;
             SingleSelect = false;
-            ShowDisabledItems = false;
-            ItemPicker.ValidateSelectionEvent += ItemPickerOnValidateSelectionEvent;
-            ReloadItemPicker();
+            Width = 700;
+            Height = 500;
+            _window.Items = GetPickerItems();
+            _window.IsValidSelectionCallback = IsValidSelection;
+            _window.SearchEnabled = true;
         }
 
-        private void ItemPickerOnValidateSelectionEvent(ItemPickerForm.ValidateEventArgs e)
+        private static IEnumerable<Item> GetPickerItems()
         {
-            if (e.Item.FQID.Kind == Kind.Server && !AllowServers) return;
-            if (e.Item.FQID.FolderType != FolderType.No && !AllowFolders) return;
-            if (ItemsSelected.Any(i => i.FQID.ObjectId == e.Item.FQID.ObjectId)) return;
-            e.AcceptSelection = true;
+            // Server items expose different children per hierarchy (logical groups vs. the full device tree),
+            // so only Server items are allowed to appear from both hierarchies. Everything else (e.g. the
+            // layout group/video wall/GIS map folders) is shared between hierarchies and would otherwise be duplicated.
+            var seen = new HashSet<Guid>();
+            foreach (var item in Configuration.Instance.GetItems(ItemHierarchy.UserDefined)
+                .Concat(Configuration.Instance.GetItems(ItemHierarchy.SystemDefined)))
+            {
+                if (item.FQID.Kind == Kind.Server || seen.Add(item.FQID.ObjectId))
+                {
+                    yield return item;
+                }
+            }
         }
 
-        private void itemPickerUserControl1_ItemsSelectedChangedEvent(object sender, EventArgs e)
+        private bool IsValidSelection(Item item)
         {
-            UpdateOkButton();
+            if (item.FQID.Kind == Kind.Server && !AllowServers) return false;
+            if (item.FQID.FolderType != FolderType.No && !AllowFolders) return false;
+            return true;
         }
 
-        private void Button_Click(object sender, EventArgs e)
-        {
-            if (!(sender is Button button)) return;
-            this.DialogResult = (DialogResult)button.Tag;
-            this.Close();
-        }
-
-        private void CustomItemPickerForm_Shown(object sender, EventArgs e)
-        {
-            UpdateOkButton();
-        }
-
-        private void UpdateOkButton()
-        {
-            OkButton.Enabled = ItemPicker.ItemsSelected.Count > 0;
-        }
+        public DialogResult ShowDialog() => _window.ShowDialog() == true ? DialogResult.OK : DialogResult.Cancel;
     }
 }
 

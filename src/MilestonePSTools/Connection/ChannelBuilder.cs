@@ -74,14 +74,23 @@ namespace MilestonePSTools.Connection
                 factory.Endpoint.EndpointBehaviors.Add(new AddTokenBehavior(loginSettings.IdentityTokenCache));
                 ConfigureEndpoint(factory.Endpoint);
             }
+            else if (loginSettings.IsOAuthIdentity)
+            {
+                throw new InvalidOperationException("LoginSettings.NetworkCredential is not available for OAuth identities.");
+            }
             else if (loginSettings.IsBasicUser)
             {
+                // NetworkCredential is safe here since IsOAuthIdentity was already confirmed false above.
+#pragma warning disable CS0618 // Type or member is obsolete
                 factory.Credentials.UserName.UserName = loginSettings.NetworkCredential.UserName;
                 factory.Credentials.UserName.Password = loginSettings.NetworkCredential.Password;
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             else
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 factory.Credentials.Windows.ClientCredential = loginSettings.NetworkCredential;
+#pragma warning restore CS0618 // Type or member is obsolete
             }
 
             var channel = factory.CreateChannel();
